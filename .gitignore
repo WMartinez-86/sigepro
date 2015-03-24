@@ -1,0 +1,5 @@
+.idea
+
+# ignora los archivos con las siguientes extensiones
+*~
+*pyc
