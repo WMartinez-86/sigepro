@@ -2,8 +2,11 @@ from django.test import Client
 from django.contrib.auth.models import User
 import unittest
 from django.contrib.auth import SESSION_KEY
+
+from django import setup
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sigepro.settings")
+os.environ['DJANGO_SETTINGS_MODULE'] = 'sigepro.settings'
+setup()
 
 
 # Create your tests here.
