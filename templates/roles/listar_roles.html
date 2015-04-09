@@ -84,24 +84,21 @@ Roles
                 </tr>
                 </thead>
                 <tbody>
-                {% for dato in datos %}
+                {% for rol in object_list %}
                 <tr>
                     <td>
-                        <center>{{ dato.id }}</center>
-                    </td>
-                    <td>
-                        <center>{{ dato.name }}</center>
+                        <center>{{ rol.nombre }}</center>
                     </td>
                     <td>
                         <center><a href="/roles/{{ dato.pk }}" class="btn btn-success"><i
                                 class="icon-eye-open icon-white"></i></a></center>
                     </td>
                     <td>
-                        <center><a href="/roles/modificar/{{ dato.pk }}" class="btn btn-warning"><i
+                        <center><a href="/roles/modificar/{{ rol.id }}" class="btn btn-warning"><i
                                 class="icon-pencil icon-white"></i></a></center>
                     </td>
                     <td>
-                        <center><a href="/roles/eliminar/{{ dato.pk }}" class="btn btn-danger"><i
+                        <center><a href="/roles/eliminar/{{ rol.id }}" class="btn btn-danger"><i
                                 class=" icon-trash icon-white"></i></a></center>
                     </td>
                 </tr>

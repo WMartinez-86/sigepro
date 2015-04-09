@@ -5,17 +5,20 @@ from django.db import models
 # from apps.proyectos.models import Proyecto
 
 # Create your models here.
+
+
 class Rol(models.Model):
     """
     Clase del Modelo que a los roles con sus atributos.
+    @int id : Identificador
     @cvar nombre : Cadena de caracteres
     """
+    id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50)
-
 
     def __unicode__(self):
         return self.nombre
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            super(Rol, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+        #if not self.id:
+        # super(Rol, self).save(*args, **kwargs)

@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     #INICIO
-    url(r'^', include('apps.inicio.urls')),
+    url(r'^$', include('apps.inicio.urls')),
     #ROLES
     url(r'^roles/',include('apps.roles.urls')),
 

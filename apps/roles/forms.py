@@ -2,7 +2,7 @@ __author__ = 'smgalu'
 
 from django import forms
 from apps.roles.models import Rol
-from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import Group #, Permission
 
 
 class GroupForm(forms.ModelForm):
