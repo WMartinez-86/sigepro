@@ -50,23 +50,23 @@ def lista_roles(request):
     grupos = Group.objects.all()
     return render_to_response('roles/listar_roles.html', {'datos': grupos}, context_instance=RequestContext(request))
 
-# @login_required
-# @permission_required('group')
-# def buscarRol(request):
-#     """
-#     vista para buscar un rol entre todos los registrados en el sistema
-#     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-#     @return: return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))
-#     """
-#     query = request.GET.get('q', '')
-#     if query:
-#         qset = (
-#             Q(name__contains=query)
-#         )
-#         results = Group.objects.filter(qset).distinct()
-#     else:
-#         results = []
-#     return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))
+@login_required
+@permission_required('group')
+def buscarRol(request):
+    """
+    vista para buscar un rol entre todos los registrados en el sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))
+    """
+    query = request.GET.get('q', '')
+    if query:
+        qset = (
+            Q(name__contains=query)
+        )
+        results = Group.objects.filter(qset).distinct()
+    else:
+        results = []
+    return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))
 
 
 @login_required
