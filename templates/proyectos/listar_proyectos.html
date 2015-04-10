@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block title %}
+Proyectos
+{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+
+<html lang="es-PY" >
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+     <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css"/>
+
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="dashboard">
+
+<!-- Container -->
+<div  id="content" class="change-list" style="width: 1000px">
+    <!-- Content -->
+    <div class="change-list">
+
+        <h1>Administracion de Proyectos</h1>
+    <form action="/sigepro/apps/proyectos/search/" method="get">
+    <label for="q"></label>
+    <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del Proyecto">
+    <div class="btn-group">
+                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                </div>
+    <a href="/proyectos/" class="btn btn-success"><i class="icon-refresh"></i></a>
+    </form>
+
+<ul class="object-tools">
+    <li>
+        <a href="/proyectos/registrar" class="addlink">Nuevo Proyecto</a>
+    </li>
+</ul>
+
+<div id="content-main">
+
+        <div class="results" >
+           <ul class="errorlist">
+            {% if  mensaje == 1 %}
+            <li>Error: No se puede modificar. Ya no esta en estado Pendiente.</li>
+            {% endif %}
+        </ul>
+        <table >
+        <thead>
+        <tr>
+            <th scope="col" class="sortable" >
+                <div class="text">
+                    <a>Proyectos</a>
+                </div>
+            </th>
+             <th scope="col">
+                <div class="text">
+                    <a>Estado</a>
+                </div>
+            </th>
+             <th scope="col">
+                <div class="text">
+                    <a>Lider_a_Cargo</a>
+                </div>
+            </th>
+             <th scope="col">
+                <div class="text">
+                    <a>Fecha_de_Inicio</a>
+                </div>
+            </th>
+            <th scope="col">
+                <div class="text">
+                    <a>Fecha_de_Finalizacion</a>
+                </div>
+            </th>
+                        <th scope="col">
+                <div class="text">
+                    <a>Detalle</a>
+                </div>
+            </th>
+            <th scope="col">
+                <div class="text">
+                    <a>Modificar</a>
+                </div>
+            </th>
+
+            <th scope="col">
+                <div class="text">
+                    <a>Importar</a>
+                </div>
+            </th>
+            <th scope="col">
+                <div class="text">
+                    <a>Fases</a>
+                </div>
+            </th>
+                        <th scope="col">
+                <div class="text">
+                    <a>Equipo</a>
+                </div>
+            </th>
+                        <th scope="col">
+                <div class="text">
+                    <a>Cambiar_Estado</a>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for proyecto in object_list  %}
+            <tr>
+                <td><center>{{ dato.nombre }}</center></td>
+				<td><center>{{ dato.estado }}</center></td>
+                <td><center>{{ dato.lider }}</center></td>
+				<td><center>{{ dato.fecha_ini }}</center></td>
+                <td><center>{{ dato.fecha_fin }}</center></td>
+                <td><center><a href="/proyectos/{{ dato.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                <td><center><a href="/proyectos/modificar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+
+                <td><center><a href="/proyectos/importar/{{ dato.pk }}" class="btn btn-warning"><i class="icon-share icon-white"></i></a></center></td>
+                <td><center><a href="/fases/proyecto/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-list-alt icon-white"></i></a></center></td>
+                <td><center><a href="/proyectos/equipo/{{ dato.pk }}" class="btn btn-inverse"><i class="icon-user icon-white"></i></a></center></td>
+                <td><center><a href="/proyectos/cambiarEstado/{{ dato.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        </table>
+        </div>
+
+
+</div>
+
+
+
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+{% endblock %}
+
