@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^$', include('apps.inicio.urls')),
     #ROLES
     url(r'^roles/',include('apps.roles.urls')),
+    #PROYECTOS
+    url(r'^proyectos/',include('apps.proyectos.urls')),
 
 
 )
