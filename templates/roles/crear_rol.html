@@ -1,55 +1,55 @@
 {% extends 'base.html' %}
 {% block title %}
-	Nuevo_Rol
+Nuevo_Rol
 {% endblock %}
 {% block content %}
-    <head>
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
 
 </head>
-    <div class="breadrumbs">
+<div class="breadrumbs">
     <a href="/roles/">Roles</a>
-    "> Nuevo Rol"c
-    </div>
+    > Nuevo Rol
+</div>
 
-                <div id="content">
-                <h1>Crear Rol</h1>
-       <fieldset class="module aligned">
-<form enctype="multipart/form-data" method="post">{% csrf_token %}
-    <div class="form-row">
-        <div><label>Nombre:</label>{{group_form.name}}</div>
-        <div><p class="help">
-            Mantenga presionado "Control", para seleccionar más de una opción.
-        </p></div><label>Permisos:</label>
-        <div class="selector">
-            <div class="selector-available">
-                <h2>Permisos Disponibles</h2>
-                <p class="selector-filter">
-                </p>
+<div id="content">
+    <h1>Crear Rol</h1>
+    <fieldset class="module aligned">
+        <form enctype="multipart/form-data" method="post">{% csrf_token %}
+            <div class="form-row">
+                <div><label>Nombre:</label>{{Rol_form.nombre}}</div>
+                <div><p class="help">
+                    Mantenga presionado "Control", para seleccionar más de una opción.
+                </p></div><label>Permisos:</label>
+                <div class="selector">
+                    <div class="selector-available">
+                        <h2>Permisos Disponibles</h2>
+                        <p class="selector-filter">
+                        </p>
 
-                    <div >
-                        {% if results %}<!---este es del filtro--->
-                        <ul>
-                            {% for result in results %}
+                        <div >
+                            {% if results %}<!---este es del filtro--->
+                            <ul>
+                                {% for result in results %}
                                 {{ result.name }}
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </ul>
                             {% else %}
-                            {{ group_form.permissions}}
-                        {% endif %}
+                            {{ Rol_form.permissions}}
+                            {% endif %}
+
+                        </div>
 
                     </div>
+                </div>
 
             </div>
-        </div>
-
-        </div>
-    <div class="submit-row">
-    <input type="submit" value="Confirmar" />
-        </div>
-</form>
-            </fieldset>
-                    </div>
+            <div class="submit-row">
+                <input type="submit" value="Confirmar" />
+            </div>
+        </form>
+    </fieldset>
+</div>
 
 {% endblock %}

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.template import RequestContext
 from django.views.generic import TemplateView, ListView
-from apps.roles.forms import RolCrear
+from .forms import GroupForm
 from django.shortcuts import render_to_response
 # from django.db.models import Q
 from .models import Rol
@@ -24,7 +24,7 @@ def crear_rol(request):
     """
     if request.method == 'POST':
         # formulario enviado
-        group_form = RolCrear(request.POST)
+        group_form = GroupForm(request.POST)
 
         if group_form.is_valid():
             # formulario validado correctamente
@@ -33,7 +33,8 @@ def crear_rol(request):
 
     else:
         # formulario inicial
-        group_form = RolCrear()
+        group_form = GroupForm()
+
     return render_to_response('roles/crear_rol.html', { 'group_form': group_form}, context_instance=RequestContext(request))
 
 
