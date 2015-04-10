@@ -1,8 +1,7 @@
 from django.db import models
+#from django.contrib.auth.models import usuarios
 
 # Create your models here.
-
-class Proyecto(models.Model):
 
 ESTADOS = (
 
@@ -10,9 +9,10 @@ ESTADOS = (
     ('ANU','Anulado'),
     ('ACT', 'Activo'),
     ('FIN','Finalizado'),
-    ('ELI','Eliminado')
+    ('ELI','Eliminado'),
 )
 
+class Proyecto(models.Model):
     """
     Clase del Modelo que representa al proyecto con sus atributos.
     @cvar nombre: Cadena de caracteres
@@ -30,4 +30,4 @@ ESTADOS = (
     fecha_ini=models.DateField(verbose_name='Fecha de inicio',null=False)
     fecha_fin=models.DateField(verbose_name='Fecha de Finalizacion',null=False)
     estado=models.CharField(max_length=3,choices= ESTADOS, default='PEN')
-    cliente = models.ForeignKey(usuarios, related_name='lider')
+
