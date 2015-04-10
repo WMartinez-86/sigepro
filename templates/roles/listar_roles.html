@@ -26,16 +26,6 @@ Roles
 
     <h1>Administracion de Roles</h1>
 
-    <form action="/roles/search/" method="get">
-        <label for="q"></label>
-        <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del Rol">
-
-        <div class="btn-group">
-            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-        </div>
-        <a href="/roles/" class="btn btn-success"><i class="icon-refresh"></i></a>
-    </form>
-
     <ul class="object-tools">
         <li>
             <a href="/roles/crear" class="addlink">Nuevo Rol</a>
@@ -63,7 +53,7 @@ Roles
                     </th>
                     <th scope="col">
                         <div class="text">
-                            <a> __Roles__ </a>
+                            <a>Roles</a>
                         </div>
                     </th>
                     <th scope="col">
@@ -90,7 +80,7 @@ Roles
                         <center>{{ rol.nombre }}</center>
                     </td>
                     <td>
-                        <center><a href="/roles/{{ dato.pk }}" class="btn btn-success"><i
+                        <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
                                 class="icon-eye-open icon-white"></i></a></center>
                     </td>
                     <td>
