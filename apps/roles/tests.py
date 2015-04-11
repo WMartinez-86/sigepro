@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'alvarenga'
+
 from django.test import Client
 from django.test import TestCase
 from django.contrib.auth.models import Group

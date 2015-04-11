@@ -49,7 +49,7 @@ def detalle_rol(request, id_rol):
     @return: render_to_response('roles/detalle_rol.html', {'rol': dato, 'permisos': permisos}, context_instance=RequestContext(request))
     """
 
-    dato = get_object_or_404(Group, pk=id_rol)
+    dato = get_object_or_404(pk=id_rol)
     permisos = Permission.objects.filter(group__id=id_rol)
     return render_to_response('roles/detalle_rol.html', {'rol': dato, 'permisos': permisos}, context_instance=RequestContext(request))
 

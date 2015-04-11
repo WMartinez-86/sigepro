@@ -63,20 +63,20 @@ class SigeproTestSuite(unittest.TestCase):
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
 
-    def logout(self):
-        """
-        Test para el logout
-        usuario = User.objects.create_user('juan', 'juan@pol.com', 'juanma')
-        c = Client()
-        c.login(username='juan', password='juanma')
-        response = c.get('/logout/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(SESSION_KEY not in self.client.session)
-
-        """
-        User.objects.create_user('juan', 'juan@pol.com', 'juanma')
-        c = Client()
-        c.login(username='juan', password='juanma')
-        response = c.get('/logout/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(SESSION_KEY not in self.client.session)
+    # def logout(self):
+    #     """
+    #     Test para el logout
+    #     usuario = User.objects.create_user('juan', 'juan@pol.com', 'juanma')
+    #     c = Client()
+    #     c.login(username='juan', password='juanma')
+    #     response = c.get('/logout/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTrue(SESSION_KEY not in self.client.session)
+    #
+    #     """
+    #     User.objects.create_user('juan', 'juan@pol.com', 'juanma')
+    #     c = Client()
+    #     c.login(username='juan', password='juanma')
+    #     response = c.get('/logout/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTrue(SESSION_KEY not in self.client.session)
