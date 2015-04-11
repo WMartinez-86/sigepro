@@ -1,7 +1,6 @@
 __author__ = 'willian'
 
 from django.conf.urls import patterns, include, url
-from .views import Registrarse
 
 urlpatterns = patterns('',
 
@@ -10,8 +9,6 @@ urlpatterns = patterns('',
 
     url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',
         name='logout'),
-
-    url(r'^registrarse/$',Registrarse.as_view(),name='registrarse'),
 
 
 )

@@ -1,6 +1,6 @@
 __author__ = 'willian'
 from django.conf.urls import patterns, include, url
-from .views import list_usuario, edit_user, delete_user, search
+from .views import list_usuario, edit_user, delete_user, search, Registrarse
 
 urlpatterns = patterns('',
     url(r'^$', list_usuario, name='usuario'),
@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^nuevo_pass/$','apps.usuarios.views.password_change',name='cambiar_pass_done'),
     url(r'^nuevo_pass/done/$', 'apps.usuarios.views.password_change_done', name='cambiar_pass_done'),
     url(r'^search/$', search, name='search'),
+    url(r'^usuarios/registrarse/$', Registrarse.as_view(), name='registrarse'),
 
 
 )
