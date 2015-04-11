@@ -77,3 +77,14 @@ def registra_proyecto(request):
         formulario = ProyectoForm()
     return render_to_response('proyectos/registrar_proyectos.html', {'formulario': formulario, 'mensaje': 1000},
                               context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos')
+def RegisterSuccessView(request):
+    """
+    Vista llamada en caso de creacion correcta de un proyecto, redirige a un template de exito
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: render_to_response('proyectos/creacion_correcta.html', context_instance=RequestContext(request))
+    """
+    return render_to_response('proyectos/creacion_correcta.html', context_instance=RequestContext(request))
