@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^nuevo_pass/done/$', 'apps.usuarios.views.password_change_done', name='cambiar_pass_done'),
     url(r'^search/$', search, name='search'),
     url(r'^usuarios/registrarse/$', Registrarse.as_view(), name='registrarse'),
-
+    url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',
+        name='logout'),
 
 )
