@@ -22,9 +22,9 @@ class Perfiles(models.Model):
     '''
        direccion es direccion en la cual reside el usuario
     '''
-    lider = models.BooleanField(null=False)
+    lider = models.BooleanField(null=False, default=0)
     '''
-       representa si el usuario en cuestion es lider o no
+       representa si el usuario en cuestion es Scrum Master o no
     '''
     #foto = models.ImageField(upload_to='foto_usuario')
     # """
