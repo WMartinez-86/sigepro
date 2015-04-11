@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from apps.proyectos.forms import ProyectoForm, CambiarEstadoForm
 from django.contrib import messages
 from sigepro import settings
+from django.db.models import Q
 
 __text__ = 'Este modulo contiene funciones que permiten el control de proyectos'
 # Create your views here.
@@ -122,3 +123,60 @@ def editar_proyecto(request, id_proyecto):
         proyecto_form = ProyectoForm(instance=proyecto)
     return render_to_response('proyectos/editar_proyecto.html', {'proyectos': proyecto_form, 'nombre': nombre},
                               context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos')
+def buscar_proyecto(request):
+    """
+    vista para buscar los proyectos del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
+    """
+    query = request.GET.get('q', '')
+    if query:
+        qset = (
+            Q(nombre__contains=query)
+        )
+        results = Proyecto.objects.filter(qset).distinct()
+
+    else:
+        results = []
+
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': results},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos')
+def cambiar_estado_proyecto(request, id_proyecto):
+    """
+    Vista para cambiar el estado de un proyecto, verificando que esto sea posible: para estar activo debe tener la cantidad
+    necesaria de miembros del comite (cantidad impar)
+    Si cambia a activo todas sus fases pasan al estado activo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+
+    proyecto = Proyecto.objects.get(id=id_proyecto)
+    nombre = proyecto.nombre
+    if request.method == 'POST':
+        proyecto_form = CambiarEstadoForm(request.POST, instance=proyecto)
+        if proyecto_form.is_valid():
+            if proyecto_form.cleaned_data['estado'] == 'ACT':
+
+                # formulario validado correctamente
+                proyecto_form.save()
+                return HttpResponseRedirect('/proyectos/register/success/')
+            else:
+                if proyecto_form.cleaned_data['estado'] == 'ANU' or proyecto_form.cleaned_data['estado'] == 'PEN' or \
+                                proyecto_form.cleaned_data['estado'] == 'ELI':
+                    proyecto_form.save()
+                    return HttpResponseRedirect('/proyectos/register/success/')
+
+    else:
+        # formulario inicial
+        proyecto_form = CambiarEstadoForm(instance=proyecto)
+        return render_to_response('proyectos/cambiar_estado_proyecto.html',
+                                  {'proyectos': proyecto_form, 'nombre': nombre,'mensaje':1000}, context_instance=RequestContext(request))
