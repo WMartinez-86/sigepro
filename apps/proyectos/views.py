@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from apps.proyectos.models import Proyecto
 from django.views.generic import TemplateView, ListView
 from django.utils import timezone
@@ -151,9 +151,7 @@ def buscar_proyecto(request):
 @permission_required('proyectos')
 def cambiar_estado_proyecto(request, id_proyecto):
     """
-    Vista para cambiar el estado de un proyecto, verificando que esto sea posible: para estar activo debe tener la cantidad
-    necesaria de miembros del comite (cantidad impar)
-    Si cambia a activo todas sus fases pasan al estado activo
+
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
@@ -180,3 +178,18 @@ def cambiar_estado_proyecto(request, id_proyecto):
         proyecto_form = CambiarEstadoForm(instance=proyecto)
         return render_to_response('proyectos/cambiar_estado_proyecto.html',
                                   {'proyectos': proyecto_form, 'nombre': nombre,'mensaje':1000}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos')
+def detalle_proyecto(request, id_proyecto):
+    """
+    Vista para ver los detalles del proyecto del sistema, junto con su lider y los miembros del comite
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato, 'comite': comite, 'lider':lider}, context_instance=RequestContext(request))
+    """
+
+    dato = get_object_or_404(Proyecto, pk=id_proyecto)
+    return render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato},
+                              context_instance=RequestContext(request))
