@@ -1,0 +1,85 @@
+{% extends 'base2.html' %}
+{% block title %}
+	Sitio administrativo
+{% endblock %}
+{% block content %}
+
+<html lang="es-PY" >
+<head>
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/dashboard.css" />
+
+<script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+
+<meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="dashboard">
+
+<!-- Container -->
+<div id="container">
+    <!-- Content -->
+    <div id="content" class="colMS">
+        
+        <h1>Administracion de Usuarios</h1>
+    <form action="/usuario/search/" method="get">
+    <input type="text" name="busqueda" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del Usuario">
+    <div class="btn-group">
+                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                </div>
+    <a href="/usuario/" class="btn btn-success"><i class="icon-refresh"></i></a>
+
+    </form>
+<div id="content-main">
+
+
+    
+        <div class="app-auth module">
+        <table >
+        <caption>
+                Usuario
+            <a href="/registrarse/" class="addlink">Añadir</a></a>
+        </caption>
+        
+
+
+                {% for user in object_list %}
+                    <tr class="model-user">
+                <th scope="row"><a href="/usuario/edit/{{ user.id }}/">{{ user.username }}</a></th>
+                <td><a href="/usuario/delete/{{ user.id }}/" class="deletelink">Eliminar</a></td>
+                <td><a href="/usuario/edit/{{ user.id }}/" class="changelink">Modificar</a></td>
+                    </tr>
+                {% endfor %}
+                {% if usuarios %}
+                <p>Found {{ usuarios|length }} usuario{{ usuarios|pluralize }}.</p>
+                <ul>
+                    {% for usuario in usuarios %}
+                        <tr class="model-user">
+                <th scope="row"><a href="/usuario/edit/{{ user.id }}/">{{ usuario.username }}</a></th>
+                <td><a href="/usuario/delete/{{ user.id }}/" class="deletelink">Eliminar</a></td>
+                <td><a href="/usuario/edit/{{ user.id }}/" class="changelink">Modificar</a></td>
+                    </tr>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+        
+        </table>
+        </div>
+    
+
+</div>
+
+
+
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+{% endblock %}
