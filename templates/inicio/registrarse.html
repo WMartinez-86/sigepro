@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% block title %}
 	Registrarse
@@ -6,10 +6,40 @@
 
 
 {% block content %}
-	<form method="POST">{% csrf_token %}
-		{{form.as_p}}
-		<input type="submit" value="Registrarse">
-	</form>
+    <head>
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+</head>
+
+   {% if user.is_authenticated and user.username == "admin" %}
+    <div class="breadcrumbs">
+    <a href="/usuario/">Usuarios</a>
+    "> Nuevo Usuario"
+    </div>
+     <a href="/" >Atras</a>
+       {% else %}
+           <a href="/">Atras</a>
+    {% endif %}
+<!---
+<script languaje="JavaScript">
+function pulsar() {
+alert("Una vez registrado puede pasar al sistema como usuario invitado");
+}
+</script>---->
+
+
+                <div id="content">
+                <h1>Registro de Usuario</h1>
+       <fieldset class="module aligned wide">
+<form method="post">{% csrf_token %}
+    <div class="form-row">
+    {{ form.as_p }}
+        </div>
+    <div class="submit-row">
+    <input type="submit" value="Registrarse" />
+        </div>
+</form>
+            </fieldset>
+                    </div>
 {% endblock %}
-
-

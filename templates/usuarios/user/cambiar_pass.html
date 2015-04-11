@@ -1,0 +1,81 @@
+{% extends 'base2.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es-PY" >
+<head>
+<title>Cambio de contraseña</title>
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+<script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+
+<meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="">
+
+<!-- Container -->
+<div id="container">
+
+
+
+    <!-- Content -->
+    <div id="content" class="colM">
+
+
+        <div id="content-main">
+
+<form action="" method="post">{% csrf_token %}
+<div>
+{% if form.errors %}
+    <p class="errornote">
+    {% if form.errors.items|length == 1 %} <p>"Por favor, corrija el error abajo."</p>{% else %}<p>"Por favor, corrija el error abajo."</p>{% endif %}
+    </p>
+{% endif %}
+
+<h1>Cambio de contraseña</h1>
+
+<p>Por favor, introduzca su contraseña antigua, por seguridad, y después introduzca la nueva contraseña dos veces para verificar que la ha escrito correctamente.</p>
+
+<fieldset class="module aligned wide">
+
+<div class="form-row">
+
+    {{ form.old_password.errors }}
+    <label for="id_old_password" class="required">Contraseña antigua:</label>{{ form.old_password }}
+</div>dmin
+
+<div class="form-row">
+    {{ form.new_password1.errors }}
+    <label for="id_new_password1" class="required">Contraseña nueva:</label>{{ form.new_password1 }}
+</div>
+
+<div class="form-row">
+{{ form.new_password2.errors }}
+    <label for="id_new_password2" class="required">Contraseña (de nuevo):</label>{{ form.new_password2 }}
+</div>
+
+</fieldset>
+
+<div class="submit-row">
+    <input type="submit" value="Cambiar mi contraseña" class="default" />
+</div>
+
+<script type="text/javascript">document.getElementById("id_old_password").focus();</script>
+</div>
+</form></div>
+
+
+
+        <br class="clear" />dmin
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+{% endblock %}

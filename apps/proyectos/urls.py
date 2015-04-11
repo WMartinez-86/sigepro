@@ -3,7 +3,7 @@ __author__ = 'juanma'
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-from views import lista_proyectos, registra_proyecto, RegisterSuccessView
+from views import lista_proyectos, registra_proyecto, RegisterSuccessView, editar_proyecto
 #from views import editar_proyecto, importar_proyecto, ver_equipo, cambiar_estado_proyecto
 
 urlpatterns = patterns('',
@@ -12,6 +12,7 @@ urlpatterns = patterns('',
         #Administracion de Proyectos
         url(r'^$',lista_proyectos.as_view()),
         url(r'^register/success/$',RegisterSuccessView ,name='RegisterSuccessView'),
+        url(r'^modificar/(?P<id_proyecto>\d+)$', editar_proyecto, name='edit_proyecto'),
 
         )
 print urlpatterns

@@ -7,6 +7,8 @@ from django.utils import timezone
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from apps.proyectos.forms import ProyectoForm, CambiarEstadoForm
+from django.contrib import messages
+from sigepro import settings
 
 __text__ = 'Este modulo contiene funciones que permiten el control de proyectos'
 # Create your views here.
@@ -88,3 +90,35 @@ def RegisterSuccessView(request):
     @return: render_to_response('proyectos/creacion_correcta.html', context_instance=RequestContext(request))
     """
     return render_to_response('proyectos/creacion_correcta.html', context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos')
+def editar_proyecto(request, id_proyecto):
+    """
+    Vista para editar un proyecto,o su lider o los miembros de su comite
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: HttpResponseRedirect('/proyectos/register/success/') cuando el formulario es validado correctamente o render_to_response('proyectos/editar_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+    proyecto = Proyecto.objects.get(id=id_proyecto)
+    nombre = proyecto.nombre
+    if request.method == 'POST':
+        # formulario enviado
+        proyecto_form = ProyectoForm(request.POST, instance=proyecto)
+        if proyecto_form.is_valid():
+            if proyecto_form.cleaned_data['fecha_ini'] > proyecto_form.cleaned_data['fecha_fin']:
+                messages.add_message(request, settings.DELETE_MESSAGE,
+                                     "Fecha de inicio debe ser menor a la fecha de finalizacion")
+            else:
+                # lider = proyecto_form.cleaned_data['lider']
+                # roles = Group.objects.get(name='Lider')
+                # lider.groups.add(roles)
+                # formulario validado correctamente
+                proyecto_form.save()
+                return HttpResponseRedirect('/proyectos/register/success/')
+    else:
+        # formulario inicial
+        proyecto_form = ProyectoForm(instance=proyecto)
+    return render_to_response('proyectos/editar_proyecto.html', {'proyectos': proyecto_form, 'nombre': nombre},
+                              context_instance=RequestContext(request))

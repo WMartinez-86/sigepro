@@ -1,6 +1,7 @@
 __author__ = 'willian'
 from django.conf.urls import patterns, include, url
 from .views import list_usuario, edit_user, delete_user, search
+
 urlpatterns = patterns('',
     url(r'^$', list_usuario, name='usuario'),
     url(r'^edit/(?P<pk>\d+)/$', edit_user, name='usuario_edit'),
