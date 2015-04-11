@@ -24,7 +24,7 @@
             <div><strong>Estado: </strong>{{ proyecto.estado }}</div>
             <div><strong>Fecha de Inicio: </strong>{{ proyecto.fecha_ini }}</div>
             <div><strong>Fecha de Finalizacion: </strong>{{ proyecto.fecha_fin}}</div>
-            <div><strong>Observaciones: </strong>{{ proyecto.observaciones }}</div>
+            <!--<div><strong>Observaciones: </strong>{{ proyecto.observaciones }}</div>-->
             {% for integrante in comite %}
                 <li>{{ integrante.first_name}} {{ integrante.last_name}}</li>
             {% endfor %}
