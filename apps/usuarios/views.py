@@ -22,15 +22,15 @@ class Usuario(ModelForm):
     """
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_active','is_staff','is_superuser')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 class Perfil(ModelForm):
     """
-    Modelo que agrega el rol de lider
+    Modelo que agrega el rol de Scrum Master
     """
     class Meta:
         model = Perfiles
-        fields = ( 'lider','telefono', 'direccion')
+        fields = ('telefono', 'direccion')
 
 @login_required
 def list_usuario(request, template_name = 'usuarios/admin.html'):
@@ -78,7 +78,7 @@ def edit_user(request, pk, template_name = 'usuarios/user/edit.html'):
     if form.is_valid() and perfil.is_valid():
         form.save()
         perfil.save()
-        return redirect('/usuario/')
+        return redirect('/usuarios/')
     return render(request, template_name, {'form':form, 'perfil':perfil})
 
 
