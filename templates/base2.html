@@ -31,7 +31,7 @@
       <div class="navbar-inner">
         <a class="brand" href="/">SIGEPRO</a>
           <ul class="nav">
-            <li class="active"><a href="/inicio/">Inicio</a></li>
+            <li class="active"><a href="/">Inicio</a></li>
                  {% if  user.is_superuser %}
                      <li class="dropdown">
                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administracion
@@ -43,39 +43,14 @@
                              <li><a href="/roles">Roles</a></li>
                          </ul>
                      </li>
-                     <li class="dropdown">
-                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reportes
-                             <b class="caret"></b>
-                         </a>
-                         <ul class="dropdown-menu">
-                             <li><a href="/reportes/usuarios">Usuarios</a></li>
-                             <li><a href="/reportes/proyectos">Proyectos</a></li>
-                             <li><a href="/reportes/roles">Roles</a></li>
-                         </ul>
-                     </li>
                  {% endif %}
-                    <li class="dropdown">
-                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion de Cambios
-                             <b class="caret"></b>
-                         </a>
-                         <ul class="dropdown-menu">
-                             <li><a href="/solicitudes/listar/">Solicitudes de Cambio</a></li>
-                         </ul>
-                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reportes sobre Proyecto
-                        <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                <li><a href="/reportes/listar_proyectos_reporte/">Reportes</a></li>
-              </ul>
-                    </li>
               <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Mi cuenta
                  <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="/usuario/nuevo_pass/">Cambiar contraseña</a></li>
-                  <li><a href="/cerrar/">Cerrar Sesión</a></li>
+                <li><a href="/usuarios/nuevo_pass/">Cambiar contraseña</a></li>
+                  <li><a href="/inicio/cerrar/">Cerrar Sesión</a></li>
               </ul>
           </li>
           </ul>
@@ -108,7 +83,7 @@
   {% endblock %}
 
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
         <script>window.jQuery || document.write('<script src="{{STATIC_URL}}js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 
     <script src="{{STATIC_URL}}js/vendor/bootstrap.min.js"></script>

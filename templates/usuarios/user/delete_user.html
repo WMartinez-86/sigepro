@@ -4,12 +4,12 @@
 {% endblock %}
 {% block content %}
     <div class="breadcrumbs">
-    <a href="/usuario/">Usuarios</a>
-    "> Eliminar"
+    <a href="/usuarios/">Usuarios</a>
+    Eliminar
     </div>
 <div id="content" class="flex">
     <h2>¿Está seguro?</h2>
-    <p>¿Está usted seguro que quiere eliminar el usuario seleccionado?</p>
+    <p>¿Está seguro de eliminar el usuario seleccionado?</p>
 <form method="post">{% csrf_token %}
     Usuario: "{{ object }}"
     <p></p>

@@ -23,12 +23,12 @@
     <div id="content" class="colMS">
         
         <h1>Administracion de Usuarios</h1>
-    <form action="/usuario/search/" method="get">
+    <form action="/usuarios/search/" method="get">
     <input type="text" name="busqueda" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del Usuario">
     <div class="btn-group">
                     <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
                 </div>
-    <a href="/usuario/" class="btn btn-success"><i class="icon-refresh"></i></a>
+    <a href="/usuarios/" class="btn btn-success"><i class="icon-refresh"></i></a>
 
     </form>
 <div id="content-main">
@@ -46,9 +46,9 @@
 
                 {% for user in object_list %}
                     <tr class="model-user">
-                <th scope="row"><a href="/usuario/edit/{{ user.id }}/">{{ user.username }}</a></th>
-                <td><a href="/usuario/delete/{{ user.id }}/" class="deletelink">Eliminar</a></td>
-                <td><a href="/usuario/edit/{{ user.id }}/" class="changelink">Modificar</a></td>
+                <th scope="row"><a href="/usuarios/edit/{{ user.id }}/">{{ user.username }}</a></th>
+                <td><a href="/usuarios/delete/{{ user.id }}/" class="deletelink">Eliminar</a></td>
+                <td><a href="/usuarios/edit/{{ user.id }}/" class="changelink">Modificar</a></td>
                     </tr>
                 {% endfor %}
                 {% if usuarios %}
@@ -56,9 +56,9 @@
                 <ul>
                     {% for usuario in usuarios %}
                         <tr class="model-user">
-                <th scope="row"><a href="/usuario/edit/{{ user.id }}/">{{ usuario.username }}</a></th>
-                <td><a href="/usuario/delete/{{ user.id }}/" class="deletelink">Eliminar</a></td>
-                <td><a href="/usuario/edit/{{ user.id }}/" class="changelink">Modificar</a></td>
+                <th scope="row"><a href="/usuarios/edit/{{ user.id }}/">{{ usuario.username }}</a></th>
+                <td><a href="/usuarios/delete/{{ user.id }}/" class="deletelink">Eliminar</a></td>
+                <td><a href="/usuarios/edit/{{ user.id }}/" class="changelink">Modificar</a></td>
                     </tr>
                     {% endfor %}
                 </ul>

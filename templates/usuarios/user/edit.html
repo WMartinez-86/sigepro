@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
 </head>
     <div class="breadcrumbs">
-    <a href="/usuario/">Usuarios</a>
+    <a href="/usuarios/">Usuarios</a>
     "> Modificar"
     </div>
     <div id="content">
@@ -18,8 +18,9 @@
         <fieldset class="module aligned wide">
 <form method="post">{% csrf_token %}
     <div class="form-row">
-    {{ form.as_p }}
-    {{ perfil.as_p }}
+        {{ form.as_p }}
+        {{ perfil.as_p }}
+
         </div>
     <div class="submit-row">
     <input type="submit" value="Guardar Cambios" />
