@@ -3,6 +3,8 @@ from django.db import models
 
 # Create your models here.
 
+__author__ = 'juanma'
+
 ESTADOS = (
 
     ('PEN', 'Pendiente'),
