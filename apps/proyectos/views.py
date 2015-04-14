@@ -14,19 +14,7 @@ from django.db.models import Q
 __text__ = 'Este modulo contiene funciones que permiten el control de proyectos'
 # Create your views here.
 
-# @login_required
-# @permission_required('proyectos')
-# def listar_proyectos(ListView):
-#     """
-#     vista para listar los proyectos del sistema junto con el nombre de su cliente
-#     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-#     @return: render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos}, context_instance=RequestContext(request))
-#     """
-#     #proyectos = Proyecto.objects.filter((Q(estado='PEN')|Q(estado='ANU')))
-#     proyectos = Proyecto.objects.all().exclude(estado='ELI')
-#
-#     return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1000},
-#                               context_instance=RequestContext(request))
+__author__ = 'juanma'
 
 
 class lista_proyectos(ListView):
@@ -38,7 +26,7 @@ class lista_proyectos(ListView):
 @permission_required('proyectos')
 def registra_proyecto(request):
     """
-    Vista para registrar un nuevo proyecto con su lider y miembros de su comite de cambios
+    Vista para registrar un nuevo proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return HttpResponseRedirect('/proyectos/register/success') si el rol lider fue correctamente asignado o
     render_to_response('proyectos/registrar_proyecto.html',{'formulario':formulario}, context_instance=RequestContext(request)) al formulario
@@ -65,15 +53,7 @@ def registra_proyecto(request):
                 return render_to_response('proyectos/registrar_proyectos.html', {'formulario': formulario, 'mensaje': 0},
                                           context_instance=RequestContext(request))
             else:
-                # lider = formulario.cleaned_data['lider']
-                # #Eslider=Perfiles.objects.get(usuario=lider)
-                # #Verifica si esta puede ser lider
-                # if Eslider.lider != True:
-                #     return render_to_response('proyectos/registrar_proyecto.html', {'formulario': formulario, 'mensaje': 2},
-                #                           context_instance=RequestContext(request))
-                # #asigna el rol lider al usuario seleccionado
-                # roles = Group.objects.get(name='Lider')
-                # lider.groups.add(roles)
+
                 formulario.save()
                 return HttpResponseRedirect('/proyectos/register/success')
     else:
@@ -97,7 +77,7 @@ def RegisterSuccessView(request):
 @permission_required('proyectos')
 def editar_proyecto(request, id_proyecto):
     """
-    Vista para editar un proyecto,o su lider o los miembros de su comite
+    Vista para editar un proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: HttpResponseRedirect('/proyectos/register/success/') cuando el formulario es validado correctamente o render_to_response('proyectos/editar_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
@@ -112,9 +92,7 @@ def editar_proyecto(request, id_proyecto):
                 messages.add_message(request, settings.DELETE_MESSAGE,
                                      "Fecha de inicio debe ser menor a la fecha de finalizacion")
             else:
-                # lider = proyecto_form.cleaned_data['lider']
-                # roles = Group.objects.get(name='Lider')
-                # lider.groups.add(roles)
+
                 # formulario validado correctamente
                 proyecto_form.save()
                 return HttpResponseRedirect('/proyectos/register/success/')
@@ -184,10 +162,10 @@ def cambiar_estado_proyecto(request, id_proyecto):
 @permission_required('proyectos')
 def detalle_proyecto(request, id_proyecto):
     """
-    Vista para ver los detalles del proyecto del sistema, junto con su lider y los miembros del comite
+    Vista para ver los detalles del proyecto del sistema
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
-    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato, 'comite': comite, 'lider':lider}, context_instance=RequestContext(request))
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
     """
 
     dato = get_object_or_404(Proyecto, pk=id_proyecto)
