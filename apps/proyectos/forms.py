@@ -32,4 +32,4 @@ class CambiarEstadoForm(ModelForm):
 
     class Meta:
         model = Proyecto
-        exclude = ['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'lider', 'observaciones', 'comite']
+        exclude = ['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'observaciones']
