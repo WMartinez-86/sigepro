@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from apps.proyectos.models import Proyecto
 
+__author__ = 'juanma'
 # Create your tests here.
 class sigeproTestCase(TestCase):
     fixtures = ["proyectos_testmaker"]
