@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, Permission
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.template import RequestContext
 from django.views.generic import TemplateView, ListView
-from .forms import RolForm, GroupForm
+from .forms import GroupForm
 from django.shortcuts import render_to_response
 from .models import Rol
 
@@ -34,10 +34,21 @@ def crear_rol(request):
 
     return render_to_response('roles/crear_rol.html', { 'group_form': group_form}, context_instance=RequestContext(request))
 
+@login_required
+@permission_required('group')
+def lista_roles(request):
+    """
+    vista para listar los roles existentes en el sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: render_to_response('roles/listar_roles.html', {'datos': grupos}, context_instance=RequestContext(request))
+    """
 
-class lista_roles(ListView):
-    template_name = 'roles/listar_roles.html'
-    model = Rol
+    grupos = Group.objects.all()
+    return render_to_response('roles/listar_roles.html', {'datos': grupos}, context_instance=RequestContext(request))
+
+# class lista_roles(ListView):
+#     template_name = 'roles/listar_roles.html'
+#     model = Rol
 
 @login_required
 #@permission_required('group')
@@ -95,3 +106,21 @@ def editar_rol(request,id_rol):
         # formulario inicial
         rol_form = GroupForm(instance=rol)
     return render_to_response('roles/editar_rol.html', { 'rol': rol_form, 'dato':rol}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('group')
+def buscarRol(request):
+    """
+    vista para buscar un rol entre todos los registrados en el sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))
+    """
+    query = request.GET.get('q', '')
+    if query:
+        qset = (
+            Q(name__contains=query)
+        )
+        results = Group.objects.filter(qset).distinct()
+    else:
+        results = []
+    return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))

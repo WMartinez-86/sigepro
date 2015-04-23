@@ -7,12 +7,12 @@ from .models import Rol
 
 
 class GroupForm(forms.ModelForm):
-    permissions = Group.objects.exclude(name="roles")
+    #permission = Group.objects.exclude(id=1)
     class Meta:
         model = Group
         fields=['name','permissions']
-
-class RolForm(forms.ModelForm):
-    class Meta:
-        model = Rol
-        exclude = ['id']
+#
+# class RolForm(forms.ModelForm):
+#     class Meta:
+#         model = Rol
+#         exclude = ['id']

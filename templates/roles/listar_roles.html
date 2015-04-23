@@ -73,11 +73,11 @@ Roles
                 <tbody>
 
                 <!--Lista los roles de usuario -->
-                {% for rol in object_list %}
-                    {% if  rol.nombre != "Administrador" and rol.nombre != "Scrum Master" %}
+                {% for dato in datos %}
+                    {% if  dato.name != "Administrador" and dato.name != "Scrum Master" %}
                     <tr>
                         <td>
-                            <center>{{ rol.nombre }}</center>
+                            <center>{{ dato.name }}</center>
                         </td>
                         <td>
                             <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
@@ -121,11 +121,11 @@ Roles
                 <tbody>
 
                 <!--Lista los roles del sistema -->
-                {% for rol in object_list %}
-                    {% if  rol.nombre = "Administrador" or rol.nombre = "Scrum Master" %}
+                {% for dato in datos %}
+                    {% if  dato.name = "Administrador" or dato.name = "Scrum Master" %}
                     <tr>
                         <td>
-                            <center>{{ rol.nombre }}</center>
+                            <center>{{ dato.name }}</center>
                         </td>
                         <td>
                             <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
