@@ -74,23 +74,25 @@ Roles
 
                 <!--Lista los roles de usuario -->
                 {% for rol in object_list %}
-                <tr>
-                    <td>
-                        <center>{{ rol.nombre }}</center>
-                    </td>
-                    <td>
-                        <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
-                                class="icon-eye-open icon-white"></i></a></center>
-                    </td>
-                    <td>
-                        <center><a href="/roles/modificar/{{ rol.id }}" class="btn btn-warning"><i
-                                class="icon-pencil icon-white"></i></a></center>
-                    </td>
-                    <td>
-                        <center><a href="/roles/eliminar/{{ rol.id }}" class="btn btn-danger"><i
-                                class=" icon-trash icon-white"></i></a></center>
-                    </td>
-                </tr>
+                    {% if  rol.nombre != "Administrador" and rol.nombre != "Scrum Master" %}
+                    <tr>
+                        <td>
+                            <center>{{ rol.nombre }}</center>
+                        </td>
+                        <td>
+                            <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
+                                    class="icon-eye-open icon-white"></i></a></center>
+                        </td>
+                        <td>
+                            <center><a href="/roles/modificar/{{ rol.id }}" class="btn btn-warning"><i
+                                    class="icon-pencil icon-white"></i></a></center>
+                        </td>
+                        <td>
+                            <center><a href="/roles/eliminar/{{ rol.id }}" class="btn btn-danger"><i
+                                    class=" icon-trash icon-white"></i></a></center>
+                        </td>
+                    </tr>
+                    {% endif %}
                 {% endfor %}
 
                 </tbody>
@@ -120,15 +122,17 @@ Roles
 
                 <!--Lista los roles del sistema -->
                 {% for rol in object_list %}
-                <tr>
-                    <td>
-                        <center>{{ rol.nombre }}</center>
-                    </td>
-                    <td>
-                        <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
-                                class="icon-eye-open icon-white"></i></a></center>
-                    </td>
-                </tr>
+                    {% if  rol.nombre = "Administrador" or rol.nombre = "Scrum Master" %}
+                    <tr>
+                        <td>
+                            <center>{{ rol.nombre }}</center>
+                        </td>
+                        <td>
+                            <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
+                                    class="icon-eye-open icon-white"></i></a></center>
+                        </td>
+                    </tr>
+                    {% endif %}
                 {% endfor %}
 
                 </tbody>
