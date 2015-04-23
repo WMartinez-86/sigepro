@@ -26,6 +26,15 @@ Roles
 
     <h1>Administracion de Roles</h1>
 
+    <form action="/roles/search/" method="get">
+        <label for="q"></label>
+        <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del Rol">
+        <div class="btn-group">
+            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+        </div>
+        <a href="/roles/" class="btn btn-success"><i class="icon-refresh"></i></a>
+    </form>
+
     <ul class="object-tools">
         <li>
             <a href="/roles/crear" class="addlink">Nuevo Rol</a>
@@ -74,25 +83,25 @@ Roles
 
                 <!--Lista los roles de usuario -->
                 {% for dato in datos %}
-                    {% if  dato.name != "Administrador" and dato.name != "Scrum Master" %}
-                    <tr>
-                        <td>
-                            <center>{{ dato.name }}</center>
-                        </td>
-                        <td>
-                            <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
-                                    class="icon-eye-open icon-white"></i></a></center>
-                        </td>
-                        <td>
-                            <center><a href="/roles/modificar/{{ rol.id }}" class="btn btn-warning"><i
-                                    class="icon-pencil icon-white"></i></a></center>
-                        </td>
-                        <td>
-                            <center><a href="/roles/eliminar/{{ rol.id }}" class="btn btn-danger"><i
-                                    class=" icon-trash icon-white"></i></a></center>
-                        </td>
-                    </tr>
-                    {% endif %}
+                {% if  dato.name != "Administrador" and dato.name != "Scrum Master" %}
+                <tr>
+                    <td>
+                        <center>{{ dato.name }}</center>
+                    </td>
+                    <td>
+                        <center><a href="/roles/{{ dato.id }}" class="btn btn-success"><i
+                                class="icon-eye-open icon-white"></i></a></center>
+                    </td>
+                    <td>
+                        <center><a href="/roles/modificar/{{ dato.id }}" class="btn btn-warning"><i
+                                class="icon-pencil icon-white"></i></a></center>
+                    </td>
+                    <td>
+                        <center><a href="/roles/eliminar/{{ dato.id }}" class="btn btn-danger"><i
+                                class=" icon-trash icon-white"></i></a></center>
+                    </td>
+                </tr>
+                {% endif %}
                 {% endfor %}
 
                 </tbody>
@@ -122,17 +131,17 @@ Roles
 
                 <!--Lista los roles del sistema -->
                 {% for dato in datos %}
-                    {% if  dato.name = "Administrador" or dato.name = "Scrum Master" %}
-                    <tr>
-                        <td>
-                            <center>{{ dato.name }}</center>
-                        </td>
-                        <td>
-                            <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
-                                    class="icon-eye-open icon-white"></i></a></center>
-                        </td>
-                    </tr>
-                    {% endif %}
+                {% if  dato.name = "Administrador" or dato.name = "Scrum Master" %}
+                <tr>
+                    <td>
+                        <center>{{ dato.name }}</center>
+                    </td>
+                    <td>
+                        <center><a href="/roles/{{ dato.id }}" class="btn btn-success"><i
+                                class="icon-eye-open icon-white"></i></a></center>
+                    </td>
+                </tr>
+                {% endif %}
                 {% endfor %}
 
                 </tbody>
