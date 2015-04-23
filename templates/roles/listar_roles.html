@@ -43,6 +43,8 @@ Roles
                 <li>Error: No se puede eliminar. El rol posee asociados.</li>
                 {% endif %}
             </ul>
+
+            <h2>Roles del Usuario</h2>
             <table>
                 <thead>
                 <tr>
@@ -69,6 +71,8 @@ Roles
                 </tr>
                 </thead>
                 <tbody>
+
+                <!--Lista los roles de usuario -->
                 {% for rol in object_list %}
                 <tr>
                     <td>
@@ -88,6 +92,45 @@ Roles
                     </td>
                 </tr>
                 {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            </br></br></br>
+
+            <h2>Roles del Sistema</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">
+                        <div class="text">
+                            <a>Roles</a>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="text">
+                            <a>Detalles</a>
+                        </div>
+                    </th>
+
+                </thead>
+
+                <tbody>
+
+                <!--Lista los roles del sistema -->
+                {% for rol in object_list %}
+                <tr>
+                    <td>
+                        <center>{{ rol.nombre }}</center>
+                    </td>
+                    <td>
+                        <center><a href="/roles/{{ rol.id }}" class="btn btn-success"><i
+                                class="icon-eye-open icon-white"></i></a></center>
+                    </td>
+                </tr>
+                {% endfor %}
+
                 </tbody>
 
             </table>
