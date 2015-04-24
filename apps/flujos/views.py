@@ -74,18 +74,16 @@ def registrar_flujo(request, id_proyecto):
 @login_required
 @permission_required('proyectos, flujos')
 def listar_flujos(request,id_proyecto):
-#def listar_flujos(request):
     """
     vista para listar las fases del proyectos
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return render_to_response('fases/listar_fases.html', {'datos': fases}, context_instance=RequestContext(request))
     """
-    #id_proyecto = 1
     flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    if proyecto.estado!='PEN':
-        proyectos = Proyecto.objects.all().exclude(estado='ELI')
-        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                              context_instance=RequestContext(request))
-    else:
-        return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    # if proyecto.estado!='PEN':
+    #     proyectos = Proyecto.objects.all().exclude(estado='ELI')
+    #     return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1}, context_instance=RequestContext(request))
+    # else:
+    return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+
