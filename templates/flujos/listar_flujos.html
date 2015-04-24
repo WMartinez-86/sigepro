@@ -112,19 +112,19 @@ Fases
                     </tr>
                     </thead>
                     <tbody>
-                    {% for dato in datos  %}
+                    {% for proyecto in object_list  %}
                     <tr>
-                        <td><center>{{ dato.orden }}</center></td>
-                        <td><center>{{ dato.nombre }}</center></td>
-                        <td><center>{{ dato.estado }}</center></td>
-                        <td><center>{{ dato.fInicio }}</center></td>
-                        <td><center><a href="/fases/{{ dato.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
-                        <td><center><a href="/fases/editar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
-                        <td><center><a href="/fases/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
-                        <td><center><a href="/tiposDeItem/fase/{{ dato.id }}" class="btn btn-warning"><i class="icon-briefcase icon-white"></i></a></center></td>
-                        <td><center><a href="/fases/roles/{{ dato.id }}" class="btn "><i class=" icon-shopping-cart icon-black"></i></a></center></td>
-                        <td><center><a href="/fases/asignar/{{dato.id}}" class="btn btn-inverse"><i class="icon-user icon-white"></i></a></center></td>
-                        <td><center><a href="/fases/desasignar/{{dato.id}}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
+                        <td><center>{{ proyecto.orden }}</center></td>
+                        <td><center>{{ proyecto.nombre }}</center></td>
+                        <td><center>{{ proyecto.estado }}</center></td>
+                        <td><center>{{ proyecto.fInicio }}</center></td>
+                        <td><center><a href="/fases/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                        <td><center><a href="/fases/editar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+                        <td><center><a href="/fases/eliminar/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                        <td><center><a href="/tiposDeItem/fase/{{ proyecto.id }}" class="btn btn-warning"><i class="icon-briefcase icon-white"></i></a></center></td>
+                        <td><center><a href="/fases/roles/{{ proyecto.id }}" class="btn "><i class=" icon-shopping-cart icon-black"></i></a></center></td>
+                        <td><center><a href="/fases/asignar/{{proyecto.id}}" class="btn btn-inverse"><i class="icon-user icon-white"></i></a></center></td>
+                        <td><center><a href="/fases/desasignar/{{proyecto.id}}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
                     </tr>
                     {% endfor %}
                     </tbody>
