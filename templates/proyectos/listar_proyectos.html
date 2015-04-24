@@ -85,7 +85,11 @@ Proyectos
                                 <a>Modificar</a>
                             </div>
                         </th>
-
+                        <th scope="col">
+                            <div class="text">
+                                <a>Flujos</a>
+                            </div>
+                        </th>
 
                         <th scope="col">
                             <div class="text">
@@ -103,6 +107,7 @@ Proyectos
                         <td><center>{{ proyecto.fecha_fin }}</center></td>
                         <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                         <td><center><a href="/proyectos/modificar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+                        <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list-alt icon-white"></i></a></center></td>
                         <td><center><a href="/proyectos/cambiarEstado/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center></td>
                     </tr>
                     {% endfor %}
