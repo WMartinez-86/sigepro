@@ -28,10 +28,10 @@ Fases
             <a href="/proyectos/">Proyectos</a>
             ">Administracion de Flujos"
         </div>
-        <h1>Fases para el proyecto {{ proyecto.nombre }}</h1>
+        <h1>Flujos para el proyecto {{ proyecto.nombre }}</h1>
         <form action="/flujos/search/{{proyecto.id}}" method="get">
             <label for="q"></label>
-            <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del fase">
+            <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del flujo">
             <div class="btn-group">
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </div>
@@ -41,7 +41,7 @@ Fases
 
         <ul class="object-tools">
             <li>
-                <a href="/flujos/registrar/{{proyecto.id}}" class="addlink">Nueva Fase</a>
+                <a href="/flujos/registrar/{{proyecto.id}}" class="addlink">Nuevo Flujo</a>
                 <!--<a href="/fases/lista_todas/{{proyecto.id}}" class="addlink">Importar Fase</a>-->
             </li>
         </ul>
@@ -61,7 +61,7 @@ Fases
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>__Fase__</a>
+                                <a>__Flujo__</a>
                             </div>
                         </th>
                         <th scope="col">
