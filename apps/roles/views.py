@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.views.generic import TemplateView, ListView
 from .forms import GroupForm
 from django.shortcuts import render_to_response
-from .models import Rol
+from django.db.models import Q
 
 __text__ = 'Este modulo contiene funciones que permiten el control de roles'
 
@@ -60,7 +60,7 @@ def detalle_rol(request, id_rol):
     @return: render_to_response('roles/detalle_rol.html', {'rol': dato, 'permisos': permisos}, context_instance=RequestContext(request))
     """
 
-    dato = get_object_or_404(pk=id_rol)
+    dato = get_object_or_404(Group, pk=id_rol)
     permisos = Permission.objects.filter(group__id=id_rol)
     return render_to_response('roles/detalle_rol.html', {'rol': dato, 'permisos': permisos}, context_instance=RequestContext(request))
 
