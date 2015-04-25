@@ -2,39 +2,26 @@ __author__ = 'juanma'
 
 from django.conf.urls import patterns, url
 from django.contrib import admin
-from apps.items.views import listar_proyectos,listar_fases,listar_tiposDeItem, crear_item, listar_items, detalle_item, crear_solicitud
-from apps.items.views import editar_item, eliminar_archivo,detalle_tiposDeItem, seleccion_tipoItem, crear_item_hijo,cambiar_estado_item
-from apps.items.views import listar_archivos, detalle_version_item, listar_versiones, reversionar_item,descargo_archivo, cambiar_padre,\
-    cambiar_antecesor,grafo_relaciones,eliminar_item,listar_muertos,revivir
+from apps.userStories.views import crear_userStory, listar_userStories, detalle_userStory
+from apps.userStories.views import editar_userStory, eliminar_archivo,detalle_tiposDeItem, cambiar_estado_userStory
+from apps.userStories.views import listar_archivos, descargo_archivo, eliminar_userStory
+
 admin.autodiscover()
 
 
 urlpatterns = patterns('',
-        url(r'^proyectos/$',listar_proyectos, name='listar_proyectos'),
-        url(r'^proyectos/fases/(?P<id_proyecto>\d+)$',listar_fases, name='listar_fases'),
-        url(r'^fases/tiposDeItem/(?P<id_fase>\d+)$',listar_tiposDeItem, name='listar_tiposDeItem'),
+
         url(r'^fases/tiposDeItem/detalle/(?P<id_tipoItem>\d+)$',detalle_tiposDeItem, name='detalle_tiposDeItem'),
-        url(r'^item/selectTipoItem/(?P<id_fase>\d+)$',seleccion_tipoItem, name='seleccion_tipoItem'),
-        url(r'^item/crear/(?P<id_tipoItem>\d+)$',crear_item, name='crear_item'),
-        url(r'^item/listar/(?P<id_fase>\d+)$',listar_items, name='listar_items'),
-        url(r'^item/detalle/(?P<id_item>\d+)$',detalle_item, name='detalle_item'),
-        url(r'^item/modificar/(?P<id_item>\d+)$',editar_item, name='editar_item'),
+        url(r'^userStory/crear/(?P<id_tipoItem>\d+)$',crear_userStory, name='crear_userStory'),
+        url(r'^userStory/listar/(?P<id_fase>\d+)$',listar_userStories, name='listar_userStories'),
+        url(r'^userStory/detalle/(?P<id_userStory>\d+)$',detalle_userStory, name='detalle_userStory'),
+        url(r'^userStory/modificar/(?P<id_userStory>\d+)$',editar_userStory, name='editar_userStory'),
 
-        url(r'^item/versiones/(?P<id_item>\d+)$',listar_versiones,name='listar_versiones'),
-        url(r'^item/reversionar/(?P<id_version>\d+)$',reversionar_item,name='reversionar_item'),
-        url(r'^item/archivos/(?P<id_item>\d+)$',listar_archivos, name='listar_archivos'),
-        url(r'^item/descargar/(?P<idarchivo>\d+)$',descargo_archivo, name='descargar_archivos'),
-        url(r'^item/archivos/eliminar/(?P<id_archivo>\d+)$',eliminar_archivo,name='eliminar_archivo'),
-        url(r'^item/detalle/version/(?P<id_version>\d+)$',detalle_version_item, name='detalle_version'),
-        url(r'^item/crear/hijo/(?P<id_item>\d+)$',crear_item_hijo,name='crear_hijo'),
-        url(r'^item/cambiar_estado/(?P<id_item>\d+)$',cambiar_estado_item,name='cambiar_estado'),
+        url(r'^userStory/archivos/(?P<id_userStory>\d+)$',listar_archivos, name='listar_archivos'),
+        url(r'^userStory/descargar/(?P<idarchivo>\d+)$',descargo_archivo, name='descargar_archivos'),
+        url(r'^userStory/archivos/eliminar/(?P<id_archivo>\d+)$',eliminar_archivo,name='eliminar_archivo'),
+        url(r'^userStory/cambiar_estado/(?P<id_userStory>\d+)$',cambiar_estado_userStory,name='cambiar_estado'),
 
-        url(r'^item/padre/(?P<id_item>\d+)$',cambiar_padre,name='cambiar_padre'),
-        url(r'^item/antecesor/(?P<id_item>\d+)$',cambiar_antecesor,name='cambiar_antecesor'),
-        url(r'^item/grafo/(?P<id_fase>\d+)$',grafo_relaciones,name='grafo_relaciones'),
-        url(r'^item/solicitud/(?P<id_item>\d+)$',crear_solicitud,name='crear_solicitud'),
+        url(r'^userStory/eliminar_userStory/(?P<id_userStory>\d+)$',eliminar_userStory,name='eliminar_userStory'),
 
-        url(r'^item/eliminar_item/(?P<id_item>\d+)$',eliminar_item,name='eliminar_item'),
-        url(r'^item/listar_muertos/(?P<id_fase>\d+)$',listar_muertos, name='listar_muertos'),
-        url(r'^item/revivir/(?P<id_item>\d+)$',revivir, name='revivir'),
         )

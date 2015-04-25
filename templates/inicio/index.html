@@ -6,68 +6,82 @@ inicio
 
 {% block content %}
 
-        <div class="row-fluid ">
+<!DOCTYPE html>
 
-            <div class="span7">
-              <br><br><br><br>
-              <br><br><br><br>
-            </div>
+<html lang="es-PY">
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css"/>
 
-            {{ user.username|capfirst}}
-            <div class="span5">
-                <div class="row-fluid">
-                  <div class="span2"></div>
-                  <div class="span8 registrar">
-                    {% if user.is_authenticated %}
-                      Bienvenido {{user.username|capfirst}}
-                      <a href="/usuarios/cerrar/">Salir</a>
-                    {% else %}
-                    <legend align="center">Entrar</legend>
-                    <form class="form-horizontal alinear" method="POST">{% csrf_token %}
-                      <div class="control-group">
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE"/>
+</head>
+
+<div class="row-fluid ">
+
+    <div class="span7">
+        <br><br><br><br>
+        <br><br><br><br>
+    </div>
+
+    <div class="span5">
+        <div class="row-fluid">
+            <div class="span2"></div>
+            <div class="span8 registrar">
+                {% if user.is_authenticated %}
+                <center><font size="3", color="FFFFFF">Bienvenido {{user.username|capfirst}}</font>
+                <a href="/usuarios/cerrar/">Salir</a></center>
+                {% else %}
+                <legend align="center">Entrar</legend>
+                <form class="form-horizontal alinear" method="POST">{% csrf_token %}
+                    <div class="control-group">
                         <label class="control-label" for="inputEmail" >Usuario</label>
                         <div class="controls">
-                          <input name="username" type="text" id="inputEmail" placeholder="Usuario">
+                            <input name="username" type="text" id="inputEmail" placeholder="Usuario">
                         </div>
-                      </div>
+                    </div>
 
-                      <div class="control-group">
+                    <div class="control-group">
                         <label class="control-label" for="inputPassword">Contraseña</label>
                         <div class="controls">
-                          <input name="password" type="password" id="inputPassword" placeholder="Contraseña">
+                            <input name="password" type="password" id="inputPassword" placeholder="Contraseña">
                         </div>
-                      </div>
+                    </div>
 
-                      <div class="control-group">
+                    <div class="control-group">
                         <div class="controls">
-                          <label class="checkbox">
-                          <input type="checkbox">Recordar</label>
-                          <button type="submit" class="btn btn-info">Ingresar</button>{% csrf_token %}
+                            <label class="checkbox">
+                                <input type="checkbox">Recordar</label>
+                            <button type="submit" class="btn btn-info">Ingresar</button>{% csrf_token %}
                         </div>
-                      </div>
-                    </form>
-                    {% endif %}  
-                  </div>  
-                  <div class="span2"></div>
-                </div>
+                    </div>
+                </form>
+                {% endif %}
             </div>
+            <div class="span2"></div>
         </div>
+    </div>
+</div>
 
-     
-      <div class="row-fluid">
-        <div class="span12">
-          <hr class="medio">
-          <div class="row-fluid s1 medio2">
+
+<div class="row-fluid">
+    <div class="span12">
+        <hr class="medio">
+        <div class="row-fluid s1 medio2">
             <div class="span3">
-              <br>
-              <br>
-              <br>
-              <h4 class="alinear1" align="center"><font color="#151515"><strong>Sistema de Gestion de Proyectos</strong></font></h4>
+                <br>
+                <br>
+                <br>
+                <h4  align="center"><font color="#151515", size="4"><strong>Sistema de Gestion de Proyectos</strong></font></h4>
             </div>
-          </div>
-          <hr class="medio1">
         </div>
-      </div>  	
+        <hr class="medio1">
+    </div>
+</div>
 
 
 {% endblock %}
