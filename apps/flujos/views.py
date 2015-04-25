@@ -25,7 +25,7 @@ def registrar_flujo(request, id_proyecto):
     """
     Vista para registrar una nueva flujo dentro de proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @return HttpResponseRedirect('/flujos/register/success') si el rol lider fue correctamente asignado o
+    @return HttpResponseRedirect('/flujos/register/success') si el rol fue correctamente asignado o
     render_to_response('proyectos/registrar_proyecto.html',{'formulario':formulario}, context_instance=RequestContext(request)) al formulario
     """
     mensaje=100
@@ -102,7 +102,7 @@ def listar_flujos(request,id_proyecto):
 @permission_required('proyectos, flujos')
 def editar_flujo(request,id_flujo):
     """
-    Vista para editar un proyecto,o su lider o los miembros de su comite
+    Vista para editar un proyecto,y flujo
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: HttpResponseRedirect('/proyectos/register/success/') cuando el formulario es validado correctamente o render_to_response('proyectos/editar_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
@@ -366,5 +366,5 @@ def desasignar_usuario(request,id_flujo):
     for rol in roles:
         p=User.objects.filter(groups__id=rol.id)
         for pp in p:
-            usuarios.append(pp) #lista todos los usuarios con rol en la fas
+            usuarios.append(pp) #lista todos los usuarios con rol en el flujo
     return render_to_response('flujos/desasignar_usuarios.html', {'datos': usuarios,'flujo':flujo,'proyecto':proyecto,'roles':roles}, context_instance=RequestContext(request))
