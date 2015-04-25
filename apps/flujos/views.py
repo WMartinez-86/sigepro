@@ -277,8 +277,6 @@ def detalle_flujo(request, id_flujo):
     @return: render_to_response
     """
 
-
-
     dato = get_object_or_404(Flujo, pk=id_flujo)
     proyecto = Proyecto.objects.get(id=dato.proyecto_id)
     if proyecto.estado!='PEN':
