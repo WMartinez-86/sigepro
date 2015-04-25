@@ -42,7 +42,7 @@ def registrar_flujo(request, id_proyecto):
                 fecha=fecha.strftime('%Y-%m-%d')
                 fecha1=datetime.strptime(fecha,'%Y-%m-%d')
                 newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
-                               fInicio = fecha,estado = "PEN", proyecto_id = id_proyecto)
+                               fInicio = fecha,estado = "PEN", proyecto_id = id_proyecto, sprim = request.POST["sprim"])
                 aux=0
                 orden=Flujo.objects.filter(proyecto_id=id_proyecto)
 

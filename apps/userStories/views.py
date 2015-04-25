@@ -25,111 +25,81 @@ def userStoriesProyecto(proyecto):
     flujos = Flujo.objects.filter(proyecto_id=proyecto)
     userStories=[]
     for flujo in flujos:
-        tuserStory=TipoItem.objects.filter(flujo=flujo)
-        for t in tuserStory:
-            userStory=Item.objects.filter(tipo_userStory=t)
-            for i in userStory:
-                if i.estado!='ANU':
-                    userStories.append(i)
+             if i.estado!='ANU':
+                userStories.append(i)
     return userStories
 
 
 @login_required
-@permission_required('tipoItem')
-def detalle_tiposDeItem(request, id_tipoItem):
+def crear_userStory(request,id_tipoUserStory):
     """
-    Vista para ver los detalles del tipo de userStory <id_tipoItem>
-    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @param id_tipoItem: referencia al tipo de userStory dentro de la base de datos
-    @return render_to_response('tiposDeItem/detalle_tipoDeItem.html', {'datos': dato, 'atributos': atributos},
-                              context_instance=RequestContext(request))
-    """
-    dato = get_object_or_404(TipoItem, pk=id_tipoItem)
-    flujo = Flujo.objects.get(id=dato.flujo_id)
-    proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
-    atributos = Atributo.objects.filter(tipoItem__id=id_tipoItem)
-    return render_to_response('userStories/detalle_tipoDeItem.html', {'datos': dato, 'atributos': atributos,'flujo':flujo,'proyecto':proyecto},
-                              context_instance=RequestContext(request))
-
-
-@login_required
-def crear_userStory(request,id_tipoItem):
-    """
-    Vista para crear un userStory y asignarlo a un tipo de userStory. Ademas se dan las opciones de agregar un
+    Vista para crear un userStory. Ademas se dan las opciones de agregar un
     archivo al userStory, y de completar todos los atributos de su tipo de userStory
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @param id_tipoItem: clave foranea al tipoItem
+    @param id_tipoUserStory: clave foranea al tipoUserStory
     @ return render_to_response('userStories/...) o render_to_response('403.html')
     """
-    atri=1
-    if cantidad_userStories(id_tipoItem):
-       # print(cantidad_userStories(id_tipoItem))
-        id_flujo=TipoItem.objects.get(id=id_tipoItem).flujo_id
-        flag=es_miembro(request.user.id,id_flujo,'add_userStory')
-        atributos=Atributo.objects.filter(tipoItem=id_tipoItem)
-        if len(atributos)==0:
-            atri=0
-        flujo=Flujo.objects.get(id=id_flujo)
-        proyecto=flujo.proyecto_id
-        userStories=[]
-        tipouserStory=[]
-        flujo_anterior=Flujo.objects.filter(proyecto_id=proyecto, orden=((flujo.orden)-1))
-        if len(flujo_anterior)==0:
-            userStories=[]
-        else:
-            for flujo in flujo_anterior:
-                tuserStory=TipoItem.objects.filter(flujo_id=flujo.id)
-                for i in tuserStory:
-                    it=Item.objects.filter(tipo_userStory_id=i.id, estado='FIN')
-                    for ii in it:
-                        userStories.append(ii)
-
-        if flag==True:
-            if request.method=='POST':
-                #formset = ItemFormSet(request.POST)
-                formulario = PrimerFlujoForm(request.POST)
-
-                if formulario.is_valid():
-                    today = datetime.now() #fecha actual
-                    dateFormat = today.strftime("%Y-%m-%d") # fecha con format
-                    #obtener userStory con el cual relacionar
-                    userStory_nombre=request.POST.get('entradalista')
-                    if userStory_nombre!=None:
-                        userStory=''
-                        userStoriess=Item.objects.filter(nombre=userStory_nombre)
-                        for i in userStoriess:
-                            userStory=i
-                        cod=newItem=Item(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1, relacion_id=userStory.id, tipo='Sucesor',tipo_userStory_id=id_tipoItem,fecha_creacion=dateFormat, fecha_mod=dateFormat,flujo_id=id_flujo)
-                        newItem.save()
-                    else:
-                        cod=newItem=Item(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1,tipo_userStory_id=id_tipoItem,fecha_creacion=dateFormat, fecha_mod=dateFormat,flujo_id=id_flujo)
-                        newItem.save()
-                #guardar archivo
-                    if request.FILES.get('file')!=None:
-                        archivo=Archivo(archivo=request.FILES['file'],nombre='', id_userStory_id=cod.id)
-                        archivo.save()
-                #guardar atributos
-
-                    for atributo in atributos:
-
-                        a=request.POST.get(atributo.nombre)
-                        if a!=None:
-                            #validar atributos antes de guardarlos
-                            #if validarAtributo(request,atributo.tipo,a):
-                                aa=AtributoItem(id_userStory_id=cod.id, id_atributo=atributo,valor=a,version=1)
-                                aa.save()
-                    return render_to_response('userStories/creacion_correcta.html',{'id_flujo':id_flujo}, context_instance=RequestContext(request))
-            else:
-
-                formulario = PrimerFlujoForm()
-                hijo=False
-                proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
-                return render_to_response('userStories/crear_userStory.html', { 'formulario': formulario, 'atributos':atributos, 'userStories':userStories, 'hijo':hijo,'atri':atri,'tuserStory':id_tipoItem,'flujo':flujo}, context_instance=RequestContext(request))
-        else:
-            return render_to_response('403.html')
-    else:
-        id_flujo=get_object_or_404(TipoItem,id=id_tipoItem).flujo_id
-        return render_to_response('userStories/cantidad_maxima.html',{'id_flujo':id_flujo}, context_instance=RequestContext(request))
+    # atri=1
+    # id_flujo=TipoUserStory.objects.get(id=id_tipoUserStory).flujo_id
+    # if len(atributos)==0:
+    #     atri=0
+    # flujo=Flujo.objects.get(id=id_flujo)
+    # proyecto=flujo.proyecto_id
+    # userStories=[]
+    # tipouserStory=[]
+    # flujo_anterior=Flujo.objects.filter(proyecto_id=proyecto, orden=((flujo.orden)-1))
+    # if len(flujo_anterior)==0:
+    #     userStories=[]
+    # else:
+    #     for flujo in flujo_anterior:
+    #         tuserStory=TipoUserStory.objects.filter(flujo_id=flujo.id)
+    #          for i in tuserStory:
+    #             it=UserStory.objects.filter(tipo_userStory_id=i.id, estado='FIN')
+    #             for ii in it:
+    #                 userStories.append(ii)
+    #
+    # if flag==True:
+    #     if request.method=='POST':
+    #         #formset = UserStoryFormSet(request.POST)
+    #         formulario = PrimerFlujoForm(request.POST)
+    #
+    #         if formulario.is_valid():
+    #             today = datetime.now() #fecha actual
+    #             dateFormat = today.strftime("%Y-%m-%d") # fecha con format
+    #             #obtener userStory con el cual relacionar
+    #             userStory_nombre=request.POST.get('entradalista')
+    #             if userStory_nombre!=None:
+    #                 userStory=''
+    #                 userStoriess=UserStory.objects.filter(nombre=userStory_nombre)
+    #                 for i in userStoriess:
+    #                     userStory=i
+    #                 cod=newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1, relacion_id=userStory.id, tipo='Sucesor',tipo_userStory_id=id_tipoUserStory,fecha_creacion=dateFormat, fecha_mod=dateFormat,flujo_id=id_flujo)
+    #                 newUserStory.save()
+    #             else:
+    #                 cod=newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1,tipo_userStory_id=id_tipoUserStory,fecha_creacion=dateFormat, fecha_mod=dateFormat,flujo_id=id_flujo)
+    #                 newUserStory.save()
+    #         #guardar archivo
+    #             if request.FILES.get('file')!=None:
+    #                 archivo=Archivo(archivo=request.FILES['file'],nombre='', id_userStory_id=cod.id)
+    #                 archivo.save()
+    #         #guardar atributos
+    #
+    #             for atributo in atributos:
+    #                  a=request.POST.get(atributo.nombre)
+    #                 if a!=None:
+    #                     #validar atributos antes de guardarlos
+    #                     #if validarAtributo(request,atributo.tipo,a):
+    #                         aa=AtributoUserStory(id_userStory_id=cod.id, id_atributo=atributo,valor=a,version=1)
+    #                         aa.save()
+    #             return render_to_response('userStories/creacion_correcta.html',{'id_flujo':id_flujo}, context_instance=RequestContext(request))
+    #     else:
+    #
+    #         formulario = PrimerFlujoForm()
+    #         hijo=False
+    #         proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
+    #         return render_to_response('userStories/crear_userStory.html', { 'formulario': formulario, 'atributos':atributos, 'userStories':userStories, 'hijo':hijo,'atri':atri,'tuserStory':id_tipoUserStory,'flujo':flujo}, context_instance=RequestContext(request))
+    # else:
+    #     return render_to_response('403.html')
 
 
 def puede_add_userStories(id_flujo):
@@ -145,10 +115,10 @@ def puede_add_userStories(id_flujo):
         return True
     else:
         flujo_anterior=Flujo.objects.get(orden=flujo.orden-1,proyecto=flujo.proyecto)
-        tipouserStory=TipoItem.objects.filter(flujo_id=flujo_anterior.id)
+        tipouserStory=TipoUserStory.objects.filter(flujo_id=flujo_anterior.id)
 
         for ti in tipouserStory:
-            userStory=Item.objects.filter(tipo_userStory_id=ti.id)
+            userStory=UserStory.objects.filter(tipo_userStory_id=ti.id)
             for i in userStory:
                 if i.estado=='FIN':
                     return True
@@ -165,7 +135,7 @@ def listar_userStories(request,id_flujo):
     tuserStory=get_object_or_404(Flujo,id=id_flujo)
     flujo=Flujo.objects.filter(id=id_flujo)
     if es_miembro(request.user.id,flujo,''):
-        userStories=Item.objects.filter(flujo_id=id_flujo).exclude(estado='ANU')
+        userStories=UserStory.objects.filter(flujo_id=id_flujo).exclude(estado='ANU')
         if puede_add_userStories(flujo):
             nivel = 3
             id_proyecto=Flujo.objects.get(id=flujo).proyecto_id
@@ -173,7 +143,7 @@ def listar_userStories(request,id_flujo):
             return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'flujo':tuserStory, 'nivel':nivel,'proyecto':proyecto}, context_instance=RequestContext(request))
         else:
             #ESTE HAY QUE CORREGIR SI HAY TIEMPO
-            return HttpResponse("<h1>No se pueden administrar los Items de esta flujo. La flujo anterior aun no tiene userStories finalizados<h1>")
+            return HttpResponse("<h1>No se pueden administrar los UserStories de esta flujo. La flujo anterior aun no tiene userStories finalizados<h1>")
 
     else:
         return render_to_response('403.html')
@@ -186,7 +156,7 @@ def editar_userStory(request,id_userStory):
     usuario es el que realizo la solicittud de cambio
     '''
 
-    userStory_nuevo=get_object_or_404(Item,id=id_userStory)
+    userStory_nuevo=get_object_or_404(UserStory,id=id_userStory)
     flujo=Flujo.objects.get(id=userStory_nuevo.flujo_id)
     proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
     flag=es_miembro(request.user.id,userStory_nuevo.flujo_id,'change_userStory')
@@ -194,7 +164,7 @@ def editar_userStory(request,id_userStory):
     if flag==False:
         return HttpResponseRedirect('/denegado')
 
-    atributos=AtributoItem.objects.filter(id_userStory=id_userStory)
+    atributos=AtributoUserStory.objects.filter(id_userStory=id_userStory)
     if len(atributos)==0:
         atri=0
     if userStory_nuevo.estado=='CON':
@@ -243,7 +213,7 @@ def editar_userStory(request,id_userStory):
                                             validar=False
 
                             if validar==True:
-                                aa=AtributoItem.objects.get(id=atributo.id)
+                                aa=AtributoUserStory.objects.get(id=atributo.id)
                                 aa.valor=a
                                 aa.save()
                     return render_to_response('userStories/creacion_correcta.html',{'id_flujo':flujo.id}, context_instance=RequestContext(request))
@@ -299,7 +269,7 @@ def listar_archivos(request, id_userStory):
     @return render_to_response(..)
     """
 
-    tuserStory=get_object_or_404(Item,id=id_userStory).tipo_userStory
+    tuserStory=get_object_or_404(UserStory,id=id_userStory).tipo_userStory
     flujo=tuserStory.flujo_id
     if es_miembro(request.user.id,flujo,'change_userStory'):
         if request.method=='POST':
@@ -345,15 +315,15 @@ def detalle_userStory(request, id_userStory):
     @param id_userStory: clave foranea al userStory
     @return render_to_response(..)
     """
-    userStory=get_object_or_404(Item,id=id_userStory)
-    tipouserStory=get_object_or_404(TipoItem,id=userStory.tipo_userStory_id)
+    userStory=get_object_or_404(UserStory,id=id_userStory)
+    tipouserStory=get_object_or_404(TipoUserStory,id=userStory.tipo_userStory_id)
     flujo=tipouserStory.flujo_id
     fasse=Flujo.objects.get(id=flujo)
     proyecto=Proyecto.objects.get(id=fasse.proyecto_id)
     if es_miembro(request.user.id, flujo,''):
-        atributos=AtributoItem.objects.filter(id_userStory=id_userStory)
+        atributos=AtributoUserStory.objects.filter(id_userStory=id_userStory)
         archivos=Archivo.objects.filter(id_userStory=id_userStory)
-        dato = get_object_or_404(Item, pk=id_userStory)
+        dato = get_object_or_404(UserStory, pk=id_userStory)
 
         return render_to_response('userStories/detalle_userStory.html', {'datos': dato, 'atributos': atributos, 'archivos':archivos,'flujo':fasse,'proyecto':proyecto}, context_instance=RequestContext(request))
     else:
@@ -397,7 +367,7 @@ def cambiar_estado_userStory(request,id_userStory):
     @return render_to_response('userStories/...) de acuerdo a los diferentes estados que puede tener un userStory
     """
 
-    userStory=get_object_or_404(Item,id=id_userStory)
+    userStory=get_object_or_404(UserStory,id=id_userStory)
 
     nombre=userStory.nombre
     flujo=userStory.tipo_userStory.flujo
@@ -430,8 +400,8 @@ def cambiar_estado_userStory(request,id_userStory):
                     if userStory_form.cleaned_data['estado']=='VAL':
                         if estado_anterior=='CON':
                             #se obtienen todos los userStories perteneciente a la linea base rota
-                            userStory=get_object_or_404(Item, id=id_userStory)
-                            userStoriesLineaBase=Item.objects.filter(lineaBase=userStory.lineaBase)
+                            userStory=get_object_or_404(UserStory, id=id_userStory)
+                            userStoriesLineaBase=UserStory.objects.filter(lineaBase=userStory.lineaBase)
                             #se crea una linea base nueva
                             vieja_lb=userStory.lineaBase
                             cod=nueva_lb=LineaBase(nombre=vieja_lb.nombre+ ' Nueva', flujo=vieja_lb.flujo, estado='CERRADA')
@@ -440,10 +410,10 @@ def cambiar_estado_userStory(request,id_userStory):
                                 #se genera una nueva version para cada userStory
                                 generar_version(userStoryLB)
                                 #se agrega cada userStory a la nueva linea base
-                                instanciaItem=get_object_or_404(Item, id=userStoryLB.id)
-                                instanciaItem.version=userStory.version+1
-                                instanciaItem.lineaBase=cod
-                                instanciaItem.save()
+                                instanciaUserStory=get_object_or_404(UserStory, id=userStoryLB.id)
+                                instanciaUserStory.version=userStory.version+1
+                                instanciaUserStory.lineaBase=cod
+                                instanciaUserStory.save()
                             #se cambia el estado del userStory a FIN
                             userStory.estado='FIN'
                             userStory.version=userStory.version+1
@@ -453,13 +423,13 @@ def cambiar_estado_userStory(request,id_userStory):
                             solicitud.estado='EJECUTADA'
                             solicitud.save()
                             #se borran de la lista los userStories que estan relacionados con el userStory modificado
-                            userStories_revision=ItemsARevision.objects.filter(userStory_bloqueado=userStory)
+                            userStories_revision=UserStoriesARevision.objects.filter(userStory_bloqueado=userStory)
                             for userStoryRev in userStories_revision:
-                                instanciaItemRev=get_object_or_404(ItemsARevision, id=userStoryRev.id)
-                                instanciaItemRev.delete()
+                                instanciaUserStoryRev=get_object_or_404(UserStoriesARevision, id=userStoryRev.id)
+                                instanciaUserStoryRev.delete()
                             return render_to_response('userStories/creacion_correcta.html',{'id_flujo':flujo.id}, context_instance=RequestContext(request))
                         else:
-                            userStories_revision=ItemsARevision.objects.all()
+                            userStories_revision=UserStoriesARevision.objects.all()
 
                             for userStoryR in userStories_revision:
                                 if userStoryR.userStory_revision.id==userStory.id:
@@ -478,18 +448,18 @@ def cambiar_estado_userStory(request,id_userStory):
                                 return render_to_response('userStories/creacion_correcta.html',{'id_flujo':flujo.id}, context_instance=RequestContext(request))
                     else:
                         messages.add_message(request,settings.DELETE_MESSAGE, 'El estado no puede cambiar de en Revision/Construccion A Pendiente')
-                        id_flujo=get_object_or_404(Item,id=id_userStory).flujo_id
+                        id_flujo=get_object_or_404(UserStory,id=id_userStory).flujo_id
                         flujo=Flujo.objects.get(id=id_flujo)
                         return render_to_response('userStories/cambiar_estado_userStory.html', {  'userStory_form': userStory_form, 'nombre':nombre, 'tuserStory':userStory,'mensaje':2,'flujo':flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
         else:
             # formulario inicial
             userStory_form = EstadoUSForm(instance=userStory)
-            id_flujo=get_object_or_404(Item,id=id_userStory).flujo_id
+            id_flujo=get_object_or_404(UserStory,id=id_userStory).flujo_id
             flujo=Flujo.objects.get(id=id_flujo)
         return render_to_response('userStories/cambiar_estado_userStory.html', {  'userStory_form': userStory_form, 'nombre':nombre, 'tuserStory':userStory,'mensaje':100,'flujo':flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
 
 
-    id_flujo=get_object_or_404(Item,id=id_userStory).flujo_id
+    id_flujo=get_object_or_404(UserStory,id=id_userStory).flujo_id
     flujo=Flujo.objects.get(id=id_flujo)
 
     nombre=userStory.nombre
@@ -511,7 +481,7 @@ def cambiar_estado_userStory(request,id_userStory):
                             if papa.estado=='VAL' or papa.estado=='FIN':
                                 bandera=False
                     if userStory_form.cleaned_data['estado']=='PEN':
-                            hijos=Item.objects.filter(relacion=userStory).exclude(estado='ANU')
+                            hijos=UserStory.objects.filter(relacion=userStory).exclude(estado='ANU')
                             for hijo in hijos:
                                 if hijo.estado!='PEN' and hijo.tipo=='Hijo':
                                     # 'No se puede cambiar  a pendiente ya que tiene hijos con estados distintos a Pendiente'
@@ -535,18 +505,18 @@ def eliminar_userStory(request, id_userStory):
     Vista que permite cambiar el estado del userStory a anulado, para ello se verifica que el mismo
     no tenga hijos y ademas que su estado sea pendiente
     '''
-    userStory=get_object_or_404(Item, id=id_userStory)
+    userStory=get_object_or_404(UserStory, id=id_userStory)
     flujo=userStory.tipo_userStory.flujo_id
     if es_miembro(request.user.id,flujo,'delete_userStory')!=True or userStory.estado=='ANU':
         return HttpResponseRedirect('/denegado')
-    userStory=get_object_or_404(Item, id=id_userStory)
+    userStory=get_object_or_404(UserStory, id=id_userStory)
     if userStory.estado=='PEN':
-        a=Item.objects.filter((Q(tipo='Hijo') & Q(relacion=userStory))).exclude(estado='ANU')
+        a=UserStory.objects.filter((Q(tipo='Hijo') & Q(relacion=userStory))).exclude(estado='ANU')
         if len(a)!=0:
             messages.add_message(request,settings.DELETE_MESSAGE,"No se puede eliminar un userStory que tenga hijos")
             tuserStory=userStory.tipo_userStory
-            userStories=Item.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
-            userStory=get_object_or_404(Item, id=id_userStory)
+            userStories=UserStory.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
+            userStory=get_object_or_404(UserStory, id=id_userStory)
             id_flujo=userStory.tipo_userStory.flujo_id
             flujo=get_object_or_404(Flujo,id=id_flujo)
             proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
@@ -555,18 +525,18 @@ def eliminar_userStory(request, id_userStory):
             userStory.estado='ANU'
             userStory.save()
             tuserStory=userStory.tipo_userStory
-            userStories=Item.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
-            userStory=get_object_or_404(Item, id=id_userStory)
+            userStories=UserStory.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
+            userStory=get_object_or_404(UserStory, id=id_userStory)
             id_flujo=userStory.tipo_userStory.flujo_id
             flujo=get_object_or_404(Flujo,id=id_flujo)
             proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
             return render_to_response('userStories/listar_userStories.html', {'datos': userStories,'mensaje':1 ,'tuserStory':tuserStory,'flujo':flujo, 'nivel':3,'proyecto':proyecto}, context_instance=RequestContext(request))
-            messages.add_message(request,settings.DELETE_MESSAGE,"Item eliminado correctamente")
+            messages.add_message(request,settings.DELETE_MESSAGE,"UserStory eliminado correctamente")
     else:
          messages.add_message(request,settings.DELETE_MESSAGE,"No se puede eliminar un userStory cuyo estado no sea pendiente")
          tuserStory=userStory.tipo_userStory
-         userStories=Item.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
-         userStory=get_object_or_404(Item, id=id_userStory)
+         userStories=UserStory.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
+         userStory=get_object_or_404(UserStory, id=id_userStory)
          id_flujo=userStory.tipo_userStory.flujo_id
          flujo=get_object_or_404(Flujo,id=id_flujo)
          proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
@@ -576,7 +546,7 @@ def eliminar_userStory(request, id_userStory):
     id_proyecto=Flujo.objects.get(id=flujo).proyecto_id
     nivel=3
     request.session['nivel'] = 3
-    userStories=Item.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
+    userStories=UserStory.objects.filter(tipo_userStory_id=tuserStory.id).exclude(estado='ANU')
     proyecto=Proyecto.objects.get(id=id_proyecto)
     flujo=Flujo.objects.filter(id=id_flujo)
     return render_to_response('userStories/listar_userStories.html', {'datos': userStories,'mensaje':1000 ,'tuserStory':tuserStory,'flujo':flujo, 'nivel':nivel,'proyecto':proyecto}, context_instance=RequestContext(request))
