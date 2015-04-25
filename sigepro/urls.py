@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^proyectos/',include('apps.proyectos.urls')),
     #FLUJOS
     url(r'^flujos/',include('apps.flujos.urls')),
+    #USER STORIES
+    url(r'^userStories/',include('apps.userStories.urls')),
 
 
 )
