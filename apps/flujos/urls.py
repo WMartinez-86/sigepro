@@ -4,9 +4,8 @@ __author__ = 'juanma'
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos, asignar_rol, asignar_usuario, asociar
-from views import editar_flujo,flujos_todas, importar_flujo, eliminar_flujo, desasignar_usuario, desasociar,rol_proyecto,\
-    crearol_proyecto,detallerol_proyecto, modificarrol_proyecto, eliminarrol_proyecto
+from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos, asignar_usuario
+from views import editar_flujo,flujos_todas, importar_flujo, eliminar_flujo, desasignar_usuario
 
 urlpatterns = patterns('',
         #Administracion de Flujos

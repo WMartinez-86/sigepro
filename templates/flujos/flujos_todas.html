@@ -1,20 +1,20 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Flujos
+Flujos
 {% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="es-PY" >
 <head>
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css" />
 
-<script type="text/javascript">window.__admin_media_prefix__ = "/static/usuario/";</script>
-<script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
-<script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
-<script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
-<script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
-<meta name="robots" content="NONE,NOARCHIVE" />
+    <script type="text/javascript">window.__admin_media_prefix__ = "/static/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
 </head>
 
 
@@ -24,61 +24,61 @@
 <div id="container">
     <!-- Content -->
     <div id="content" class="change-list" style="width: 1000px">
-    <div class="breadcrumbs">
-    <a href="/proyectos/">Proyectos</a>>>
-        <a href="/flujos/proyecto/{{proyecto.id}}">Flujos</a>>>
-    "Administracion de Flujos"
-    </div>
+        <div class="breadcrumbs">
+            <a href="/proyectos/">Proyectos</a>>>
+            <a href="/flujos/proyecto/{{proyecto.id}}">Flujos</a>>>
+            "Administracion de Flujos"
+        </div>
         <h1>Flujos del proyecto {{ proyecto.nombre }}</h1>
 
-<div id="content-main">
+        <div id="content-main">
 
-        <div class="results" >
-        <table >
-        <thead>
-        <tr>
-            <th scope="col" class="sortable" >
-                <div class="text">
-                    <a>__Nro__</a>
-                </div>
-            </th>
-             <th scope="col">
-                <div class="text">
-                    <a>__Flujo__</a>
-                </div>
-            </th>
-             <th scope="col">
-                <div class="text">
-                    <a>__Estado__</a>
-                </div>
-            </th>
-             <th scope="col">
-                <div class="text">
-                    <a> ___Detalle___  </a>
-                </div>
-            </th>
-            <th scope="col">
-                <div class="text">
-                    <a>___Importar___</a>
-                </div>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for dato in datos  %}
-            <tr>
-                <td>{{ dato.orden }}</td>
-				<td>{{ dato.nombre }}</td>
-                <td>{{ dato.estado }}</td>
-                <td><a href="/flujos/{{ dato.pk }}" class="button"><i class="icon-eye-open"></i>Detalle</a></td>
-                <td><a href="/flujos/importar/{{ dato.pk }}-{{ proyecto.id }}" class="button"><i class="icon-trash"></i>Importar</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
+            <div class="results" >
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>__Nro__</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>__Flujo__</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>__Estado__</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a> ___Detalle___  </a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>___Importar___</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for dato in datos  %}
+                    <tr>
+                        <td>{{ dato.orden }}</td>
+                        <td>{{ dato.nombre }}</td>
+                        <td>{{ dato.estado }}</td>
+                        <td><a href="/flujos/{{ dato.pk }}" class="button"><i class="icon-eye-open"></i>Detalle</a></td>
+                        <td><a href="/flujos/importar/{{ dato.pk }}-{{ proyecto.id }}" class="button"><i class="icon-trash"></i>Importar</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
 
-        </table>
+                </table>
+            </div>
         </div>
-</div>
 
 
 
