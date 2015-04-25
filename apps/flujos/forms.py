@@ -26,6 +26,6 @@ class ModificarFlujoForm(ModelForm):
 
 class RolesForm(forms.Form):
     roles = forms.ModelMultipleChoiceField(queryset=Group.objects.none() )
-    def __init__(self, fase, *args, **kwargs):
+    def __init__(self, flujo, *args, **kwargs):
         super(RolesForm, self).__init__(*args, **kwargs)
-        self.fields['roles'].queryset = Group.objects.filter(fase__id=fase)
+        self.fields['roles'].queryset = Group.objects.filter(flujo__id=flujo)
