@@ -1,23 +1,31 @@
-from django.shortcuts import render
+# -*- encoding: utf-8 -*-
+
+__text__ = 'Este modulo contiene funciones que permiten el control de las flujos'
+
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.contrib import messages
-from apps.proyectos.models import Proyecto
 from apps.flujos.models import Flujo
-from datetime import datetime
+from django.contrib.auth.models import User, Group, Permission
+from django.db.models import Q
+from django.contrib import messages
+from sigepro import settings
+from django.contrib import messages
+from django.shortcuts import render
+from apps.proyectos.models import Proyecto
 from apps.flujos.forms import FlujoForm, ModificarFlujoForm, CrearFlujoForm
+from apps.roles.forms import GroupForm
+from datetime import datetime
 
-# Create your views here.
 
 @login_required
 @permission_required('flujo')
 def registrar_flujo(request, id_proyecto):
     """
-    Vista para registrar una nueva fase dentro de proyecto
+    Vista para registrar una nueva flujo dentro de proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @return HttpResponseRedirect('/fases/register/success') si el rol lider fue correctamente asignado o
+    @return HttpResponseRedirect('/flujos/register/success') si el rol lider fue correctamente asignado o
     render_to_response('proyectos/registrar_proyecto.html',{'formulario':formulario}, context_instance=RequestContext(request)) al formulario
     """
     mensaje=100
@@ -33,7 +41,8 @@ def registrar_flujo(request, id_proyecto):
                 fecha=datetime.strptime(str(request.POST["fInicio"]),'%d/%m/%Y')
                 fecha=fecha.strftime('%Y-%m-%d')
                 fecha1=datetime.strptime(fecha,'%Y-%m-%d')
-                newFlujo = Flujo(nombre = request.POST["nombre"], proyecto_id = id_proyecto)
+                newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
+                               fInicio = fecha,estado = "PEN", proyecto_id = id_proyecto)
                 aux=0
                 orden=Flujo.objects.filter(proyecto_id=id_proyecto)
 
@@ -45,7 +54,7 @@ def registrar_flujo(request, id_proyecto):
                     if cantidad>0:#comprobaciones de fecha
                        anterior = Flujo.objects.get(orden=cantidad, proyecto_id=id_proyecto)
                        if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
-                           #Fecha de inicio no concuerda con fase anterior
+                           #Fecha de inicio no concuerda con flujo anterior
                            return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':1,'id':id_proyecto,'proyecto':proyecto},
                                                      context_instance=RequestContext(request))
                        else:
@@ -57,7 +66,7 @@ def registrar_flujo(request, id_proyecto):
                                 return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':2,'id':id_proyecto,'proyecto':proyecto},
                                                           context_instance=RequestContext(request))
                             else:
-                                newFlujo.orden=orden.count()+1 #Calculo del orden de la fase a crear
+                                newFlujo.orden=orden.count()+1 #Calculo del orden de la flujo a crear
                                 newFlujo.save()
                                 return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
                     else:
@@ -70,19 +79,487 @@ def registrar_flujo(request, id_proyecto):
                               context_instance=RequestContext(request))
 
 
+
 @login_required
 @permission_required('proyectos, flujos')
 def listar_flujos(request,id_proyecto):
     """
-    vista para listar las fases del proyectos
+    vista para listar las flujos del proyectos
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @return render_to_response('fases/listar_fases.html', {'datos': fases}, context_instance=RequestContext(request))
+    @return render_to_response('flujos/listar_flujos.html', {'datos': flujos}, context_instance=RequestContext(request))
     """
     flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    # if proyecto.estado!='PEN':
-    #     proyectos = Proyecto.objects.all().exclude(estado='ELI')
-    #     return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1}, context_instance=RequestContext(request))
-    # else:
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    else:
+        return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos, flujos')
+def editar_flujo(request,id_flujo):
+    """
+    Vista para editar un proyecto,o su lider o los miembros de su comite
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: HttpResponseRedirect('/proyectos/register/success/') cuando el formulario es validado correctamente o render_to_response('proyectos/editar_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+    flujo= Flujo.objects.get(id=id_flujo)
+    id_proyecto= flujo.proyecto_id
+    proyecto = Proyecto.objects.get(id=id_proyecto)
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    if request.method == 'POST':
+        # formulario enviado
+        mensaje =100
+        flujo_form = ModificarFlujoForm(request.POST, instance=flujo)
+        if flujo_form.is_valid():
+            if len(str(request.POST["fInicio"])) != 10 : #comprobacion de formato de fecha
+                mensaje=0
+                return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                          context_instance=RequestContext(request))
+            else:
+                fecha=datetime.strptime(str(request.POST["fInicio"]),'%d/%m/%Y')
+                fecha=fecha.strftime('%Y-%m-%d')
+                fecha1=datetime.strptime(fecha,'%Y-%m-%d')
+                proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
+                orden=Flujo.objects.filter(proyecto_id=proyecto.id)
+                cantidad = orden.count()
+                if cantidad>1 and flujo.orden != cantidad and flujo.orden >1: #comprobaciones de fechas
+                       anterior = Flujo.objects.get(orden=(flujo.orden)-1, proyecto_id=id_proyecto)
+                       siguiente = Flujo.objects.get(orden=(flujo.orden)+1, proyecto_id=id_proyecto)
+                       if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
+                            mensaje=1
+                            return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                      context_instance=RequestContext(request))
+                       else:
+                           if fecha1>datetime.strptime(str(siguiente.fInicio),'%Y-%m-%d'):
+                               mensaje=2
+                               return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                         context_instance=RequestContext(request))
+                           else:
+                                if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                                    mensaje=3
+                                    return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                              context_instance=RequestContext(request))
+                                else:
+                                    flujo_form.save()
+                                    return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                elif cantidad>1 and flujo.orden != cantidad and flujo.orden==1:
+                   siguiente = Flujo.objects.get(orden=(flujo.orden)+1, proyecto_id=id_proyecto)
+                   if fecha1>datetime.strptime(str(siguiente.fInicio),'%Y-%m-%d'):
+                        mensaje=2
+                        return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                  context_instance=RequestContext(request))
+                   else:
+                        if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                            mensaje=3
+                            return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                      context_instance=RequestContext(request))
+                        else:
+                            flujo_form.save()
+
+                            return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                elif cantidad>1 and flujo.orden == cantidad:
+                    anterior = Flujo.objects.get(orden=(flujo.orden)-1, proyecto_id=id_proyecto)
+                    if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
+                        mensaje=1
+                        return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                  context_instance=RequestContext(request))
+                    else:
+                        if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                            mensaje=3
+                            return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                      context_instance=RequestContext(request))
+                        else:
+                            flujo_form.save()
+                            return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                else:
+                    if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                        mensaje=3
+                        return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                  context_instance=RequestContext(request))
+                    else:
+                        flujo_form.save()
+                        return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+    else:
+        # formulario inicial
+        flujo_form = ModificarFlujoForm(instance=flujo)
+    return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form, 'flujo': flujo, 'proyecto':proyecto}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('flujo')
+def flujos_todas(request,id_proyecto):
+    """
+    vista para listar las flujos del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('flujos/flujos_todas.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    flujos = Flujo.objects.all()
+    proyecto = Proyecto.objects.get(id=id_proyecto)
+    return render_to_response('flujos/flujos_todas.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('flujo')
+def importar_flujo(request, id_flujo,id_proyecto):
+    """
+        Vista para importar los datos de una flujo, dado en <id_flujo> . Se utiliza para crear una flujo nueva a partir de otra
+        ya existente. Realiza las comprobaciones necesarias con respecto a la fecha de inicio y orden de flujo.
+        @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+        @param id_flujo: referencia a ala flujo en la base de datos
+        @param id_proyecto: referencia al proyecto de la base de datos
+        @return HttpResponseRedirect('flujos/registrar_flujos.html') con sus diferentes variaciones de acuerdo al caso
+    """
+
+    flujo= Flujo.objects.get(id=id_flujo)
+    if request.method=='POST':
+        proyecto = Proyecto.objects.get(id=id_proyecto)
+        formulario = CrearFlujoForm(request.POST)
+        if formulario.is_valid():
+            if len(str(request.POST["fInicio"])) != 10 :
+                mensaje=0
+                return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':mensaje,'id':id_proyecto}, context_instance=RequestContext(request))
+
+            else:
+                fecha=datetime.strptime(str(request.POST["fInicio"]),'%d/%m/%Y')
+                fecha=fecha.strftime('%Y-%m-%d')
+                fecha1=datetime.strptime(fecha,'%Y-%m-%d')
+                newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],maxItems = request.POST["maxItems"],fInicio = fecha, estado = "PEN",
+                               proyecto_id = id_proyecto)
+                aux=0
+                orden=Flujo.objects.filter(proyecto_id=id_proyecto)
+                if aux>0:
+                    messages.add_message(request, settings.DELETE_MESSAGE, "Er: No hacemos nada")
+                else:
+                    proyecto=Proyecto.objects.get(id=id_proyecto)
+                    cantidad = orden.count()
+                    if cantidad>0:
+                       anterior = Flujo.objects.get(orden=cantidad, proyecto_id=id_proyecto)
+                       if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
+                            mensaje=1
+                            return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':mensaje,'id':id_proyecto, 'proyecto':proyecto},
+                                                      context_instance=RequestContext(request))
+
+                       else:
+                            if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                                mensaje=2
+                                return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':mensaje,'id':id_proyecto, 'proyecto':proyecto},
+                                                          context_instance=RequestContext(request))
+
+                            else:
+
+                                newFlujo.orden=orden.count()+1
+                                newFlujo.save()
+
+                                return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                    else:
+                                newFlujo.orden=1
+                                newFlujo.save()
+                                return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+    else:
+        formulario = CrearFlujoForm(initial={'descripcion':flujo.descripcion, 'maxItems':flujo.maxItems, 'fInicio':flujo.fInicio, 'orden':flujo.orden}) #'fInicio':datetime.strptime(str(flujo.fInicio),'%Y-%m-%d').strftime('%d/%m/%y')
+    return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':1000,'id':id_proyecto}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('flujo')
+def detalle_flujo(request, id_flujo):
+
+    """
+    Vista para ver los detalles del usuario <id_user> del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: render_to_response
+    """
+
+
+
+    dato = get_object_or_404(Flujo, pk=id_flujo)
+    proyecto = Proyecto.objects.get(id=dato.proyecto_id)
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    return render_to_response('flujos/detalle_flujo.html', {'datos': dato,'proyecto':proyecto}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def eliminar_flujo(request,id_flujo):
+    """
+    Vista para eliminar una flujo de un proyecto. Busca la flujo por su id_flujo y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    flujo = get_object_or_404(Flujo, pk=id_flujo)
+    proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
+    if proyecto.estado =='PEN':
+        roles=Group.objects.all().exclude(name='Lider')
+        for rol in roles:
+            flujo2=Flujo.objects.get(roles__id=rol.id)
+            if flujo2.id==flujo.id:
+                print(flujo2.id,flujo.id)
+                user=User.objects.filter(groups__id=rol.id) #obtiene todos los usuarios con ese rol
+                for us in user: #recorre la lista de usuario para desasociarlos cada uno
+                    us.groups.remove(rol) #remueve el rol del usuario
+                    us.save()   #guarda los cambios
+                rol.delete() #elimina el rol que estaba vinculado a la flujo del proyecto
+        flujo.delete()
+    flujos = Flujo.objects.filter(proyecto_id=proyecto.id).order_by('orden')
     return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
 
+@login_required
+@permission_required('flujo')
+def buscar_flujos(request,id_proyecto):
+    """
+    vista para buscar las flujos del proyecto
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
+    """
+    query = request.GET.get('q', '')
+    proyecto = Proyecto.objects.get(id=id_proyecto)
+    if query:
+        qset = (
+            Q(nombre__contains=query)
+        )
+        results = Flujo.objects.filter(qset, proyecto_id=id_proyecto).distinct()
+    else:
+        results = []
+
+
+    return render_to_response('flujos/listar_flujos.html', {'datos': results, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def asignar_usuario(request,id_flujo):
+    """
+    Vista auxiliar para obtener un listado de usuarios para asociar a la flujo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: render_to_response
+    """
+    usuarios=User.objects.filter(is_active=True)
+    flujo=Flujo.objects.get(id=id_flujo)
+    roles=Group.objects.filter(flujo__id=id_flujo)
+    for rol in roles:       #Un usuario tiene un rol por flujo
+        usuarios=usuarios.exclude(groups__id=rol.id)
+    proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    return render_to_response('flujos/asignar_usuarios.html', {'datos': usuarios, 'flujo' : flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def asignar_rol(request,id_usuario, id_flujo):
+    """
+    Vista auxiliar para obtener el listado de roles asociados a una flujo para asociarlos a un usuario
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_usuario: referencia al usuario dentro de la base de datos
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return render_to_response
+    """
+    flujo=Flujo.objects.get(id=id_flujo) # objecto flujo
+    usuario=User.objects.get(id=id_usuario) # objeto del usuario seleccionado
+    roles=Group.objects.filter(flujo__id=id_flujo) #filtra roles de la flujo
+    proyecto = Proyecto.objects.get(id=flujo.proyecto_id) #objecto proyecto
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    return render_to_response('flujos/asignar_rol.html',
+                              {'roles': roles,'usuario':usuario, 'flujo':flujo,'proyecto':proyecto},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def asociar(request,id_rol,id_usuario,id_flujo):
+    """
+    Vista para asociar un rol perteneciente a una face a un usuario, asociandolo de esta manera a la flujo, y al proyecto
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_usuario: referencia al usuario dentro de la base de datos
+    @param id_rol: referencia al rol de usuario
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: HttpResponseRedirect('/flujos/proyecto/'+str(flujo.proyecto_id))
+    """
+    flujo=Flujo.objects.get(id=id_flujo)
+    usuario=User.objects.get(id=id_usuario)
+    rol = Group.objects.get(id=id_rol)
+    usuario.groups.add(rol)
+    usuario.save()
+    return HttpResponseRedirect('/flujos/proyecto/'+str(flujo.proyecto_id))
+
+
+@login_required
+@permission_required('flujo')
+def desasignar_usuario(request,id_flujo):
+    """
+    vista para listar a los usuario de una flujo, para poder desasociarlos
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('flujos/desasignar_usuarios.html', {'datos': usuarios,'flujo':id_flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
+    """
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    roles=Group.objects.filter(flujo__id=id_flujo)
+    usuarios=[]
+    for rol in roles:
+        p=User.objects.filter(groups__id=rol.id)
+        for pp in p:
+            usuarios.append(pp) #lista todos los usuarios con rol en la fas
+    return render_to_response('flujos/desasignar_usuarios.html', {'datos': usuarios,'flujo':flujo,'proyecto':proyecto,'roles':roles}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('flujo')
+def desasociar(request,id_usuario, id_flujo):
+    """
+    Vista para remover un rol al usuario, desasociandolo asi de una flujo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_usuario: referencia al usuario dentro de la base de datos
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: HttpResponseRedirect('/flujos/proyecto/'+str(flujo.proyecto_id))
+    """
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
+    if proyecto.estado!='PEN':
+        proyectos = Proyecto.objects.all().exclude(estado='ELI')
+        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
+                              context_instance=RequestContext(request))
+    usuario=User.objects.get(id=id_usuario)
+    roles=Group.objects.filter(flujo__id=id_flujo) #filtra los roles de la flujo
+    for rol in roles:
+        usuario.groups.remove(rol) #remueve el rol del usuario
+        usuario.save()
+
+    return HttpResponseRedirect('/flujos/proyecto/'+str(flujo.proyecto_id))
+
+@login_required
+@permission_required('flujo')
+def rol_proyecto(request, id_flujo):
+    """
+    vista que lista los roles que se asignan al proyecto por flujo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia al proyecto flujo de la base de datos
+    @return: render_to_response
+    """
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
+    roles=Group.objects.filter(flujo__id=id_flujo)
+    return render_to_response('flujos/roles_proyecto.html', {'proyectos': proyecto,'flujo':flujo,'roles':roles},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def crearol_proyecto(request, id_flujo):
+    """
+    vista que crea los roles que se asignan al proyecto por flujo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia al proyecto flujo de la base de datos
+    @return: render_to_response
+    """
+
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
+    if request.method == 'POST':
+        # formulario enviado
+        group_form = GroupForm(request.POST)
+
+        if group_form.is_valid():
+            # formulario validado correctamente
+            rol=group_form.save() #agarra el rol del formulario
+            flujo.roles.add(rol) #asigna el rol a la flujo
+            flujo.save()
+            return HttpResponseRedirect('/flujos/roles/'+str(id_flujo))
+
+    else:
+        # formulario inicial
+        group_form = GroupForm()
+    return render_to_response('flujos/crear_rol.html', {'group_form': group_form,'proyectos': proyecto,'flujo':flujo},
+                              context_instance=RequestContext(request))
+
+@login_required
+@permission_required('flujo')
+def detallerol_proyecto(request,id_rol,id_flujo):
+    """
+    Vista para asociar un rol perteneciente a una face a un usuario, asociandolo de esta manera a la flujo, y al proyecto
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_rol: referencia al rol de usuario
+    @param id_flujo: referencia a la flujo dentro de la base de datos
+    @return: render_to_response
+    """
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
+    rol = Group.objects.get(id=id_rol)
+    dato = get_object_or_404(Group, pk=id_rol)
+    permisos = Permission.objects.filter(group__id=id_rol)
+    return render_to_response('flujos/detalle_rol.html',
+                              {'rol': dato, 'permisos': permisos,'flujo':flujo,'proyectos':proyecto},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def modificarrol_proyecto(request, id_rol, id_flujo):
+    """
+    vista que modificar los roles que se asignan al proyecto por flujo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_flujo: referencia al proyecto flujo de la base de datos
+    @return: render_to_response
+    """
+
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
+
+    rol= Group.objects.get(id=id_rol)
+    if request.method == 'POST':
+        # formulario enviado
+        rol_form = GroupForm(request.POST, instance=rol)
+
+        if rol_form.is_valid():
+            # formulario validado correctamente
+            rol_form.save()
+            return HttpResponseRedirect('/flujos/roles/'+str(id_flujo))
+
+    else:
+        # formulario inicial
+        rol_form = GroupForm(instance=rol)
+    return render_to_response('flujos/editar_rol.html', { 'rol': rol_form, 'dato':rol,'flujo':flujo,'proyectos':proyecto},
+                              context_instance=RequestContext(request))
+
+@login_required
+@permission_required('group')
+def eliminarrol_proyecto(request, id_rol, id_flujo):
+    """
+    vista para eliminar el rol <id_rol>. Se comprueba que dicho rol no tenga flujos asociadas.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_rol: referencia a los roles
+    @return: render_to_response('roles/asignar_rol.html', {'datos': grupos}, context_instance=RequestContext(request))
+    """
+
+    dato = get_object_or_404(Group, pk=id_rol)
+    users=User.objects.filter(groups__id=dato.id)#usuarios asociados a este rol
+    flujo=Flujo.objects.get(id=id_flujo)
+    proyecto=Proyecto.objects.get(id=flujo.proyecto_id)
+    roles=Group.objects.filter(flujo__id=id_flujo)
+    if users.count()==0:
+        dato.delete()
+        return render_to_response('flujos/roles_proyecto.html', {'proyectos': proyecto,'flujo':flujo,'roles':roles,'mensaje':1}, context_instance=RequestContext(request))
+    else:
+        return render_to_response('flujos/roles_proyecto.html', {'proyectos': proyecto,'flujo':flujo,'roles':roles,'mensaje':2}, context_instance=RequestContext(request))
+    roles=Group.objects.filter(flujo__id=id_flujo)
+    return render_to_response('flujos/roles_proyecto.html', {'proyectos': proyecto,'flujo':flujo,'roles':roles, 'mensaje':1000}, context_instance=RequestContext(request))

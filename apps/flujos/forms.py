@@ -10,17 +10,18 @@ from django.contrib.auth.models import Group
 class FlujoForm(ModelForm):
     class Meta:
         model = Flujo
+        exclude = ()
 
 class CrearFlujoForm(ModelForm):
 
     class Meta:
         model = Flujo
-        #fields = ('nombre')
+        fields = ('nombre', 'descripcion', 'fInicio')
 
 class ModificarFlujoForm(ModelForm):
     class Meta:
         model = Flujo
-        #fields = ('nombre')
+        fields = ('descripcion','fInicio')
 
 
 class RolesForm(forms.Form):

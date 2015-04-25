@@ -1,7 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import Group
 from apps.proyectos.models import Proyecto
 
 # Create your models here.
+
+ESTADOS = (
+
+    ('PEN','Pendiente'),
+    ('EJE','En Ejecucion'),
+    ('FIN','Finalizado'),
+)
+# usar get_estado_display()
 
 class Flujo(models.Model):
     """
@@ -19,14 +28,15 @@ class Flujo(models.Model):
     @cvar proyecto: clave foranea a proyecto
     """
     nombre = models.CharField(max_length=100, verbose_name='Nombre')
-    #nombresActividades = models.TextField(verbose_name='Nombres de las actividades')
-    #numActividades = models.SmallIntegerField(verbose_name='Numero de actividades')
+    descripcion = models.TextField(verbose_name='Descripcion')
+    #maxItems = models.SmallIntegerField(verbose_name='Cantidad max de Items')
     #posicion = models.SmallIntegerField(verbose_name='Posicion relativa de la fase dentro del proyecto')
-    #fInicio = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA')
+    fInicio = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA')
    # fFin = models.DateField(verbose_name='Fecha de Finalizacion')
-    #orden = models.SmallIntegerField(verbose_name='Orden')
-    #estado = models.CharField(max_length=3, choices=ESTADOS, verbose_name='Estado')
-    #fCreacion = models.DateField(verbose_name='Fecha de Creacion', auto_now=True)
+    orden = models.SmallIntegerField(verbose_name='Orden')
+    estado = models.CharField(max_length=3, choices=ESTADOS, verbose_name='Estado')
+    fCreacion = models.DateField(verbose_name='Fecha de Creacion', auto_now=True)
 #    fModificacion = models.DateField(verbose_name='Fecha de Modificacion')
-    #roles = models.ManyToManyField(Group)
+    sprim = models.PositiveIntegerField(verbose_name="Sprim")
+    roles = models.ManyToManyField(Group)
     proyecto = models.ForeignKey(Proyecto)
