@@ -300,16 +300,6 @@ def eliminar_flujo(request,id_flujo):
     flujo = get_object_or_404(Flujo, pk=id_flujo)
     proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
     if proyecto.estado =='PEN':
-        roles=Group.objects.all().exclude(name='Lider')
-        for rol in roles:
-            flujo2=Flujo.objects.get(roles__id=rol.id)
-            if flujo2.id==flujo.id:
-                print(flujo2.id,flujo.id)
-                user=User.objects.filter(groups__id=rol.id) #obtiene todos los usuarios con ese rol
-                for us in user: #recorre la lista de usuario para desasociarlos cada uno
-                    us.groups.remove(rol) #remueve el rol del usuario
-                    us.save()   #guarda los cambios
-                rol.delete() #elimina el rol que estaba vinculado a la flujo del proyecto
         flujo.delete()
     flujos = Flujo.objects.filter(proyecto_id=proyecto.id).order_by('orden')
     return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
