@@ -36,6 +36,5 @@ class Flujo(models.Model):
     estado = models.CharField(max_length=3, choices=ESTADOS, verbose_name='Estado')
     fCreacion = models.DateField(verbose_name='Fecha de Creacion', auto_now=True)
 #    fModificacion = models.DateField(verbose_name='Fecha de Modificacion')
-    sprim = models.PositiveIntegerField(verbose_name="Sprim")
     roles = models.ManyToManyField(Group)
     proyecto = models.ForeignKey(Proyecto)
