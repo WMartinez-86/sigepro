@@ -23,7 +23,7 @@ from datetime import datetime
 @permission_required('flujo')
 def registrar_flujo(request, id_proyecto):
     """
-    Vista para registrar una nueva flujo dentro de proyecto
+    Vista para registrar un nuevo flujo dentro de proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return HttpResponseRedirect('/flujos/register/success') si el rol fue correctamente asignado o
     render_to_response('proyectos/registrar_proyecto.html',{'formulario':formulario}, context_instance=RequestContext(request)) al formulario
@@ -66,7 +66,7 @@ def registrar_flujo(request, id_proyecto):
                                 return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':2,'id':id_proyecto,'proyecto':proyecto},
                                                           context_instance=RequestContext(request))
                             else:
-                                newFlujo.orden=orden.count()+1 #Calculo del orden de la flujo a crear
+                                newFlujo.orden=orden.count()+1 #Calculo del orden del flujo a crear
                                 newFlujo.save()
                                 return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
                     else:
@@ -84,7 +84,7 @@ def registrar_flujo(request, id_proyecto):
 @permission_required('proyectos, flujos')
 def listar_flujos(request,id_proyecto):
     """
-    vista para listar las flujos del proyectos
+    vista para listar los flujos del proyectos
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return render_to_response('flujos/listar_flujos.html', {'datos': flujos}, context_instance=RequestContext(request))
     """
@@ -209,7 +209,7 @@ def flujos_todas(request,id_proyecto):
 @permission_required('flujo')
 def importar_flujo(request, id_flujo,id_proyecto):
     """
-        Vista para importar los datos de una flujo, dado en <id_flujo> . Se utiliza para crear una flujo nueva a partir de otra
+        Vista para importar los datos de un flujo, dado en <id_flujo> . Se utiliza para crear un flujo nueva a partir de otra
         ya existente. Realiza las comprobaciones necesarias con respecto a la fecha de inicio y orden de flujo.
         @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
         @param id_flujo: referencia a ala flujo en la base de datos
@@ -290,7 +290,7 @@ def detalle_flujo(request, id_flujo):
 @permission_required('flujo')
 def eliminar_flujo(request,id_flujo):
     """
-    Vista para eliminar una flujo de un proyecto. Busca la flujo por su id_flujo y lo destruye.
+    Vista para eliminar un flujo de un proyecto. Busca la flujo por su id_flujo y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
@@ -306,7 +306,7 @@ def eliminar_flujo(request,id_flujo):
 @permission_required('flujo')
 def buscar_flujos(request,id_proyecto):
     """
-    vista para buscar las flujos del proyecto
+    vista para buscar los flujos del proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
     """
@@ -328,7 +328,7 @@ def buscar_flujos(request,id_proyecto):
 @permission_required('flujo')
 def asignar_usuario(request,id_flujo):
     """
-    Vista auxiliar para obtener un listado de usuarios para asociar a la flujo
+    Vista auxiliar para obtener un listado de usuarios para asociar a el flujo
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response
@@ -350,7 +350,7 @@ def asignar_usuario(request,id_flujo):
 @permission_required('flujo')
 def desasignar_usuario(request,id_flujo):
     """
-    vista para listar a los usuario de una flujo, para poder desasociarlos
+    vista para listar a los usuario de un flujo, para poder desasociarlos
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response('flujos/desasignar_usuarios.html', {'datos': usuarios,'flujo':id_flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
