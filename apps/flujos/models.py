@@ -22,7 +22,7 @@ class Flujo(models.Model):
     @cvar fInicio: Fecha que indica el inicio
     @cvar fFin: Fecha que indica el posible finalizacion
     @cvar estado: Enum de los tipos de estados por los que puede pasar una fase: Pendiente, Desarrollo, Completa y Comprometida
-    @cvar fCreacion: Fecha que indica el instante en que se crea la fase
+    @cvar fCreacion: Fecha que indica el instante en que se crea el flujo
     @cvar roles: relacion muchos a muchos con la tabla de Grupos
     @cvar proyecto: clave foranea a proyecto
     """
