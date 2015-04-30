@@ -22,20 +22,18 @@ class Flujo(models.Model):
     @cvar fInicio: Fecha que indica el inicio
     @cvar fFin: Fecha que indica el posible finalizacion
     @cvar estado: Enum de los tipos de estados por los que puede pasar una fase: Pendiente, Desarrollo, Completa y Comprometida
-    @cvar fCreacion: Fecha que indica el instante en que se crea la fase
+    @cvar fCreacion: Fecha que indica el instante en que se crea el flujo
     @cvar roles: relacion muchos a muchos con la tabla de Grupos
     @cvar proyecto: clave foranea a proyecto
     """
     nombre = models.CharField(max_length=100, verbose_name='Nombre')
     descripcion = models.TextField(verbose_name='Descripcion')
     #maxItems = models.SmallIntegerField(verbose_name='Cantidad max de Items')
-    #posicion = models.SmallIntegerField(verbose_name='Posicion relativa de la fase dentro del proyecto')
     fInicio = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA')
    # fFin = models.DateField(verbose_name='Fecha de Finalizacion')
     orden = models.SmallIntegerField(verbose_name='Orden')
     estado = models.CharField(max_length=3, choices=ESTADOS, verbose_name='Estado')
     fCreacion = models.DateField(verbose_name='Fecha de Creacion', auto_now=True)
 #    fModificacion = models.DateField(verbose_name='Fecha de Modificacion')
-    sprim = models.PositiveIntegerField(verbose_name="Sprim")
     roles = models.ManyToManyField(Group)
     proyecto = models.ForeignKey(Proyecto)

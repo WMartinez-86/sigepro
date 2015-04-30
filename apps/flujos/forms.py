@@ -16,7 +16,7 @@ class CrearFlujoForm(ModelForm):
 
     class Meta:
         model = Flujo
-        fields = ('nombre', 'descripcion', 'fInicio', 'sprim')
+        fields = ('nombre', 'descripcion', 'fInicio')
 
 class ModificarFlujoForm(ModelForm):
     class Meta:
