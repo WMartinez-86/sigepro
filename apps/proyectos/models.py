@@ -7,9 +7,8 @@ __author__ = 'juanma'
 
 ESTADOS = (
 
-    ('PEN', 'Pendiente'),
-    ('ANU','Anulado'),
-    ('ACT', 'Activo'),
+    ('PRO', 'Produccion'),
+    ('APR', 'Aprobado'),
     ('FIN','Finalizado'),
     ('ELI','Eliminado'),
 )
@@ -26,9 +25,14 @@ class Proyecto(models.Model):
     @cvar cliente: Clave foranea a la tabla usuario
     """
 
-    nombre= models.CharField(max_length=100, verbose_name='Nombre',unique=True)
+    nombre= models.CharField(max_length=50, verbose_name='Nombre',unique=True)
+    nombreCorto= models.CharField(max_length=20, verbose_name='Nombre',unique=True)
     siglas= models.CharField(max_length=20)
     descripcion= models.TextField(verbose_name='Descripcion')
     fecha_ini=models.DateField(verbose_name='Fecha de inicio',null=False)
     fecha_fin=models.DateField(verbose_name='Fecha de Finalizacion',null=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     estado=models.CharField(max_length=3,choices= ESTADOS, default='PEN')
+    duracion_sprint = models.PositiveIntegerField(default=30)
+    #equipo = models.ManyToManyField(User, through='MiembroEquipo')
+
