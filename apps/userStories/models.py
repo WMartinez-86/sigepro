@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import Group
 from apps.flujos.models import Flujo
 from django.contrib.auth.models import User
-
+from apps.proyectos.models import Proyecto
 
 
 # Create your models here.
@@ -30,28 +30,20 @@ class UserStory(models.Model):
     @cvar fecha_mod: Tipo de dato Date
     @cvar tipo_item: clave foranea a tipo item
     """
-    nombre=models.CharField(max_length=100, verbose_name='Nombre')
-    descripcion=models.TextField(max_length=140, verbose_name='Descripcion')
-    #costo=models.PositiveIntegerField(verbose_name='Costo')
-    tiempoEstimado=models.PositiveIntegerField(verbose_name='Tiempo Estimado')
-    tiempoReal=models.PositiveIntegerField(verbose_name='Tiempo Real')
-    estado=models.CharField(max_length=3,choices=ESTADOS, verbose_name='Estado')
-    #version=models.PositiveSmallIntegerField(verbose_name='Version')
-    #relacion=models.ForeignKey('self',null=True, verbose_name='Relacion', related_name='relacionItem')
-    #tipo=models.CharField(null=True,max_length=10, choices=TIPOS, verbose_name='Tipo')
-    fecha_creacion=models.DateField(verbose_name='Fecha de Creacion')
-    fecha_mod=models.DateField(verbose_name='Fecha de Modificacion')
-    flujo=models.ForeignKey(Flujo)
-    usuario=models.ForeignKey(User)
-    #lineaBase=models.ForeignKey(LineaBase, null=True)
+    estado_choices = ((0, 'ToDo'), (1, 'Doing'), (2, 'Done'), (3, 'Pendiente Aprobacion'), (4, 'Aprobado'))
+    nombre = models.CharField(max_length=20, verbose_name='Nombre')
+    descripcion = models.TextField(verbose_name='Descripcion')
+    prioridad = models.IntegerField(choices=((i, i) for i in range(1, 11)), default=1)
+    valor_negocio = models.IntegerField(verbose_name='Valor de Negocio')
+    valor_tecnico = models.IntegerField(verbose_name='Valor Tecnico')
+    tiempo_estimado = models.PositiveIntegerField(verbose_name='Tiempo Estimado')
+    tiempo_registrado = models.PositiveIntegerField(default=0, verbose_name='Tiempo Registrado')
+    ultimo_cambio = models.DateTimeField(auto_now=True, verbose_name='Ultimo Cambio')
+    estado = models.IntegerField(choices=estado_choices, default=0)
+    proyecto = models.ForeignKey(Proyecto)
+    desarrollador = models.ForeignKey(User, null=True, blank=True)
+    #sprint = models.ForeignKey(Sprint, null=True, blank=True)
+    #actividad = models.ForeignKey(Actividad, null=True, blank=True)
 
-class Archivo(models.Model):
-    """
-    Modelo que representa a un Archivo
-    @cvar archivo: Campo de tipo Archivo
-    @cvar id_item: Clave foranea a Item
-    @cvar nombre: Un campo de texto
-    """
-    archivo=models.FileField(upload_to='archivos')
-    id_item=models.ForeignKey(UserStory, null=True)
-    nombre=models.CharField(max_length=100, null=True)
+
+
