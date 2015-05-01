@@ -26,6 +26,7 @@ class ProyectoForm(ModelForm):
         exclude = ['estado','roles']
 
 
+
 class CambiarEstadoForm(ModelForm):
     estado = forms.CharField(max_length=3, widget=forms.Select(choices=ESTADOS))
 
