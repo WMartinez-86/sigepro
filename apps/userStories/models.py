@@ -27,8 +27,10 @@ class UserStory(models.Model):
     @cvar relacion: clave foranea a otro item
     @cvar tipo: Enum de los tipos de relaciones entre items: Padre-Padre-Antecesor-Padre
     @cvar fecha_creacion: Tipo de dato Date
-    @cvar fecha_mod: Tipo de dato Date
-    @cvar tipo_item: clave foranea a tipo item
+    @cvar proyecto: Clave foranea a un Proyecto
+    @cvar desarrollador: Clave foranea a un Desarrollador
+    @cvar fecha_mod: Clave foranea a a un Sprint
+    @cvar actividad: Clave foranea a una Actividad
     """
     estado_choices = ((0, 'ToDo'), (1, 'Doing'), (2, 'Done'), (3, 'Pendiente Aprobacion'), (4, 'Aprobado'))
     nombre = models.CharField(max_length=20, verbose_name='Nombre')

@@ -12,7 +12,7 @@ ESTADOS = (
     ('VAL', 'Validado'),
 )
 
-class UserStoryForm(forms.ModelForm):
+class crearUserStoryForm(forms.ModelForm):
     class Meta:
         model= UserStory
         exclude=('estado','proyecto', 'desarrolador')
