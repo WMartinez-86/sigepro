@@ -12,7 +12,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse_lazy
 from sigepro import settings
 from apps.flujos.models import Flujo
-from apps.userStories.models import UserStory
+from apps.userStories.models import UserStory, Archivo
 from apps.proyectos.models import Proyecto
 from apps.userStories.forms import crearUserStoryForm
 from django import forms
@@ -77,14 +77,18 @@ def listar_userStories(request):
 
 def crear_userStory(request):
     """
-    Vista para crear un item y asignarlo a un tipo de item. Ademas se dan las opciones de agregar un
+      Vista para crear un item y asignarlo a un tipo de item. Ademas se dan las opciones de agregar un
     archivo al item, y de completar todos los atributos de su tipo de item
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_tipoItem: clave foranea al tipoItem
     @ return render_to_response('items/...) o render_to_response('403.html')
     """
-    #id_flujo=Flujo.objects.get(id=id_proyecto).fase_id
-    #flujo=Flujo.objects.get(id=id_flujo)
+    atri=1
+
+    # print(cantidad_items(id_tipoItem))
+
+    items=[]
+
 
     if request.method=='POST':
         #formset = ItemFormSet(request.POST)
@@ -93,30 +97,27 @@ def crear_userStory(request):
         if formulario.is_valid():
             today = datetime.now() #fecha actual
             dateFormat = today.strftime("%Y-%m-%d") # fecha con format
-             #obtener item con el cual relacionar
-            userStory_nombre=request.POST.get('entradalista')
-            if userStory_nombre!=None:
-                item=''
-                itemss=UserStory.objects.filter(nombre=userStory_nombre)
-                for i in itemss:
-                    item=i
-                    cod=newItem=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1, relacion_id=item.id, tipo='Sucesor',tipo_item_id=id_tipoItem,fecha_creacion=dateFormat, fecha_mod=dateFormat,fase_id=id_fase)
-                    newItem.save()
-                else:
-                    cod=newItem=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1,tipo_item_id=id_tipoItem,fecha_creacion=dateFormat, fecha_mod=dateFormat,fase_id=id_fase)
-                    newItem.save()
-            return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
+            return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario},
+                                      context_instance=RequestContext(request))
+
+
+            cod=newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1,fecha_creacion=dateFormat, fecha_mod=dateFormat)
+            newUserStory.save()
+
 
             #guardar archivo
-            # if request.FILES.get('file')!=None:
-            # archivo=Archivo(archivo=request.FILES['file'],nombre='', id_item_id=cod.id)
-            # archivo.save()
+        if request.FILES.get('file')!=None:
+            archivo=Archivo(archivo=request.FILES['file'],nombre='', id_item_id=cod.id)
+            archivo.save()
+
             #guardar atributos
 
+            return render_to_response('userStories/creacion_correcta.html', context_instance=RequestContext(request))
     else:
 
         formulario = crearUserStoryForm()
-        #proyecto=Proyecto.objects.filter(id=fase.proyecto_id)
-        return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario},
-                                  context_instance=RequestContext(request))
+        hijo=False
+        #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
+        #return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario, 'hijo':hijo,'atri':atri}, context_instance=RequestContext(request))
+
 
