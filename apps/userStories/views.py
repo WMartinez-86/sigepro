@@ -30,47 +30,19 @@ def listar_userStories(request):
     #tuserStory=get_object_or_404(Flujo,id=id_flujo)
     #flujo=Flujo.objects.filter(id=id_flujo)
     #if es_miembro(request.user.id,flujo,''):
-    userStories=UserStory.objects.filter()
+        #userStories=UserStory.objects.filter()
     #if puede_add_userStories(flujo):
-    nivel = 3
-    #id_proyecto=Flujo.objects.get().proyecto_id
-    #proyecto=Proyecto.objects.get()
-    return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'nivel':nivel},
-                                  context_instance=RequestContext(request))
+        #nivel = 3
+        #id_proyecto=Flujo.objects.get().proyecto_id
+        #proyecto=Proyecto.objects.get()
+        #return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'nivel':nivel},
+                                  #context_instance=RequestContext(request))
     #else:
         #ESTE HAY QUE CORREGIR SI HAY TIEMPO
         #return HttpResponse("<h1>No se pueden administrar los UserStories de esta flujo. La flujo anterior aun no tiene userStories finalizados<h1>")
 
     #else:
-    #return render_to_response('403.html')
-
-
-
-
-
-# @login_required
-# def detalle_userStory(request, id_userStory):
-#     """
-#     vista para ver los detalles del userStory <id_userStory>
-#     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-#     @param id_userStory: clave foranea al userStory
-#     @return render_to_response(..)
-#     """
-#     userStory=get_object_or_404(UserStory,id=id_userStory)
-#     tipouserStory=get_object_or_404(TipoUserStory,id=userStory.tipo_userStory_id)
-#     flujo=tipouserStory.flujo_id
-#     fasse=Flujo.objects.get(id=flujo)
-#     proyecto=Proyecto.objects.get(id=fasse.proyecto_id)
-#     if es_miembro(request.user.id, flujo,''):
-#         atributos=AtributoUserStory.objects.filter(id_userStory=id_userStory)
-#         archivos=Archivo.objects.filter(id_userStory=id_userStory)
-#         dato = get_object_or_404(UserStory, pk=id_userStory)
-#
-#         return render_to_response('userStories/detalle_userStory.html', {'datos': dato, 'atributos': atributos, 'archivos':archivos,'flujo':fasse,'proyecto':proyecto}, context_instance=RequestContext(request))
-#     else:
-#         return render_to_response('403.html')
-
-
+        #return render_to_response('403.html')
 
 
 @login_required

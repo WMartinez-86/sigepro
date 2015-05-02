@@ -7,12 +7,6 @@ from apps.sprints.models import Sprint
 
 
 # Create your models here.
-ESTADOS = (
-    ('TODO','To Do'),#Por hacer
-    ('DOING','Doing'),#desarrollo
-    ('DONE','Done'),#Terminado
-    ('FIN','Fin'),#Finalizado
-)
 
 
 class UserStory(models.Model):
@@ -45,9 +39,8 @@ class UserStory(models.Model):
     estado = models.IntegerField(choices=estado_choices, default=0)
     proyecto = models.ForeignKey(Proyecto)
     desarrollador = models.ForeignKey(User, null=True, blank=True)
-    sprint = models.ForeignKey(Sprint, null=True, blank=True)
+    #sprint = models.ForeignKey(Sprint, null=True, blank=True)
     #actividad = models.ForeignKey(Actividad, null=True, blank=True)
-
 
 
 class Archivo(models.Model):
