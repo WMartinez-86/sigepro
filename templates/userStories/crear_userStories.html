@@ -1,6 +1,6 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Nuevo_Item
+	Nuevo User Story
 {% endblock %}
 {% block content %}
     <head>
@@ -9,51 +9,21 @@
 
 </head>
     <div class="breadcrumbs">
-        <a href="/desarrollo/proyectos/">Proyecto {{ proyecto.nombre }}</a> >>>>
-        <a href="/desarrollo/proyectos/flujos/{{ flujo.proyecto_id }}">Fase en Ejecucion {{ flujo.nombre }}</a> >>>
-        <a href="/desarrollo/item/listar/{{ flujo.id }}">Administracion de Items</a> >>
-        <a href="/desarrollo/item/selectTipoItem/{{flujo.id }}" > Seleccion de Tipo de Item</a> >
-        "Crear Item"
+
+        <a href="/userStories/">Administracion de User Stories</a> >>
+
+        "Crear User Story"
     </div>
 
                 <div id="content">
-                <h1>Crear Item</h1>
+                <h1>Crear User Story</h1>
        <fieldset class="module aligned wide">
 <form method='post' action='' enctype="multipart/form-data">{% csrf_token %}
     <div class="form-row" >
     	{{formulario.as_p}}
         <br>
-{% if not hijo %}
-Antecesor:
-<select name="entradalista">
-    {% for item in items %}
-    <option>{{ item.nombre}}</option>
-    {% endfor %}
 
-</select>
-{% endif %}
-{% if atri !=  0%}
-<div><center>Atributos
-	            	<div style="height:150px;width:430px;overflow:auto;">
-	            	<table width="50%" border="1">
-					<tr>
-					<th scope="col">Nombre</th>
-                    <th scope="col">Tipo</th>
-					<th scope="col">Valor</th>
-					</tr>
-					{% for atributo in atributos %}
-							<tr>
-								<td>{{ atributo.nombre }}</td>
-                                <td>{{ atributo.tipo }}</td>
-								<td><input type='text' name={{ atributo.nombre }} value="{{ atributo.valorDefecto }}"/></td>
 
-							</tr>
-
-					{% endfor %}
-					</table>
-				    <br>
-            </div>
-{% endif %}</center>
     </div>
     <br>
         <center><input type="file" name="file" id="id_file" /></center>
