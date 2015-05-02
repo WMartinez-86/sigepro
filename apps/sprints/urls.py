@@ -4,8 +4,8 @@ __author__ = 'juanma'
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-from views import listar_sprints, registrar_sprint#, detalle_sprint, buscar_sprints, asignar_usuario
-#from views import editar_sprint,sprints_todas, importar_sprint, eliminar_sprint, desasignar_usuario
+from views import listar_sprints, registrar_sprint, eliminar_sprint, buscar_sprints#, detalle_sprint, asignar_usuario
+#from views import editar_sprint,sprints_todas, importar_sprint, desasignar_usuario
 
 urlpatterns = patterns('',
         #Administracion de Sprints
@@ -15,8 +15,8 @@ urlpatterns = patterns('',
         #url(r'^lista_todas/(?P<id_proyecto>\d+)$',sprints_todas,name='sprints_todas'),
         #url(r'^importar/(?P<id_sprint>\d+)-(?P<id_proyecto>\d+)$', importar_sprint,name='importar_sprint'),
         #url(r'^(?P<id_sprint>\d+)$', detalle_sprint, name='detalle_sprint'),
-        #url(r'^eliminar/(?P<id_sprint>\d+)$', eliminar_sprint, name='eliminar_sprint'),
-        #url(r'^search/(?P<id_proyecto>\d+)$',buscar_sprints, name='buscar_sprints'),
+        url(r'^eliminar/(?P<id_sprint>\d+)$', eliminar_sprint, name='eliminar_sprint'),
+        url(r'^search/(?P<id_proyecto>\d+)$',buscar_sprints, name='buscar_sprints'),
         #url(r'^roles/(?P<id_sprint>\d+)$', rol_proyecto, name='rol_proyecto'),
         #url(r'^roles/crear/(?P<id_sprint>\d+)$', crearol_proyecto, name='crearol_proyecto'),
         #url(r'^roles/detalle/(?P<id_rol>\d+)-(?P<id_sprint>\d+)$', detallerol_proyecto, name='detallerol_proyecto'),
