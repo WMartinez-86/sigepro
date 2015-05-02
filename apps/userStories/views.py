@@ -14,9 +14,8 @@ from sigepro import settings
 from apps.flujos.models import Flujo
 from apps.userStories.models import UserStory
 from apps.proyectos.models import Proyecto
-from apps.userStories.forms import UserStoryForm
+from apps.userStories.forms import crearUserStoryForm
 from django import forms
-
 
 
 
@@ -84,25 +83,39 @@ def crear_userStory(request):
     @param id_tipoItem: clave foranea al tipoItem
     @ return render_to_response('items/...) o render_to_response('403.html')
     """
-
+    #id_flujo=Flujo.objects.get(id=id_proyecto).fase_id
+    #flujo=Flujo.objects.get(id=id_flujo)
 
     if request.method=='POST':
         #formset = ItemFormSet(request.POST)
-        formulario = UserStoryForm(request.POST)
+        formulario = crearUserStoryForm(request.POST)
 
         if formulario.is_valid():
             today = datetime.now() #fecha actual
             dateFormat = today.strftime("%Y-%m-%d") # fecha con format
-            #obtener item con el cual relacionar
+             #obtener item con el cual relacionar
+            userStory_nombre=request.POST.get('entradalista')
+            if userStory_nombre!=None:
+                item=''
+                itemss=UserStory.objects.filter(nombre=userStory_nombre)
+                for i in itemss:
+                    item=i
+                    cod=newItem=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1, relacion_id=item.id, tipo='Sucesor',tipo_item_id=id_tipoItem,fecha_creacion=dateFormat, fecha_mod=dateFormat,fase_id=id_fase)
+                    newItem.save()
+                else:
+                    cod=newItem=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1,tipo_item_id=id_tipoItem,fecha_creacion=dateFormat, fecha_mod=dateFormat,fase_id=id_fase)
+                    newItem.save()
+            return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
 
             #guardar archivo
-
+            # if request.FILES.get('file')!=None:
+            # archivo=Archivo(archivo=request.FILES['file'],nombre='', id_item_id=cod.id)
+            # archivo.save()
             #guardar atributos
-
 
     else:
 
-        formulario = UserStoryForm()
+        formulario = crearUserStoryForm()
         #proyecto=Proyecto.objects.filter(id=fase.proyecto_id)
         return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario},
                                   context_instance=RequestContext(request))
