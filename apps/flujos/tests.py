@@ -14,17 +14,15 @@ class FlujoTest(TestCase):
     def setUp(self):
         print "\nTEST FLUJO"
 
-        u4 = User.objects.create(username='avelinaaa', first_name='runJoey', last_name='passit',
+        u4 = User.objects.create(username='juanmaaa', first_name='runJoey', last_name='passit',
                                        password='fija')
 
         proyecto = Proyecto.objects.create(nombre='prueba', descripcion="Este es un proyecto",
                                            fecha_ini="2015-01-12",
-                                           fecha_fin="2015-01-14",
-                                           lider= u4,
-                                           observaciones="esta es una observacion")
+                                           fecha_fin="2015-01-14")
 
         flujoprueba = Flujo.objects.create(nombre='faseprueba', descripcion="Este es un flujo",
-                            maxItems = 3,  fInicio="2015-01-12", orden = 3,
+                                           fInicio="2015-01-12", orden = 3,
                             fCreacion="2015-01-10", proyecto = proyecto)
         flujoprueba.save()
         print("Creo el flujo mediante el metodo setUp")
