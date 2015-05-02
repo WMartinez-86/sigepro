@@ -3,6 +3,7 @@ __author__ = 'juanma'
 from django import forms
 
 from apps.userStories.models import UserStory
+#from apps.solicitudes.models import Solicitud
 
 ESTADOS = (
 
@@ -11,13 +12,19 @@ ESTADOS = (
     ('VAL', 'Validado'),
 )
 
-class PrimerFlujoForm(forms.ModelForm):
+class crearUserStoryForm(forms.ModelForm):
     class Meta:
         model= UserStory
-        exclude=('estado', 'fecha_creacion', 'fecha_mod', 'flujo')
+        exclude=('estado','proyecto', 'desarrolador')
 
-class EstadoUSForm(forms.ModelForm):
+class EstadoUserStoryForm(forms.ModelForm):
     estado=forms.CharField(max_length=3,widget=forms.Select(choices= ESTADOS))
     class Meta:
         model=UserStory
         fields=['estado']
+
+
+# class SolicitudCambioForm(forms.ModelForm):
+#     class Meta:
+#         model=Solicitud
+#         fields=['nombre', 'descripcion']
