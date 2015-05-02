@@ -14,7 +14,7 @@ from sigepro import settings
 from apps.flujos.models import Flujo
 from apps.userStories.models import UserStory
 from apps.proyectos.models import Proyecto
-from apps.userStories.forms import EstadoUSForm, PrimerFlujoForm
+from apps.userStories.forms import UserStoryForm
 from django import forms
 
 
@@ -70,4 +70,40 @@ def listar_userStories(request):
 #         return render_to_response('userStories/detalle_userStory.html', {'datos': dato, 'atributos': atributos, 'archivos':archivos,'flujo':fasse,'proyecto':proyecto}, context_instance=RequestContext(request))
 #     else:
 #         return render_to_response('403.html')
+
+
+
+
+@login_required
+
+def crear_userStory(request):
+    """
+    Vista para crear un item y asignarlo a un tipo de item. Ademas se dan las opciones de agregar un
+    archivo al item, y de completar todos los atributos de su tipo de item
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_tipoItem: clave foranea al tipoItem
+    @ return render_to_response('items/...) o render_to_response('403.html')
+    """
+
+
+    if request.method=='POST':
+        #formset = ItemFormSet(request.POST)
+        formulario = UserStoryForm(request.POST)
+
+        if formulario.is_valid():
+            today = datetime.now() #fecha actual
+            dateFormat = today.strftime("%Y-%m-%d") # fecha con format
+            #obtener item con el cual relacionar
+
+            #guardar archivo
+
+            #guardar atributos
+
+
+    else:
+
+        formulario = UserStoryForm()
+        #proyecto=Proyecto.objects.filter(id=fase.proyecto_id)
+        return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario},
+                                  context_instance=RequestContext(request))
 
