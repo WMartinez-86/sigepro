@@ -88,7 +88,7 @@ def listar_flujos(request,id_proyecto):
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return render_to_response('flujos/listar_flujos.html', {'datos': flujos}, context_instance=RequestContext(request))
     """
-    flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
+    flujos = Flujo.objects.filter(id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
     if proyecto.estado!='PEN':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')

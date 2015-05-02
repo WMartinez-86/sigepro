@@ -1,0 +1,31 @@
+{% extends 'base2.html' %}
+{% block title %}
+Detalle_Proyecto
+{% endblock %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+</head>
+<div class="breadcrumbs">
+    <a href="/proyectos/">Proyecto {{ proyecto.nombre }}</a>>>
+    <a href="/flujos/proyecto/{{proyecto.id}}" > Flujo {{ datos.nombre }}</a>
+    > "Detalle Flujo"
+</div>
+<div id="content">
+    <h1>Detalles de la Flujo {{datos.nombre|title}}</h1>
+    <fieldset class="module aligned wide">
+        <form method="post">{% csrf_token %}
+            <div class="form-row">
+                <div><strong>Numero: </strong>{{ datos.orden }}</div>
+                <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
+                <div><strong>Descripcion: </strong>{{ datos.descripcion }}</div>
+                <div><strong>Estado: </strong>{{ datos.estado}}</div>
+                <div><strong>Fecha de Inicio: </strong>{{ datos.fInicio }}</div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+{% endblock %}

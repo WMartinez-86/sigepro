@@ -1,19 +1,30 @@
-__author__ = 'sergio'
+__author__ = 'juanma'
 
-from django.conf.urls import patterns, url, include
+
+from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-
-#from .views import crear_rol, lista_roles, detalle_rol, editar_rol, RegisterSuccessView, eliminar_rol, buscarRol
+from views import listar_sprints, registrar_sprint#, detalle_sprint, buscar_sprints, asignar_usuario
+#from views import editar_sprint,sprints_todas, importar_sprint, eliminar_sprint, desasignar_usuario
 
 urlpatterns = patterns('',
-    # url(r'^crear/$', crear_rol, name='crear_rol'),
-    # url(r'^$',lista_roles,name='lista_roles'),
-    # url(r'^(?P<id_rol>\d+)$', detalle_rol, name='detalle_rol'),
-    # url(r'^eliminar/(?P<id_rol>\d+)$', eliminar_rol, name='eliminar_rol'),
-    # url(r'^modificar/(?P<id_rol>\d+)$', editar_rol, name='editar_rol'),
-    # url(r'^search/$',buscarRol, name='buscar_roles'),
-    # url(r'^register/success/$',RegisterSuccessView.as_view()),
-    # #url(r'^$', lista_roles.as_view()),
-    )
-print urlpatterns
+        #Administracion de Sprints
+        url(r'^registrar/(?P<id_proyecto>\d+)$',registrar_sprint, name='registrar_sprints'),
+        url(r'^proyecto/(?P<id_proyecto>\d+)$', listar_sprints, name='list_sprint'),
+        #url(r'^editar/(?P<id_sprint>\d+)$', editar_sprint, name='edit_sprint'),
+        #url(r'^lista_todas/(?P<id_proyecto>\d+)$',sprints_todas,name='sprints_todas'),
+        #url(r'^importar/(?P<id_sprint>\d+)-(?P<id_proyecto>\d+)$', importar_sprint,name='importar_sprint'),
+        #url(r'^(?P<id_sprint>\d+)$', detalle_sprint, name='detalle_sprint'),
+        #url(r'^eliminar/(?P<id_sprint>\d+)$', eliminar_sprint, name='eliminar_sprint'),
+        #url(r'^search/(?P<id_proyecto>\d+)$',buscar_sprints, name='buscar_sprints'),
+        #url(r'^roles/(?P<id_sprint>\d+)$', rol_proyecto, name='rol_proyecto'),
+        #url(r'^roles/crear/(?P<id_sprint>\d+)$', crearol_proyecto, name='crearol_proyecto'),
+        #url(r'^roles/detalle/(?P<id_rol>\d+)-(?P<id_sprint>\d+)$', detallerol_proyecto, name='detallerol_proyecto'),
+        #url(r'^roles/modificar/(?P<id_rol>\d+)-(?P<id_sprint>\d+)$', modificarrol_proyecto, name='modificarrol_proyecto'),
+        #url(r'^roles/eliminar/(?P<id_rol>\d+)-(?P<id_sprint>\d+)$', eliminarrol_proyecto, name='eliminarrol_proyecto'),
+        #url(r'^asignar/(?P<id_sprint>\d+)$', asignar_usuario, name='asignar_usuario'),
+        #url(r'^asignar/(?P<id_usuario>\d+)/(?P<id_sprint>\d+)$', asignar_rol, name='asignar_rol'),
+        #url(r'^asociar/(?P<id_rol>\d+)-(?P<id_usuario>\d+)-(?P<id_sprint>\d+)$', asociar,name='asociar'),
+        #url(r'^desasignar/(?P<id_sprint>\d+)$', desasignar_usuario, name='des'),
+        #url(r'^desasignar/(?P<id_usuario>\d+)/(?P<id_sprint>\d+)$', desasociar,name='desasociar'),
+        )

@@ -9,10 +9,10 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 
 ESTADOS = (
 
-    ('PEN', 'Pendiente'),
-    ('ANU', 'Anulado'),
-    ('ACT', 'Activo'),
-    ('ELI', 'Eliminado'),
+    ('PRO', 'Produccion'),
+    ('APR', 'Aprobado'),
+    ('FIN','Finalizado'),
+    ('ELI','Eliminado'),
 )
 
 
@@ -32,4 +32,4 @@ class CambiarEstadoForm(ModelForm):
 
     class Meta:
         model = Proyecto
-        exclude = ['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'observaciones']
+        exclude = ['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'observaciones', 'nombreCorto', 'siglas', 'duracion_sprint']

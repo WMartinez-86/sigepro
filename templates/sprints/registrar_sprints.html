@@ -1,0 +1,41 @@
+{% extends 'base2.html' %}
+{% block title %}
+Nuevo_sprint
+{% endblock %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+</head>
+<div class="breadcrumbs">
+    <a href="/proyectos/">Proyecto {{ proyecto.nombre }}</a>>>
+    <a href="/sprints/proyecto/{{id}}">Sprints del Proyecto {{ proyecto.nombre }}</a>
+    ">Nuevo Sprint"
+</div>
+
+<div id="content">
+    <h1>Crear Sprint</h1>
+    <p>Fecha del proyecto comprendida del  "{{ proyecto.fecha_ini }}"  al  "{{ proyecto.fecha_fin }}"</p>
+    <fieldset class="module aligned wide">
+        <form method="post">{% csrf_token %}
+            <div class="form-row">
+                <ul class="errorlist">
+                    {% if  mensaje == 0 %}
+                    <li>Error: El formato de Fecha es: DD/MM/AAAA</li>
+                    {% elif mensaje == 1 %}
+                    <li>Error: Fecha de inicio no concuerda con Sprint anterior</li>
+                    {% elif mensaje == 2 %}
+                    <li>Error: Fecha de inicio no se encuentra dentro del rango del Proyecto</li>
+                    {% endif %}
+                </ul>
+                {{ formulario.as_p }}
+            </div>
+            <div class="submit-row">
+                <input type="submit" value="Confirmar" />
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+{% endblock %}
