@@ -64,22 +64,22 @@
             </th>
              <th scope="col">
                 <div class="text">
-                    <a>Tiempo</a>
+                    <a>Estado</a>
                 </div>
             </th>
              <th scope="col">
                 <div class="text">
-                    <a> Version </a>
+                    <a> Tiempo Estimado </a>
                 </div>
             </th>
             <th scope="col">
                 <div class="text">
-                    <a>Estado</a>
+                    <a>Tiempo Registrado</a>
                 </div>
             </th>
             <th scope="col">
                 <div class="text">
-                    <a>Ver Detalle</a>
+                    <a>Ultimo Cambio</a>
                 </div>
             </th>
 
@@ -87,13 +87,19 @@
             </th>
             <th scope="col">
                 <div class="text">
-                    <a>Modificar</a>
+                    <a>Descripcion</a>
                 </div>
             </th>
              <th scope="col">
                 <div class="text">
-                    <a>Cambiar Estado</a>
+                    <a>Modificar</a>
                 </div>
+                 </th>
+            <th scope="col">
+                <div class="text">
+                    <a>Cambiar estado</a>
+                </div>
+
             </th>
             <th scope="col">
                 <div class="text">
@@ -106,15 +112,14 @@
         {% for dato in datos  %}
             <tr>
                 <td><center>{{ dato.nombre}}</center></td>
-				<td><center>{{ dato.costo }}</center></td>
-                <td><center>{{ dato.tiempo }}</center></td>
-                <td><center>{{ dato.version }}</center></td>
-                <td><center>{{ dato.estado }}</center></td>
+				<td><center>{{ dato.estado }}</center></td>
+                <td><center>{{ dato.tiempo_estimado }}</center></td>
+                <td><center>{{ dato.tiempo_registrado }}</center></td>
+                <td><center>{{ dato.ultimo_cambio }}</center></td>
                 <td><center><a href="/desarrollo/item/detalle/{{ dato.id }}"  class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
-                <td><center><a href="/desarrollo/item/crear/hijo/{{ dato.pk }}" class="btn btn-inverse"><i class="icon-user icon-white"></i></a></center></td>
                 <td><center><a href="/desarrollo/item/modificar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
                 <td><center><a href="/desarrollo/item/cambiar_estado/{{ dato.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center></td>
-                <td><center><a href="/desarrollo/item/eliminar_item/{{ dato.pk }}" class="btn btn-info"><i class="icon-minus icon-white"></i></a></center></td>
+                <td><center><a href="/desarrollo/item/eliminar_item/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
             </tr>
         {% endfor %}
         </tbody>

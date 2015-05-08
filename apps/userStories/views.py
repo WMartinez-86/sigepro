@@ -30,26 +30,55 @@ def listar_userStories(request):
     #tuserStory=get_object_or_404(Flujo,id=id_flujo)
     #flujo=Flujo.objects.filter(id=id_flujo)
     #if es_miembro(request.user.id,flujo,''):
-        #userStories=UserStory.objects.filter()
+    userStories=UserStory.objects.filter()
     #if puede_add_userStories(flujo):
-        #nivel = 3
-        #id_proyecto=Flujo.objects.get().proyecto_id
-        #proyecto=Proyecto.objects.get()
-        #return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'nivel':nivel},
-                                  #context_instance=RequestContext(request))
+    nivel = 3
+    #id_proyecto=Flujo.objects.get().proyecto_id
+    proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
+    return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'nivel':nivel},
+                                  context_instance=RequestContext(request))
     #else:
         #ESTE HAY QUE CORREGIR SI HAY TIEMPO
         #return HttpResponse("<h1>No se pueden administrar los UserStories de esta flujo. La flujo anterior aun no tiene userStories finalizados<h1>")
 
     #else:
-        #return render_to_response('403.html')
+    #return render_to_response('403.html')
+
+
+
+
+
+# @login_required
+# def detalle_userStory(request, id_userStory):
+#     """
+#     vista para ver los detalles del userStory <id_userStory>
+#     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+#     @param id_userStory: clave foranea al userStory
+#     @return render_to_response(..)
+#     """
+#     userStory=get_object_or_404(UserStory,id=id_userStory)
+#     tipouserStory=get_object_or_404(TipoUserStory,id=userStory.tipo_userStory_id)
+#     flujo=tipouserStory.flujo_id
+#     fasse=Flujo.objects.get(id=flujo)
+#     proyecto=Proyecto.objects.get(id=fasse.proyecto_id)
+#     if es_miembro(request.user.id, flujo,''):
+#         atributos=AtributoUserStory.objects.filter(id_userStory=id_userStory)
+#         archivos=Archivo.objects.filter(id_userStory=id_userStory)
+#         dato = get_object_or_404(UserStory, pk=id_userStory)
+#
+#         return render_to_response('userStories/detalle_userStory.html', {'datos': dato, 'atributos': atributos, 'archivos':archivos,'flujo':fasse,'proyecto':proyecto}, context_instance=RequestContext(request))
+#     else:
+#         return render_to_response('403.html')
+
+
+
 
 
 @login_required
 
 def crear_userStory(request):
     """
-      Vista para crear un item y asignarlo a un tipo de item. Ademas se dan las opciones de agregar un
+    Vista para crear un item y asignarlo a un tipo de item. Ademas se dan las opciones de agregar un
     archivo al item, y de completar todos los atributos de su tipo de item
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_tipoItem: clave foranea al tipoItem
@@ -57,10 +86,16 @@ def crear_userStory(request):
     """
     atri=1
 
-    # print(cantidad_items(id_tipoItem))
+       # print(cantidad_items(id_tipoItem))
+        #id_fase=TipoItem.objects.get(id=id_tipoItem).fase_id
+        #flag=es_miembro(request.user.id,id_fase,'add_item')
 
-    items=[]
 
+        #flujo=Flujo.objects.get(id=id_fase)
+        #proyecto=flujo.proyecto_id
+        #items=[]
+        #tipoitem=[]
+    proyecto=Proyecto.objects.get(UserStory.proyecto)
 
     if request.method=='POST':
         #formset = ItemFormSet(request.POST)
@@ -69,27 +104,25 @@ def crear_userStory(request):
         if formulario.is_valid():
             today = datetime.now() #fecha actual
             dateFormat = today.strftime("%Y-%m-%d") # fecha con format
-            return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario},
-                                      context_instance=RequestContext(request))
+            #obtener item con el cual relacionar
+            #item_nombre=request.POST.get('entradalista')
 
-
-            cod=newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],costo=request.POST['costo'],tiempo=request.POST['tiempo'],estado='PEN',version=1,fecha_creacion=dateFormat, fecha_mod=dateFormat)
+            cod=newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],prioridad=request.POST['prioridad'],
+                                       valor_negocio=request.POST['valor_negocio'],valor_tecnico=request.POST['valor_tecnico'],tiempo_estimado=request.POST['tiempo_estimado'],
+                                       tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime,
+                                       desarrollador=request.POST['desarrollador'],sprint=request.POST['sprint'])
             newUserStory.save()
-
-
             #guardar archivo
         if request.FILES.get('file')!=None:
             archivo=Archivo(archivo=request.FILES['file'],nombre='', id_item_id=cod.id)
             archivo.save()
-
             #guardar atributos
-
-            return render_to_response('userStories/creacion_correcta.html', context_instance=RequestContext(request))
+        return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
     else:
 
         formulario = crearUserStoryForm()
         hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
-        #return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario, 'hijo':hijo,'atri':atri}, context_instance=RequestContext(request))
+        return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario}, context_instance=RequestContext(request))
 
 
