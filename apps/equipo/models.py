@@ -13,6 +13,7 @@ class MiembroEquipo(models.Model):
     @cvar proyecto: Clave foranea a un Proyecto
     @cvar roles: Clave muchos a muchos a Roles
     """
+
     usuario = models.ForeignKey(User)
     proyecto = models.ForeignKey(Proyecto)
     roles = models.ManyToManyField(Group)
