@@ -17,3 +17,4 @@ class MiembroEquipo(models.Model):
     usuario = models.ForeignKey(User)
     proyecto = models.ForeignKey(Proyecto)
     roles = models.ManyToManyField(Group)
+    fuerza_trabajo = models.IntegerField(default=0)

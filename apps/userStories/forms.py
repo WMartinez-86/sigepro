@@ -15,7 +15,7 @@ ESTADOS = (
 class crearUserStoryForm(forms.ModelForm):
     class Meta:
         model= UserStory
-        exclude = ()
+        exclude = ('desarrollador',)
 
 class EstadoUserStoryForm(forms.ModelForm):
     estado=forms.CharField(max_length=3,widget=forms.Select(choices= ESTADOS))

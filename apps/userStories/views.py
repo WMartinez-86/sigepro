@@ -12,7 +12,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse_lazy
 from sigepro import settings
 from apps.flujos.models import Flujo
-from apps.userStories.models import UserStory, Archivo
+from apps.userStories.models import UserStory
 from apps.proyectos.models import Proyecto
 from apps.userStories.forms import crearUserStoryForm
 from django import forms
@@ -34,7 +34,7 @@ def listar_userStories(request):
     #if puede_add_userStories(flujo):
     nivel = 3
     #id_proyecto=Flujo.objects.get().proyecto_id
-    proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
+    #proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
     return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'nivel':nivel},
                                   context_instance=RequestContext(request))
     #else:
@@ -73,7 +73,6 @@ def listar_userStories(request):
 
 
 
-
 @login_required
 
 def crear_userStory(request):
@@ -95,7 +94,7 @@ def crear_userStory(request):
         #proyecto=flujo.proyecto_id
         #items=[]
         #tipoitem=[]
-    proyecto=Proyecto.objects.get(UserStory.proyecto)
+    #proyecto=Proyecto.objects.get(UserStory.proyecto)
 
     if request.method=='POST':
         #formset = ItemFormSet(request.POST)
@@ -107,15 +106,12 @@ def crear_userStory(request):
             #obtener item con el cual relacionar
             #item_nombre=request.POST.get('entradalista')
 
-            cod=newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],prioridad=request.POST['prioridad'],
+            newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],prioridad=request.POST['prioridad'],
                                        valor_negocio=request.POST['valor_negocio'],valor_tecnico=request.POST['valor_tecnico'],tiempo_estimado=request.POST['tiempo_estimado'],
-                                       tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime,
-                                       desarrollador=request.POST['desarrollador'],sprint=request.POST['sprint'])
+                                       tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime,sprint=request.POST['sprint'])
             newUserStory.save()
             #guardar archivo
-        if request.FILES.get('file')!=None:
-            archivo=Archivo(archivo=request.FILES['file'],nombre='', id_item_id=cod.id)
-            archivo.save()
+
             #guardar atributos
         return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
     else:
