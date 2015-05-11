@@ -9,4 +9,5 @@ class Actividad(models.Model):
     """
     nombre = models.CharField(max_length=20)
     flujo = models.ForeignKey(Flujo)
+    orden = models.IntegerField(default=0)
 
