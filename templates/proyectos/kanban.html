@@ -1,0 +1,58 @@
+<!--
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><style id="css_disabled_color_picker" type="text/css">.mColorPicker[disabled] + span, .mColorPicker[disabled="disabled"] + span, .mColorPicker[disabled="true"] + span {filter:alpha(opacity=50);-moz-opacity:0.5;-webkit-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;cursor:default;}</style>
+    <title>Sigepro - Tablero Kanban</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="kanban, agile, dashboard, board, SCRUM, visual kanban, virtual kanban, lean, tablero, tablero kanban">
+    <meta name="description" content="Tablero Kanban">
+    <script src="kanban_archivos/ga.js" async="" type="text/javascript"></script><script src="kanban_archivos/jquery-1.js" type="text/javascript">
+    </script>
+    <script type="text/javascript" src="kanban_archivos/home.js">
+    </script>
+    <script type="text/javascript" src="kanban_archivos/kanban.js">
+    </script>
+    <script src="kanban_archivos/jquery-ui.js" type="text/javascript">
+    </script>
+    <script type="text/javascript" src="kanban_archivos/mColorPicker_min.js" charset="UTF-8"></script>
+
+    <link rel="stylesheet" href="kanban_archivos/kanban.css" type="text/css" media="all">
+    <link rel="stylesheet" href="kanban_archivos/jquery-ui.css" type="text/css" media="all">
+    <link rel="stylesheet" href="kanban_archivos/home.css" type="text/css" media="all">
+    <link rel="stylesheet" href="kanban_archivos/bootstrap.css" type="text/css" media="all">
+    <link href="kanban_archivos/css.css" rel="stylesheet" type="text/css">
+    <script src="kanban_archivos/google_analytics_auto.js"></script></head>
+<body class="background">
+
+<table id="cabecera" align="center">
+
+    <tbody><tr>
+        <td colspan="2" align="center" size="15">
+            </br>
+            <font size="8">Tablero Kanban</font>
+        </td>
+    </tr>
+    </tbody></table>
+
+<div id="main_div">
+    <div>
+        <input id="add_task" value="Nuevo user Story" class="btn btn-info" type="button">
+        <input id="add_col" value="Nueva Actividad" class="btn btn-primary" type="button">
+        <input id="remove_col" value="Borrar Columna" class="btn btn-danger" type="button">
+    </div>
+    <table class="table rounded" border="1">
+        <tbody><tr id="task_pool_header_container">
+            <th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="kanban_archivos/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+            <th class="task_pool_header  dotted_separator", colspan="3"><div class="header_name click"><img class="title_bullet" src="kanban_archivos/bullet.png"><span class="title_text">En proceso</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+            <th class="task_pool_header"><div class="header_name click"><img class="title_bullet" src="kanban_archivos/bullet.png"><span class="title_text">Terminado</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+        </tr>
+        <tr id="task_pool_container">
+            <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+            <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+            <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+            <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+            <td class="task_pool ui-sortable"><div></div></td>
+        </tr>
+        </tbody></table>
+
+    <div style="display: none; background: none repeat scroll 0% 0% black; opacity: 0.01; position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px;" id="mColorPickerBg"></div><div style="position: absolute; border: 1px solid rgb(204, 204, 204); color: rgb(255, 255, 255); width: 194px; height: 184px; font-size: 12px; font-family: times; display: none;" data-mcolorpicker="true" id="mColorPicker"><div style="position: relative; border: 1px solid gray;" id="mColorPickerWrapper"><div style="height: 136px; width: 192px; border: 0px none; cursor: crosshair; background-image: url(&quot;http://meta100.github.com/mColorPicker/images/picker.png&quot;);" class="mColor" id="mColorPickerImg"></div><div style="border-right: 1px solid rgb(0, 0, 0);" id="mColorPickerSwatches"><div style="background-color: rgb(255, 255, 255); height: 18px; width: 18px; border: 1px solid rgb(0, 0, 0); float: left;" class="mPastColor" id="cell0">&nbsp;</div><div style="background-color: rgb(255, 255, 0); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell1">&nbsp;</div><div style="background-color: rgb(0, 255, 0); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell2">&nbsp;</div><div style="background-color: rgb(0, 255, 255); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell3">&nbsp;</div><div style="background-color: rgb(0, 0, 255); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell4">&nbsp;</div><div style="background-color: rgb(255, 0, 255); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell5">&nbsp;</div><div style="background-color: rgb(255, 0, 0); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell6">&nbsp;</div><div style="background-color: rgb(76, 43, 17); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell7">&nbsp;</div><div style="background-color: rgb(59, 59, 59); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell8">&nbsp;</div><div style="background-color: rgb(0, 0, 0); height: 18px; width: 18px; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; float: left;" class="mPastColor mNoLeftBorder" id="cell9">&nbsp;</div><div style="clear: both;" class="mClear"></div></div><div style="background-image: url(&quot;http://meta100.github.com/mColorPicker/images/grid.gif&quot;); position: relative; height: 26px;" id="mColorPickerFooter"><input style="border: 1px solid gray; font-size: 10pt; margin: 3px; width: 80px;" id="mColorPickerInput" type="text"><span style="font-size: 16px; color: rgb(0, 0, 0); padding-right: 30px; padding-top: 3px; cursor: pointer; overflow: hidden; float: right;" class="mColor mColorTransparent" id="mColorPickerTransparent">transparent</span><a style="float: right;" target="_blank" alt="Meta100 - Designing Fun" title="Meta100 - Designing Fun" href="http://meta100.com/"><img style="border-width: 0px 0px 0px 1px; border-style: none none none solid; border-color: -moz-use-text-color -moz-use-text-color -moz-use-text-color rgb(170, 170, 170); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; right: 0px; position: absolute;" alt="Meta100 - Designing Fun" title="Meta100 - Designing Fun" src="kanban_archivos/meta100.png"></a></div></div></div><div style="display: none;" id="mColorPickerTest"></div></body></html>
