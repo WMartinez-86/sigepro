@@ -7,6 +7,7 @@ from django.utils import timezone
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from apps.proyectos.forms import ProyectoForm, CambiarEstadoForm
+from apps.userStories.models import UserStory
 from django.contrib import messages
 from sigepro import settings
 from django.db.models import Q
@@ -156,6 +157,19 @@ def cambiar_estado_proyecto(request, id_proyecto):
         proyecto_form = CambiarEstadoForm(instance=proyecto)
         return render_to_response('proyectos/cambiar_estado_proyecto.html',
                                   {'proyectos': proyecto_form, 'nombre': nombre,'mensaje':1000}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('proyectos')
+def estadoKanban(request, id_proyecto):
+    """
+
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+    # formulario inicial
+    dato = get_object_or_404(UserStory, pk=id_proyecto)
+    return render_to_response('proyectos/kanban.html', {'userStories': dato}, context_instance=RequestContext(request))
 
 
 @login_required
