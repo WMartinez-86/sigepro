@@ -36,4 +36,4 @@ class Flujo(models.Model):
     fCreacion = models.DateField(verbose_name='Fecha de Creacion', auto_now=True)
 #    fModificacion = models.DateField(verbose_name='Fecha de Modificacion')
     roles = models.ManyToManyField(Group)
-    #proyecto = models.ForeignKey(Proyecto)
+    proyecto = models.ForeignKey(Proyecto)

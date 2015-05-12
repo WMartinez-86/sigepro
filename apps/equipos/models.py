@@ -8,7 +8,7 @@ from apps.proyectos.models import Proyecto
 
 class MiembroEquipo(models.Model):
     """
-    Miembros del equipo de un proyecto con un rol específico
+    Miembros del equipo de un proyecto con un rol especifico
     @cvar usuario: Clave foranea a un Usuario
     @cvar proyecto: Clave foranea a un Proyecto
     @cvar roles: Clave muchos a muchos a Roles
