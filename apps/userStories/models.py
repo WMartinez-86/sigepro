@@ -4,6 +4,7 @@ from apps.flujos.models import Flujo
 from django.contrib.auth.models import User
 from apps.proyectos.models import Proyecto
 from apps.sprints.models import Sprint
+#from apps.trabajos.models import Trabajo
 
 
 # Create your models here.
@@ -43,7 +44,7 @@ class UserStory(models.Model):
     tiempo_registrado = models.PositiveIntegerField(default=0, verbose_name='Tiempo Registrado')
     ultimo_cambio = models.DateTimeField(auto_now=True, verbose_name='Ultimo Cambio')
     estado = models.IntegerField(choices=estado_choices, default=0)
-    proyecto = models.ForeignKey(Proyecto)
+    proyecto = models.ForeignKey(Proyecto, null=True, blank=True)
     desarrollador = models.ForeignKey(User, null=True, blank=True)
     sprint = models.ForeignKey(Sprint, null=True, blank=True)
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
