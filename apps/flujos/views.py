@@ -17,6 +17,8 @@ from apps.proyectos.models import Proyecto
 from apps.flujos.forms import FlujoForm, ModificarFlujoForm, CrearFlujoForm
 from apps.roles.forms import GroupForm
 from datetime import datetime
+from apps.userStories.models import UserStory
+from apps.actividades.models import Actividad
 
 
 @login_required
@@ -368,3 +370,21 @@ def desasignar_usuario(request,id_flujo):
         for pp in p:
             usuarios.append(pp) #lista todos los usuarios con rol en el flujo
     return render_to_response('flujos/desasignar_usuarios.html', {'datos': usuarios,'flujo':flujo,'proyecto':proyecto,'roles':roles}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('proyectos')
+def estadoKanban(request, id_flujo):
+    """
+
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+    # formulario inicial
+    flujo=Flujo.objects.get(id=id_flujo)
+    userStories = UserStory.objects.filter(proyecto_id=flujo.proyecto)
+    actividades = Actividad.objects.filter(flujo_id=id_flujo)
+    cantActividades = actividades.count()
+    print "cantactividades"
+    print cantActividades
+    return render_to_response('flujos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))

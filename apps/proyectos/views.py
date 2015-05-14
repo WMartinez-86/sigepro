@@ -7,8 +7,7 @@ from django.utils import timezone
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from apps.proyectos.forms import ProyectoForm, CambiarEstadoForm
-from apps.userStories.models import UserStory
-from apps.actividades.models import Actividad
+
 from apps.flujos.models import Flujo
 from django.contrib import messages
 from sigepro import settings
@@ -159,23 +158,6 @@ def cambiar_estado_proyecto(request, id_proyecto):
         proyecto_form = CambiarEstadoForm(instance=proyecto)
         return render_to_response('proyectos/cambiar_estado_proyecto.html',
                                   {'proyectos': proyecto_form, 'nombre': nombre,'mensaje':1000}, context_instance=RequestContext(request))
-
-@login_required
-@permission_required('proyectos')
-def estadoKanban(request, id_proyecto):
-    """
-
-    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @param id_proyecto: referencia al proyecto de la base de datos
-    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
-    """
-    # formulario inicial
-    userStories = UserStory.objects.filter(proyecto_id=id_proyecto)
-    actividades = Actividad.objects.filter(flujo_id=Flujo.objects.filter(proyecto_id=id_proyecto))
-    cantActividades = actividades.count()
-    print "cantacti"
-    print cantActividades
-    return render_to_response('proyectos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))
 
 
 @login_required

@@ -100,11 +100,6 @@ Proyectos
                                 <a>Sprints</a>
                             </div>
                         </th>
-                        <th scope="col">
-                            <div class="text">
-                                <a>Kanban</a>
-                            </div>
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -119,7 +114,6 @@ Proyectos
                         <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list-alt icon-white"></i></a></center></td>
                         <td><center><a href="/proyectos/cambiarEstado/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center></td>
                         <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
-                        <td><center><a href="/proyectos/kanban/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                     </tr>
                     {% endfor %}
                     </tbody>
