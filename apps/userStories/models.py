@@ -8,12 +8,7 @@ from apps.sprints.models import Sprint
 
 
 # Create your models here.
-ESTADOS = (
-    ('TODO','To Do'),#Por hacer
-    ('DOING','Doing'),#desarrollo
-    ('DONE','Done'),#Terminado
-    ('FIN','Fin'),#Finalizado
-)
+
 
 
 class UserStory(models.Model):
@@ -34,19 +29,22 @@ class UserStory(models.Model):
     @cvar fecha_mod: Clave foranea a a un Sprint
     @cvar actividad: Clave foranea a una Actividad
     """
-    estado_choices = ((0, 'ToDo'), (1, 'Doing'), (2, 'Done'), (3, 'Pendiente Aprobacion'), (4, 'Aprobado'))
+    estados_kanban = ((0, 'ToDo'), (1, 'Doing'), (2, 'Done'), (3, 'Pendiente Aprobacion'), (4, 'Aprobado'))
+    estados_scrum = ((0, 'Nueva'), (1, 'Iniciado'), (2, 'Suspendido'), (3, 'Eliminado'))
     nombre = models.CharField(max_length=20, verbose_name='Nombre')
     descripcion = models.TextField(verbose_name='Descripcion')
-    prioridad = models.IntegerField(choices=((i, i) for i in range(1, 11)), default=1)
+    prioridad = models.IntegerField(choices=((i, i) for i in range(1, 10)), default=1)
     valor_negocio = models.PositiveIntegerField(verbose_name='Valor de Negocio')
     valor_tecnico = models.PositiveIntegerField(verbose_name='Valor Tecnico')
     tiempo_estimado = models.PositiveIntegerField(verbose_name='Tiempo Estimado')
     tiempo_registrado = models.PositiveIntegerField(default=0, verbose_name='Tiempo Registrado')
     ultimo_cambio = models.DateTimeField(auto_now=True, verbose_name='Ultimo Cambio')
-    estado = models.IntegerField(choices=estado_choices, default=0)
+    estadoKanban = models.IntegerField(choices=estados_kanban, default=0)
+    estadoScrum = models.IntegerField(choices=estados_scrum, default=0)
     proyecto = models.ForeignKey(Proyecto, null=True, blank=True)
     desarrollador = models.ForeignKey(User, null=True, blank=True)
     sprint = models.ForeignKey(Sprint, null=True, blank=True)
+    flujo = models.ForeignKey(Flujo, null=True, blank=True)
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 

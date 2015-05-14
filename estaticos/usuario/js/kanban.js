@@ -73,9 +73,9 @@ $(document).ready(function() {
 		    wip=0; // Primera columna debe tener el wip ilimitado
 		}
 		if(wip>0){
-    		$(this).parent().parent().html('<div class="header_name click"><img class="title_bullet" src="../img/bullet.png" /><span class="title_text">'+new_name+'</span></div><div wip="'+wip+'" class="WIP">WIP: '+wip+'</div>');
+    		$(this).parent().parent().html('<div class="header_name click"><img class="title_bullet" src="img/mookup/bullet.png" /><span class="title_text">'+new_name+'</span></div><div wip="'+wip+'" class="WIP">WIP: '+wip+'</div>');
 		}else{
-        	$(this).parent().parent().html('<div class="header_name click"><img class="title_bullet" src="../img/bullet.png" /><span class="title_text">'+new_name+'</span></div><div wip="'+wip+'" class="WIP">WIP: Unlimited</div>');
+        	$(this).parent().parent().html('<div class="header_name click"><img class="title_bullet" src="img/mookup/bullet.png" /><span class="title_text">'+new_name+'</span></div><div wip="'+wip+'" class="WIP">WIP: Unlimited</div>');
     	}
 	});
 
@@ -104,13 +104,14 @@ $(document).ready(function() {
 		$('.itm_box_option').hide();
 	});
 
+
 	$('.box_itm').live('mouseover',function(){
 		$(this).children().children('.itm_box_option').show();
 	});
 	$('.box_itm').live('mouseout',function(){
 		$('.itm_box_option').hide();
 	});
-	
+
 	$('.colorete').live('colorpicked', function () {
     $('#box_itm'+$(this).attr('n')).css('background',$(this).val());
 	});
@@ -247,4 +248,25 @@ function save_edit_h(e){
 	else if (e.which) code = e.which;
 		
 	if(code==13) { $(".save_header").click(); }
+}
+
+function addUserStory(nombre, desarrollador){
+    var id=2;
+    $(".task_pool").first().append(' \
+          <div class="big_container"> \
+              <div id="box_itm'+id+'"class="box_itm rounded"> \
+                  <div id="name'+id+'" class="name">nombre </div> \
+                  <div class="dotted_hr"></div> \
+                  <div id="resp'+id+'" class="name">desarrollador </div> \
+                  <progress max="100" id="progress_bar'+id+'" class="pbar" value="0"></progress> \
+                  <div class="small"> \
+                      <div n="'+id+'" class="itm_box_option"><input n="'+id+'"  class="color colorete" type="color" data-text="hidden" data-colorlink="box_itm'+id+'" value="#f7941d"></div> \
+                      <div n="'+id+'" class="option close itm_box_option"><button class="btn btn-danger btn-mini"><i class="icon-white icon-remove"></i></button></div> \
+                      <div n="'+id+'" class="option edit itm_box_option"><button class="btn btn-info btn-mini"><i class="icon-white icon-pencil"></i></button></div> \
+                  </div> \
+                  <div class="clear"></div> \
+              </div> \
+              <div id="box_itm'+id+'_shadow" class="shadow" /> \
+          <div> \
+    ');
 }

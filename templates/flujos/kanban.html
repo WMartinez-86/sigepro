@@ -51,33 +51,44 @@ Kanban
 
 <div id="main_div">
     <div>
-        <input id="add_task" value="Nuevo user Story" type="button">
+        <input id="add_task" value="Nuevo user Story" class="btn btn-info" type="button">
         <input id="add_col" value="Nueva Actividad" class="btn btn-primary" type="button">
         <input id="remove_col" value="Borrar Columna" class="btn btn-danger" type="button">
     </div>
 
     <table class="table rounded" border="1">
-        <tbody><tr id="task_pool_header_container">
-            <th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
-            {% for Actividad in actividades  %}
-                <th class="task_pool_header  dotted_separator", colspan="3"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">{{ Actividad.nombre }}</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
-            {% endfor %}
-            <th class="task_pool_header"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Terminado</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
-        </tr>
-        <tr id="task_pool_container">
-            <td class="task_pool dotted_separator ui-sortable"><div></div></td>
-            {% for Actividad in actividades  %}
+        <tbody>
+            <tr id="task_pool_header_container">
+                <th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+                {% for Actividad in actividades  %}
+                    <th class="task_pool_header  dotted_separator", colspan="3"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">{{ Actividad.nombre }}</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+                {% endfor %}
+                <th class="task_pool_header"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Terminado</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+            </tr>
+            <tr id="states">
+                <th class="task_pool_header  dotted_separator"></th>
+                {% for Actividad in actividades  %}
+                    <th class="task_pool_header  dotted_separator">To Do</th>
+                    <th class="task_pool_header  dotted_separator">Doing</th>
+                    <th class="task_pool_header  dotted_separator">Done</th>
+                {% endfor %}
+                <th class="task_pool_header  dotted_separator"><span class="title_text">{{ Actividad.nombre }}</span></th>
+            </tr>
+            <tr id="task_pool_container">
                 <td class="task_pool dotted_separator ui-sortable"><div></div></td>
-                <td class="task_pool dotted_separator ui-sortable"><div></div></td>
-                <td class="task_pool dotted_separator ui-s{ortable"><div></div></td>
-            {% endfor %}
-            <td class="task_pool ui-sortable"><div></div></td>
-        </tr>
+                {% for Actividad in actividades  %}
+                    <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+                    <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+                    <td class="task_pool dotted_separator ui-s{ortable"><div></div></td>
+                {% endfor %}
+                <td class="task_pool ui-sortable"><div></div></td>
+            </tr>
         </tbody>
     </table>
 
+    {% for UserStory in userStories  %}
 
-
+    {% endfor %}
 
     <div style="display: none; background: none repeat scroll 0% 0% black; opacity: 0.01; position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px;" id="mColorPickerBg"></div>
     <div style="position: absolute; border: 1px solid rgb(204, 204, 204); color: rgb(255, 255, 255); width: 194px; height: 184px; font-size: 12px; font-family: times; display: none;" data-mcolorpicker="true" id="mColorPicker">
