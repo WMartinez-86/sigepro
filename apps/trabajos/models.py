@@ -29,6 +29,7 @@ class Trabajo(models.Model):
   #hora = models.TimeField(default=0)
   fecha = models.DateField(auto_now=True, verbose_name='Fecha')
 
+
 class Archivo(models.Model):
   """
   Modelo que repsenta a un archivo

@@ -37,3 +37,7 @@ class Flujo(models.Model):
 #    fModificacion = models.DateField(verbose_name='Fecha de Modificacion')
     roles = models.ManyToManyField(Group)
     proyecto = models.ForeignKey(Proyecto)
+
+
+    def __str__(self):
+        return self.nombre

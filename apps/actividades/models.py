@@ -11,3 +11,7 @@ class Actividad(models.Model):
     flujo = models.ForeignKey(Flujo)
     orden = models.IntegerField(default=0)
 
+
+
+    def __str__(self):
+        return self.nombre

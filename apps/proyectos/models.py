@@ -36,6 +36,9 @@ class Proyecto(models.Model):
     #duracion_sprint = models.PositiveIntegerField(default=30)
     #equipo = models.ManyToManyField(User, through='MiembroEquipo')
 
+    def __str__(self):
+        return self.nombre
+
     class Meta:
         default_permissions = ()
         verbose_name = 'proyecto'

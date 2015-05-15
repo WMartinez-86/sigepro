@@ -50,7 +50,8 @@ class UserStory(models.Model):
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 
-
+    def __str__(self):
+        return self.nombre
 
 
 
