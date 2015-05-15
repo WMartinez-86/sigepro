@@ -16,12 +16,12 @@ class CrearFlujoForm(ModelForm):
 
     class Meta:
         model = Flujo
-        fields = ('nombre', 'descripcion', 'fInicio')
+        fields = ('nombre', 'descripcion',)
 
 class ModificarFlujoForm(ModelForm):
     class Meta:
         model = Flujo
-        fields = ('descripcion','fInicio')
+        fields = ('descripcion',)
 
 
 class RolesForm(forms.Form):

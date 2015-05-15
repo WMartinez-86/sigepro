@@ -29,7 +29,7 @@ class Flujo(models.Model):
     nombre = models.CharField(max_length=100, verbose_name='Nombre')
     descripcion = models.TextField(verbose_name='Descripcion')
     #maxItems = models.SmallIntegerField(verbose_name='Cantidad max de Items')
-    fInicio = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA')
+    # fInicio = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA')
    # fFin = models.DateField(verbose_name='Fecha de Finalizacion')
     orden = models.SmallIntegerField(verbose_name='Orden')
     estado = models.CharField(max_length=3, choices=ESTADOS, verbose_name='Estado')
