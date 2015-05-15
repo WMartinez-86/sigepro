@@ -46,7 +46,7 @@ INSTALLED_APPS = (
     'apps.sprints',
     'apps.actividades',
     'apps.equipos',
-    'apps.trabajos'
+    'apps.trabajos',
 )
 
 MIDDLEWARE_CLASSES = (

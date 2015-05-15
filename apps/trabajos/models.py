@@ -22,12 +22,12 @@ class Trabajo(models.Model):
   (TIPO_NORMAL, ('Normal')),
   )
 
+  descripcion = models.TextField(max_length=140)
   userstory = models.ForeignKey(UserStory)
   sprint = models.ForeignKey(Sprint)
   tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=TIPO_NORMAL)
-  hora = models.TimeField(default=0)
-  descripcion = models.TextField(max_length=140)
-  fecha = models.DateTimeField(auto_now=True, verbose_name='Fecha')
+  #hora = models.TimeField(default=0)
+  fecha = models.DateField(auto_now=True, verbose_name='Fecha')
 
 class Archivo(models.Model):
   """
