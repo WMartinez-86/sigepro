@@ -1,5 +1,5 @@
 import os
-
+from datetime import timedelta
 
 def populate():
     cli = agregar_rol('Cliente')
@@ -51,7 +51,7 @@ def agregar_proyecto(nombreCorto, nombre, sprint=30):
         p = Proyecto.objects.get(nombreCorto=nombreCorto)
     except Proyecto.DoesNotExist:
         p = Proyecto.objects.get_or_create(nombreCorto=nombreCorto, nombre=nombre, duracion_sprint=sprint,
-                                           fecha_ini=timezone.now(), fecha_fin=timezone.now())
+                                           fecha_ini=timezone.now(), fecha_fin=timezone.now() + timedelta(days=30))
     return p
 
 

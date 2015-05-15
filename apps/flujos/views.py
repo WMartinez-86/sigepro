@@ -36,45 +36,19 @@ def registrar_flujo(request, id_proyecto):
         proyecto = Proyecto.objects.get(id=id_proyecto)
         formulario = CrearFlujoForm(request.POST)
         if formulario.is_valid():
-            if len(str(request.POST["fInicio"])) != 10 : #Comprobacion de formato de fecha
-                mensaje=0
-                return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':mensaje,'id':id_proyecto}, context_instance=RequestContext(request))
+            newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
+                               estado = "PRO", proyecto_id = id_proyecto)
+            orden=Flujo.objects.filter(proyecto_id=id_proyecto)
+            proyecto=Proyecto.objects.get(id=id_proyecto)
+            cantidad = orden.count()
+            if cantidad>0:
+                newFlujo.orden=orden.count()+1 # Calculo del orden del flujo a crear
+                newFlujo.save()
+                return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
             else:
-                fecha=datetime.strptime(str(request.POST["fInicio"]),'%d/%m/%Y')
-                fecha=fecha.strftime('%Y-%m-%d')
-                fecha1=datetime.strptime(fecha,'%Y-%m-%d')
-                newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
-                               fInicio = fecha,estado = "PRO", proyecto_id = id_proyecto, sprim = request.POST["sprim"])
-                aux=0
-                orden=Flujo.objects.filter(proyecto_id=id_proyecto)
-
-                if aux>0:
-                    aux=1
-                else:
-                    proyecto=Proyecto.objects.get(id=id_proyecto)
-                    cantidad = orden.count()
-                    if cantidad>0:#comprobaciones de fecha
-                       anterior = Flujo.objects.get(orden=cantidad, proyecto_id=id_proyecto)
-                       if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
-                           #Fecha de inicio no concuerda con flujo anterior
-                           return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':1,'id':id_proyecto,'proyecto':proyecto},
-                                                     context_instance=RequestContext(request))
-                       else:
-                            if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
-                                #Fecha de inicio no concuerda con proyecto
-                                print(fecha1)
-                                print(datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d'))
-                                print (datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d'))
-                                return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'mensaje':2,'id':id_proyecto,'proyecto':proyecto},
-                                                          context_instance=RequestContext(request))
-                            else:
-                                newFlujo.orden=orden.count()+1 #Calculo del orden del flujo a crear
-                                newFlujo.save()
-                                return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
-                    else:
-                        newFlujo.orden=1
-                        newFlujo.save()
-                        return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                newFlujo.orden=1
+                newFlujo.save()
+                return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
     else:
         formulario = CrearFlujoForm() #formulario inicial
     return render_to_response('flujos/registrar_flujos.html',{'formulario':formulario,'id':id_proyecto, 'proyecto':proyecto, 'mensaje':mensaje},
