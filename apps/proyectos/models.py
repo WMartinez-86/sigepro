@@ -32,7 +32,7 @@ class Proyecto(models.Model):
     fecha_ini=models.DateField(verbose_name='Fecha de inicio',null=False)
     fecha_fin=models.DateField(verbose_name='Fecha de Finalizacion',null=False)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    estado=models.CharField(max_length=3,choices= ESTADOS, default='PEN')
+    estado=models.CharField(max_length=3,choices= ESTADOS, default='PRO')
     duracion_sprint = models.PositiveIntegerField(default=30)
     #equipo = models.ManyToManyField(User, through='MiembroEquipo')
 
