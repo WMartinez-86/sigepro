@@ -4,6 +4,7 @@ from apps.flujos.models import Flujo
 from django.contrib.auth.models import User
 from apps.proyectos.models import Proyecto
 from apps.sprints.models import Sprint
+from apps.actividades.models import Actividad
 #from apps.trabajos.models import Trabajo
 
 
@@ -45,6 +46,7 @@ class UserStory(models.Model):
     desarrollador = models.ForeignKey(User, null=True, blank=True)
     sprint = models.ForeignKey(Sprint, null=True, blank=True)
     flujo = models.ForeignKey(Flujo, null=True, blank=True)
+    actividad = models.ForeignKey(Actividad, null=True, blank=True)
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 

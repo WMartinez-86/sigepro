@@ -31,7 +31,7 @@ Flujos
         <h1>Flujos para el proyecto {{ proyecto.nombre }}</h1>
         <form action="/flujos/search/{{proyecto.id}}" method="get">
             <label for="q"></label>
-            <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del fase">
+            <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del flujo">
             <div class="btn-group">
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </div>
@@ -41,8 +41,8 @@ Flujos
 
         <ul class="object-tools">
             <li>
-                <a href="/flujos/registrar/{{proyecto.id}}" class="addlink">Nueva Fase</a>
-                <!--<a href="/flujos/lista_todas/{{proyecto.id}}" class="addlink">Importar Fase</a>-->
+                <a href="/flujos/registrar/{{proyecto.id}}" class="addlink">Nuevo flujo</a>
+                <!--<a href="/flujos/lista_todas/{{proyecto.id}}" class="addlink">Importar flujo</a>-->
             </li>
         </ul>
         <div id="content-main">
