@@ -148,7 +148,7 @@ def cambiar_estado_proyecto(request, id_proyecto):
                 proyecto_form.save()
                 return HttpResponseRedirect('/proyectos/register/success/')
             else:
-                if proyecto_form.cleaned_data['estado'] == 'ELI' or proyecto_form.cleaned_data['estado'] == 'PEN' or \
+                if proyecto_form.cleaned_data['estado'] == 'ELI' or proyecto_form.cleaned_data['estado'] == 'PRO' or \
                                 proyecto_form.cleaned_data['estado'] == 'ELI':
                     proyecto_form.save()
                     return HttpResponseRedirect('/proyectos/register/success/')

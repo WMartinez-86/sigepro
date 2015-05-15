@@ -44,7 +44,7 @@ def registrar_flujo(request, id_proyecto):
                 fecha=fecha.strftime('%Y-%m-%d')
                 fecha1=datetime.strptime(fecha,'%Y-%m-%d')
                 newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
-                               fInicio = fecha,estado = "PEN", proyecto_id = id_proyecto, sprim = request.POST["sprim"])
+                               fInicio = fecha,estado = "PRO", proyecto_id = id_proyecto, sprim = request.POST["sprim"])
                 aux=0
                 orden=Flujo.objects.filter(proyecto_id=id_proyecto)
 
@@ -92,7 +92,7 @@ def listar_flujos(request,id_proyecto):
     """
     flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    if proyecto.estado!='PEN':
+    if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
                               context_instance=RequestContext(request))
@@ -112,7 +112,7 @@ def editar_flujo(request,id_flujo):
     flujo= Flujo.objects.get(id=id_flujo)
     id_proyecto= flujo.proyecto_id
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    if proyecto.estado!='PEN':
+    if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
                               context_instance=RequestContext(request))
@@ -232,7 +232,7 @@ def importar_flujo(request, id_flujo,id_proyecto):
                 fecha=datetime.strptime(str(request.POST["fInicio"]),'%d/%m/%Y')
                 fecha=fecha.strftime('%Y-%m-%d')
                 fecha1=datetime.strptime(fecha,'%Y-%m-%d')
-                newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],maxItems = request.POST["maxItems"],fInicio = fecha, estado = "PEN",
+                newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],maxItems = request.POST["maxItems"],fInicio = fecha, estado = "PRO",
                                proyecto_id = id_proyecto)
                 aux=0
                 orden=Flujo.objects.filter(proyecto_id=id_proyecto)
@@ -281,7 +281,7 @@ def detalle_flujo(request, id_flujo):
 
     dato = get_object_or_404(Flujo, pk=id_flujo)
     proyecto = Proyecto.objects.get(id=dato.proyecto_id)
-    if proyecto.estado!='PEN':
+    if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
                               context_instance=RequestContext(request))
@@ -299,7 +299,7 @@ def eliminar_flujo(request,id_flujo):
     """
     flujo = get_object_or_404(Flujo, pk=id_flujo)
     proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
-    if proyecto.estado =='PEN':
+    if proyecto.estado =='PRO':
         flujo.delete()
     flujos = Flujo.objects.filter(proyecto_id=proyecto.id).order_by('orden')
     return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
@@ -341,7 +341,7 @@ def asignar_usuario(request,id_flujo):
     for rol in roles:       #Un usuario tiene un rol por flujo
         usuarios=usuarios.exclude(groups__id=rol.id)
     proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
-    if proyecto.estado!='PEN':
+    if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
                               context_instance=RequestContext(request))
@@ -359,7 +359,7 @@ def desasignar_usuario(request,id_flujo):
     """
     flujo=Flujo.objects.get(id=id_flujo)
     proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
-    if proyecto.estado!='PEN':
+    if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
                               context_instance=RequestContext(request))
@@ -381,8 +381,8 @@ def estadoKanban(request, id_flujo):
     @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
     """
     # formulario inicial
-    flujo=Flujo.objects.get(id=id_flujo)
-    userStories = UserStory.objects.filter(proyecto_id=flujo.proyecto)
+    # flujo=Flujo.objects.get(id=id_flujo)
+    userStories = UserStory.objects.filter(flujo=id_flujo)
     actividades = Actividad.objects.filter(flujo_id=id_flujo)
     cantActividades = actividades.count()
     print "cantactividades"
