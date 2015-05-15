@@ -1,0 +1,47 @@
+{% extends 'base2.html' %}
+{% block title %}
+	Detalle User Story
+{% endblock %}
+{% block content %}
+    <head>
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+</head>
+    <div class="breadcrumbs">
+
+        <a href="/userStories/">Administracion de User Stories</a> >
+    " Detalle User Story"
+    </div>
+
+                <div id="content">
+                <h1>Detalles de {{datos.nombre|title}}</h1>
+       <fieldset class="module aligned wide">
+<form method="post">{% csrf_token %}
+    <div class="form-row">
+             <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
+            <div><strong>Descripción: </strong>{{ datos.descripcion }}</div>
+            <div><strong>Costo: </strong>{{ datos.costo }}</div>
+            <div><strong>Tiempo: </strong>{{ datos.tiempo }}</div>
+            <div><strong>Version: </strong>{{ datos.version }}</div>
+            <div><strong>Estado: </strong>{{ datos.estado }}</div>
+
+            <div><strong>Fecha de creacion: </strong>{{ datos.fecha_creacion }}</div>
+            <div><strong>Fecha de modificacion: </strong>{{ datos.ulimo_cambio }}</div>
+            <div>
+
+
+
+
+            </div>
+              <div>
+
+
+
+              </div>
+        </div>
+</form>
+            </fieldset>
+                    </div>
+
+{% endblock %}

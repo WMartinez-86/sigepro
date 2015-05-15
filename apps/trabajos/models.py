@@ -27,9 +27,9 @@ class Trabajo(models.Model):
   tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=TIPO_NORMAL)
   hora = models.TimeField(default=0)
   descripcion = models.TextField(max_length=140)
+  fecha = models.DateTimeField(auto_now=True, verbose_name='Fecha')
 
-
-class Archivo(models.model):
+class Archivo(models.Model):
   """
   Modelo que repsenta a un archivo
   @cvar archivo: Campo de tipo de archivo

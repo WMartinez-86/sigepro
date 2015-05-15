@@ -56,7 +56,7 @@
         <tr>
             <th scope="col" class="sortable" >
                 <div class="text">
-                    <a>Nombre</a>
+                    <a>Tipo de trabajo</a>
                 </div>
             </th>
 
@@ -64,12 +64,12 @@
             </th>
              <th scope="col">
                 <div class="text">
-                    <a>Estado</a>
+                    <a>Descripcion</a>
                 </div>
             </th>
              <th scope="col">
                 <div class="text">
-                    <a> Tiempo Estimado </a>
+                    <a> Hora </a>
                 </div>
             </th>
             <th scope="col">
@@ -77,55 +77,35 @@
                     <a>Tiempo Registrado</a>
                 </div>
             </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Ultimo Cambio</a>
-                </div>
-            </th>
+
 
                 </div>
             </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Descripcion</a>
-                </div>
+
             </th>
-             <th scope="col">
-                <div class="text">
-                    <a>Modificar</a>
-                </div>
+
                  </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Cambiar estado</a>
-                </div>
+
 
             </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Eliminar</a>
-                </div>
+
             </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Trabajos</a>
-                </div>
+
             </th>
         </tr>
         </thead>
         <tbody>
-        {% for dato in datos  %}
+        {% for Trabajo in datos  %}
             <tr>
-                <td><center>{{ dato.nombre}}</center></td>
-				<td><center>{{ dato.estado }}</center></td>
-                <td><center>{{ dato.tiempo_estimado }}</center></td>
-                <td><center>{{ dato.tiempo_registrado }}</center></td>
-                <td><center>{{ dato.ultimo_cambio }}</center></td>
+                <td><center>{{ Trabajo.tipo_trabajo }}</center></td>
+				<td><center>{{ Trabajo.descripcion }}</center></td>
+                <td><center>{{ Trabajo.hora }}</center></td>
+                <td><center>{{ Trabajo.fecha }}</center></td>
                 <td><center><a href="/userStories/detalle/{{ dato.id }}"  class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                 <td><center><a href="/userStories/modificar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
                 <td><center><a href="/desarrollo/item/cambiar_estado/{{ dato.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center></td>
                 <td><center><a href="/userStories/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
-                <td><center><a href="/userStories/trabajos/{{ dato.pk }}" class="btn btn-info"><i class="icon-bookmark icon-white"></i></a></center></td>
+                <td><center><a href="/trabajos/dato/{{ dato.pk }}" class="btn btn-info"><i class="icon-bookmark icon-white"></i></a></center></td>
             </tr>
         {% endfor %}
         </tbody>
