@@ -82,7 +82,9 @@ def crear_userStory(request):
 
             newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],prioridad=request.POST['prioridad'],
                                        valor_negocio=request.POST['valor_negocio'],valor_tecnico=request.POST['valor_tecnico'],tiempo_estimado=request.POST['tiempo_estimado'],
-                                       tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime)
+                                       tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime, proyecto_id=request.POST['proyecto'],
+                                       desarrollador_id=request.POST['desarrollador'], sprint_id=request.POST['sprint'],
+                                       flujo_id=request.POST['flujo'])
             newUserStory.save()
             #guardar archivo
 
