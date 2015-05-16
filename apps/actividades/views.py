@@ -24,7 +24,7 @@ from apps.actividades.models import Actividad
 
 @login_required
 @permission_required('actividad')
-def registrar_actividad(request, id_proyecto):
+def registrar_actividad(request, id_flujo):
     """
     Vista para registrar un nuevo actividad dentro de proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
@@ -32,27 +32,27 @@ def registrar_actividad(request, id_proyecto):
     render_to_response('proyectos/registrar_proyecto.html',{'formulario':formulario}, context_instance=RequestContext(request)) al formulario
     """
     mensaje=100
-    proyecto = Proyecto.objects.get(id=id_proyecto)
+    flujo = Flujo.objects.get(id=id_flujo)
+    proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
     if request.method=='POST':
-        proyecto = Proyecto.objects.get(id=id_proyecto)
+        # proyecto = Proyecto.objects.get(id=id_proyecto)
         formulario = CrearActividadForm(request.POST)
         if formulario.is_valid():
-            newActividad = Actividad(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
-                               estado = "PRO", proyecto_id = id_proyecto)
-            orden=Actividad.objects.filter(proyecto_id=id_proyecto)
-            proyecto=Proyecto.objects.get(id=id_proyecto)
+            newActividad = Actividad(nombre = request.POST["nombre"],flujo_id = id_flujo)
+            orden=Actividad.objects.filter(flujo_id=id_flujo)
+            # proyecto=Proyecto.objects.get(id=id_proyecto)
             cantidad = orden.count()
             if cantidad>0:
                 newActividad.orden=orden.count()+1 # Calculo del orden del actividad a crear
                 newActividad.save()
-                return render_to_response('actividades/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                return render_to_response('actividades/creacion_correcta.html',{'id_flujo':id_flujo}, context_instance=RequestContext(request))
             else:
                 newActividad.orden=1
                 newActividad.save()
-                return render_to_response('actividades/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                return render_to_response('actividades/creacion_correcta.html',{'id_flujo':id_flujo}, context_instance=RequestContext(request))
     else:
         formulario = CrearActividadForm() #formulario inicial
-    return render_to_response('actividades/registrar_actividades.html',{'formulario':formulario,'id':id_proyecto, 'proyecto':proyecto, 'mensaje':mensaje},
+    return render_to_response('actividades/registrar_actividades.html',{'formulario':formulario,'id':id_flujo, 'proyecto':proyecto, 'mensaje':mensaje},
                               context_instance=RequestContext(request))
 
 
@@ -66,6 +66,7 @@ def listar_actividades(request,id_flujo):
     @return render_to_response('actividades/listar_actividades.html', {'datos': actividades}, context_instance=RequestContext(request))
     """
     actividades = Actividad.objects.filter(flujo_id=id_flujo).order_by('orden')
+    flujo = Flujo.objects.get(id=id_flujo)
     return render_to_response('actividades/listar_actividades.html', {'datos': actividades, 'flujo' : flujo}, context_instance=RequestContext(request))
 
 
@@ -128,24 +129,24 @@ def eliminar_actividad(request,id_actividad):
 
 @login_required
 @permission_required('actividad')
-def buscar_actividades(request,id_proyecto):
+def buscar_actividades(request,id_flujo):
     """
     vista para buscar los actividades del proyecto
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
     """
     query = request.GET.get('q', '')
-    proyecto = Proyecto.objects.get(id=id_proyecto)
+    flujo = Flujo.objects.get(id=id_flujo)
     if query:
         qset = (
             Q(nombre__contains=query)
         )
-        results = Actividad.objects.filter(qset, proyecto_id=id_proyecto).distinct()
+        results = Actividad.objects.filter(qset, flujo_id=id_flujo).distinct().order_by('orden')
     else:
         results = []
 
 
-    return render_to_response('actividades/listar_actividades.html', {'datos': results, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    return render_to_response('actividades/listar_actividades.html', {'datos': results, 'flujo' : flujo}, context_instance=RequestContext(request))
 
 
 @login_required
