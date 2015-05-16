@@ -31,7 +31,7 @@ from datetime import date
 @login_required
 def listar_trabajos(request,id_userStory):
     """
-    vista para listar los userStories pertenecientes a la flujo
+    vista para listar los trabajos pertenecientes a un user story
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_userStory: clave foranea a la flujo
     @return render_to_response(..) o HttpResponse(...)
@@ -59,6 +59,7 @@ def crear_trabajo(request):
 
     if request.method=='POST':
         #formset = ItemFormSet(request.POST)
+        #userStory_id = UserStory.objects.get(id=id_userStory)
         formulario = crearTrabajoForm(request.POST)
 
         if formulario.is_valid():
