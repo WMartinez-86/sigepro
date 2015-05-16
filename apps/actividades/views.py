@@ -66,9 +66,7 @@ def listar_actividades(request,id_flujo):
     @return render_to_response('actividades/listar_actividades.html', {'datos': actividades}, context_instance=RequestContext(request))
     """
     actividades = Actividad.objects.filter(flujo_id=id_flujo).order_by('orden')
-    proyecto = Proyecto.objects.get(id=id_flujo)
-
-    return render_to_response('actividades/listar_actividades.html', {'datos': actividades}, context_instance=RequestContext(request))
+    return render_to_response('actividades/listar_actividades.html', {'datos': actividades, 'flujo' : flujo}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -87,37 +85,12 @@ def editar_actividad(request,id_actividad):
         mensaje =100
         actividad_form = ModificarActividadForm(request.POST, instance=actividad)
         if actividad_form.is_valid():
-            orden=Actividad.objects.filter(flujo_id=actividad.flujo_id)
-            cantidad = orden.count()
-            if cantidad>1 and actividad.orden != cantidad and actividad.orden >1: #comprobaciones de fechas
-                actividad_form.save()
-                return render_to_response('actividades/creacion_correcta.html',{'id_actividad':id_actividad}, context_instance=RequestContext(request))
-            elif cantidad>1 and actividad.orden != cantidad and actividad.orden==1:
-                actividad_form.save()
-                return render_to_response('actividades/creacion_correcta.html',{'id_actividad':id_actividad}, context_instance=RequestContext(request))
-            elif cantidad>1 and actividad.orden == cantidad:
-                actividad_form.save()
-                return render_to_response('actividades/creacion_correcta.html',{'id_actividad':id_actividad}, context_instance=RequestContext(request))
-            else:
-                actividad_form.save()
-                return render_to_response('actividades/creacion_correcta.html',{'id_actividad':id_actividad}, context_instance=RequestContext(request))
+            actividad_form.save()
+            return render_to_response('actividades/creacion_correcta.html',{'id_flujo':flujo.id}, context_instance=RequestContext(request))
     else:
         # formulario inicial
         actividad_form = ModificarActividadForm(instance=actividad)
     return render_to_response('actividades/editar_actividad.html', { 'form': actividad_form, 'actividad': actividad, 'flujo': flujo}, context_instance=RequestContext(request))
-
-@login_required
-@permission_required('actividad')
-def actividades_todas(request,id_proyecto):
-    """
-    vista para listar las actividades del sistema
-    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @param id_proyecto: referencia al proyecto de la base de datos
-    @return: render_to_response('actividades/actividades_todas.html', {'datos': actividades, 'proyecto' : proyecto}, context_instance=RequestContext(request))
-    """
-    actividades = Actividad.objects.all()
-    proyecto = Proyecto.objects.get(id=id_proyecto)
-    return render_to_response('actividades/actividades_todas.html', {'datos': actividades, 'proyecto' : proyecto}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -132,12 +105,9 @@ def detalle_actividad(request, id_actividad):
     """
 
     dato = get_object_or_404(Actividad, pk=id_actividad)
-    proyecto = Proyecto.objects.get(id=dato.proyecto_id)
-    if proyecto.estado!='PRO':
-        proyectos = Proyecto.objects.all().exclude(estado='ELI')
-        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                              context_instance=RequestContext(request))
-    return render_to_response('actividades/detalle_actividad.html', {'datos': dato,'proyecto':proyecto}, context_instance=RequestContext(request))
+    flujo = Flujo.objects.get(id=dato.flujo_id)
+
+    return render_to_response('actividades/detalle_actividad.html', {'datos': dato,'proyecto':flujo}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -150,11 +120,11 @@ def eliminar_actividad(request,id_actividad):
     @return: render_to_response('actividades/listar_actividades.html', {'datos': actividades, 'proyecto' : proyecto}, context_instance=RequestContext(request))
     """
     actividad = get_object_or_404(Actividad, pk=id_actividad)
-    proyecto = Proyecto.objects.get(id=actividad.proyecto_id)
-    if proyecto.estado =='PRO':
-        actividad.delete()
-    actividades = Actividad.objects.filter(proyecto_id=proyecto.id).order_by('orden')
-    return render_to_response('actividades/listar_actividades.html', {'datos': actividades, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    id_flujo = actividad.flujo
+    actividad.delete()
+
+    actividades = Actividad.objects.filter(flujo_id=id_flujo).order_by('orden')
+    return render_to_response('actividades/listar_actividades.html', {'datos': actividades}, context_instance=RequestContext(request))
 
 @login_required
 @permission_required('actividad')
