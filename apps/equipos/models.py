@@ -18,3 +18,6 @@ class MiembroEquipo(models.Model):
     proyecto = models.ForeignKey(Proyecto)
     roles = models.ManyToManyField(Group)
     horasPorDia = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.proyecto.nombre
