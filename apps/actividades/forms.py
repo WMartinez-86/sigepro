@@ -16,7 +16,7 @@ class CrearActividadForm(ModelForm):
 
     class Meta:
         model = Actividad
-        fields = ('nombre', 'flujo',)
+        fields = ('nombre',)
 
 class ModificarActividadForm(ModelForm):
     class Meta:
