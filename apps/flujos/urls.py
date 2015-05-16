@@ -5,7 +5,7 @@ from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
 from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos,estadoKanban, asignar_usuario
-from views import editar_flujo,flujos_todas, importar_flujo, eliminar_flujo, desasignar_usuario
+from views import editar_flujo,flujos_todas, eliminar_flujo, desasignar_usuario
 
 urlpatterns = patterns('',
         #Administracion de Flujos
@@ -13,7 +13,6 @@ urlpatterns = patterns('',
         url(r'^proyecto/(?P<id_proyecto>\d+)$', listar_flujos, name='list_flujo'),
         url(r'^editar/(?P<id_flujo>\d+)$', editar_flujo, name='edit_flujo'),
         url(r'^lista_todas/(?P<id_proyecto>\d+)$',flujos_todas,name='flujos_todas'),
-        url(r'^importar/(?P<id_flujo>\d+)-(?P<id_proyecto>\d+)$', importar_flujo,name='importar_flujo'),
         url(r'^(?P<id_flujo>\d+)$', detalle_flujo, name='detalle_flujo'),
         url(r'^eliminar/(?P<id_flujo>\d+)$', eliminar_flujo, name='eliminar_flujo'),
         url(r'^search/(?P<id_proyecto>\d+)$',buscar_flujos, name='buscar_flujos'),
