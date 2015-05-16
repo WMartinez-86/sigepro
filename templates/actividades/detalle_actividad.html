@@ -18,11 +18,9 @@ Detalle_Proyecto
     <fieldset class="module aligned wide">
         <form method="post">{% csrf_token %}
             <div class="form-row">
-                <div><strong>Numero: </strong>{{ datos.orden }}</div>
+                <div><strong>Orden: </strong>{{ datos.orden }}</div>
                 <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
-                <div><strong>Descripcion: </strong>{{ datos.descripcion }}</div>
-                <div><strong>Estado: </strong>{{ datos.estado}}</div>
-                <div><strong>Fecha de Inicio: </strong>{{ datos.fInicio }}</div>
+                <div><strong>Flujo: </strong>{{ datos.flujo.nombre }}</div>
             </div>
         </form>
     </fieldset>
