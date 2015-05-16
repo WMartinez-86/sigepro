@@ -26,7 +26,7 @@ class Trabajo(models.Model):
     userstory = models.ForeignKey(UserStory)
     sprint = models.ForeignKey(Sprint)
     tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=TIPO_NORMAL)
-    #hora = models.TimeField(default=0)
+    hora = models.PositiveIntegerField(default=0)
     fecha = models.DateField(auto_now=True, verbose_name='Fecha')
 
     def __str__(self):
