@@ -42,11 +42,11 @@ class UserStory(models.Model):
     ultimo_cambio = models.DateTimeField(auto_now=True, verbose_name='Ultimo Cambio')
     estadoKanban = models.IntegerField(choices=estados_kanban, default=0)
     estadoScrum = models.IntegerField(choices=estados_scrum, default=0)
-    proyecto = models.ForeignKey(Proyecto, null=True, blank=True)
-    desarrollador = models.ForeignKey(User, null=True, blank=True)
-    sprint = models.ForeignKey(Sprint, null=True, blank=True)
-    flujo = models.ForeignKey(Flujo, null=True, blank=True)
-    actividad = models.ForeignKey(Actividad, null=True, blank=True)
+    proyecto = models.ForeignKey(Proyecto)
+    desarrollador = models.ForeignKey(User)
+    sprint = models.ForeignKey(Sprint)
+    flujo = models.ForeignKey(Flujo)
+    actividad = models.ForeignKey(Actividad)
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 
