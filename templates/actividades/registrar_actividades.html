@@ -1,0 +1,41 @@
+{% extends 'base2.html' %}
+{% block title %}
+Nuevo_flujo
+{% endblock %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+</head>
+<div class="breadcrumbs">
+    <a href="/proyectos/">Proyecto {{ flujo.nombre }}</a>>>
+    <a href="/actividades/flujo/{{id}}">Actividades del Proyecto {{ flujo.nombre }}</a>
+    ">Nuevo Actividad"
+</div>
+
+<div id="content">
+    <h1>Crear Actividad</h1>
+    <p>Fecha del flujo comprendida del  "{{ flujo.fecha_ini }}"  al  "{{ flujo.fecha_fin }}"</p>
+    <fieldset class="module aligned wide">
+        <form method="post">{% csrf_token %}
+            <div class="form-row">
+                <ul class="errorlist">
+                    {% if  mensaje == 0 %}
+                    <li>Error: El formato de Fecha es: DD/MM/AAAA</li>
+                    {% elif mensaje == 1 %}
+                    <li>Error: Fecha de inicio no concuerda con fase anterior</li>
+                    {% elif mensaje == 2 %}
+                    <li>Error: Fecha de inicio no concuerda con flujo</li>
+                    {% endif %}
+                </ul>
+                {{ formulario.as_p }}
+            </div>
+            <div class="submit-row">
+                <input type="submit" value="Confirmar" />
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+{% endblock %}

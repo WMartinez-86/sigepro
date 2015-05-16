@@ -29,5 +29,7 @@ urlpatterns = patterns('',
     url(r'^sprints/',include('apps.sprints.urls')),
     #TRABAJOS
     url(r'^trabajos/',include('apps.trabajos.urls')),
+    #ACTIVIDADES
+    url(r'^actividades/',include('apps.actividades.urls')),
 
 )

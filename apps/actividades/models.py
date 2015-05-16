@@ -12,6 +12,5 @@ class Actividad(models.Model):
     orden = models.IntegerField(default=0)
 
 
-
     def __str__(self):
         return self.nombre

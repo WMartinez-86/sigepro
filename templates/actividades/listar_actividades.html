@@ -1,0 +1,115 @@
+{% extends 'base2.html' %}
+{% block title %}
+Actividades
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es-PY" >
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css" />
+
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="dashboard">
+
+<!-- Container -->
+<div id="container">
+    <!-- Content -->
+    <div id="content" class="change-list" style="width: 1100px">
+        <div class="breadcrumbs">
+            <a href="/proyectos/">Proyectos</a>
+            ">Administracion de Actividades"
+        </div>
+        <h1>Actividades para el flujo {{ flujo.nombre }}</h1>
+        <form action="/actividades/search/{{flujo.id}}" method="get">
+            <label for="q"></label>
+            <input type="text" name="q" value="{{ query|escape }}" class="search-query" placeholder="Buscar Nombre del actividad">
+            <div class="btn-group">
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </div>
+            <a href="/actividades/flujo/{{flujo.id}}" class="btn btn-success"><i class="icon-refresh"></i></a>
+        </form>
+
+
+        <ul class="object-tools">
+            <li>
+                <a href="/actividades/registrar/{{flujo.id}}" class="addlink">Nueva actividad</a>
+                <!--<a href="/actividades/lista_todas/{{flujo.id}}" class="addlink">Importar actividad</a>-->
+            </li>
+        </ul>
+        <div id="content-main">
+
+
+
+
+            <div class="results" >
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Nro</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Nombre</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Detalle</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Modificar</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Eliminar</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for dato in datos  %}
+                    <tr>
+                        <td><center>{{ dato.orden }}</center></td>
+                        <td><center>{{ dato.nombre }}</center></td>
+                        <td><center><a href="/actividades/{{ dato.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                        <td><center><a href="/actividades/editar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+                        <td><center><a href="/actividades/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+
+        </div>
+
+
+
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+{% endblock %}
+
