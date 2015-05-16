@@ -96,6 +96,11 @@ Flujos
                         </th>
                         <th scope="col">
                             <div class="text">
+                                <a>Actividades</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
                                 <a>Kanban</a>
                             </div>
                         </th>
@@ -112,7 +117,8 @@ Flujos
                         <td><center><a href="/flujos/editar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
                         <td><center><a href="/flujos/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                         <td><center><a href="/flujos/asignar/{{dato.id}}" class="btn btn-inverse"><i class="icon-user icon-white"></i></a></center></td>
-                        <td><center><a href="/flujos/kanban/{{ dato.pk }}" class="btn btn-success"><i class="icon-eye-open icon-green"></i></a></center></td>
+                        <td><center><a href="/actividades/flujo/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-list-alt icon-white"></i></a></center></td>
+                        <td><center><a href="/flujos/kanban/{{ dato.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                     </tr>
                     {% endfor %}
                     </tbody>
