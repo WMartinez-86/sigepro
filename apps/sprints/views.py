@@ -54,15 +54,20 @@ def registrar_sprint(request, id_proyecto):
                 mensaje=0
                 return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':mensaje,'id':id_proyecto}, context_instance=RequestContext(request))
             else:
-                fecha=datetime.strptime(str(request.POST["inicio"]),'%d/%m/%Y')
-                fecha=fecha.strftime('%Y-%m-%d')
-                fecha1=datetime.strptime(fecha,'%Y-%m-%d')
-                sprint_time = proyecto.duracion_sprint
-                fechafin=fecha1 + timedelta(days=sprint_time)
-                print (fechafin)
+                fechaI = datetime.strptime(str(request.POST["inicio"]), '%d/%m/%Y')#convert string to datetime
+                fechaI = fechaI.strftime('%Y-%m-%d')# fecha con formato
+                fechaIni = datetime.strptime(fechaI, '%Y-%m-%d') #convert string to datetime
+                fechaF = datetime.strptime(str(request.POST["fin"]), '%d/%m/%Y')#convert string to datetime
+                fechaF = fechaF.strftime('%Y-%m-%d')# fecha con formato
+                fechaFin = datetime.strptime(fechaF, '%Y-%m-%d') #convert string to datetime
+                #fechaFin=fechaFin.strftime('%Y-%m-%d')
+                #fecha1=datetime.strptime(fecha,'%Y-%m-%d')
+                #sprint_time = proyecto.duracion_sprint
+                #fechafin=fecha1 + timedelta(days=sprint_time)
+                #print (fechafin)
 
                 newSprint = Sprint(nombre = request.POST["nombre"],
-                               inicio = fecha, proyecto_id = id_proyecto, fin = fechafin, descripcion = request.POST["descripcion"])
+                                   inicio = fechaIni, proyecto_id = id_proyecto, fin = fechaFin, descripcion = request.POST["descripcion"])
                 aux=0
                 orden = Sprint.objects.filter(proyecto_id=id_proyecto)
 
@@ -72,15 +77,16 @@ def registrar_sprint(request, id_proyecto):
                     proyecto=Proyecto.objects.get(id=id_proyecto)
                     cantidad = orden.count()
                     if cantidad>0:#comprobaciones de fecha
-                       anterior = Sprint.objects.get(orden=cantidad, proyecto_id=id_proyecto)
-                       if fecha1<datetime.strptime(str(anterior.inicio),'%Y-%m-%d'):
-                           #Fecha de inicio no puede ser menor a la fecha de fin del sprint anterior
-                           return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':1,'id':id_proyecto,'proyecto':proyecto},
-                                                     context_instance=RequestContext(request))
-                       else:
-                            if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                        anterior = Sprint.objects.get(orden=cantidad, proyecto_id=id_proyecto)
+                        if fechaFin<datetime.strptime(str(anterior.inicio),'%Y-%m-%d'):
+                            #Fecha de inicio no puede ser menor a la fecha de fin del sprint anterior
+                            return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':1,'id':id_proyecto,'proyecto':proyecto},
+                                                      context_instance=RequestContext(request))
+                        else:
+                            #if proyecto.fecha_ini>=fechaFin or proyecto.fecha_fin<=fechaFin:
+                            if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fechaFin or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fechaIni:
                                 #Fecha de inicio no concuerda con proyecto
-                                print(fecha1)
+                                print(fechaFin)
                                 print(datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d'))
                                 print (datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d'))
                                 return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':2,'id':id_proyecto,'proyecto':proyecto},
