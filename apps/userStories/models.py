@@ -45,8 +45,8 @@ class UserStory(models.Model):
     proyecto = models.ForeignKey(Proyecto)
     desarrollador = models.ForeignKey(User)
     sprint = models.ForeignKey(Sprint)
-    flujo = models.ForeignKey(Flujo)
-    actividad = models.ForeignKey(Actividad)
+    flujo = models.ForeignKey(Flujo, null=True, blank=True)
+    actividad = models.ForeignKey(Actividad, null=True, blank=True)
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 

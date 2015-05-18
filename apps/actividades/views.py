@@ -108,7 +108,7 @@ def detalle_actividad(request, id_actividad):
     dato = get_object_or_404(Actividad, pk=id_actividad)
     flujo = Flujo.objects.get(id=dato.flujo_id)
 
-    return render_to_response('actividades/detalle_actividad.html', {'datos': dato,'proyecto':flujo}, context_instance=RequestContext(request))
+    return render_to_response('actividades/detalle_actividad.html', {'datos': dato,'flujo':flujo}, context_instance=RequestContext(request))
 
 
 @login_required

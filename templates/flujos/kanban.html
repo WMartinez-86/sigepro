@@ -62,14 +62,14 @@ Kanban
     <table class="table rounded" border="1">
         <tbody>
             <tr id="task_pool_header_container">
-                <th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+                <!--<th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>-->
                 {% for Actividad in actividades  %}
                     <th class="task_pool_header  dotted_separator", colspan="3"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">{{ Actividad.nombre }}</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
                 {% endfor %}
                 <th class="task_pool_header"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Terminado</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
             </tr>
             <tr id="states">
-                <th class="task_pool_header  dotted_separator"></th>
+                <!--<th class="task_pool_header  dotted_separator"></th>-->
                 {% for Actividad in actividades  %}
                     <th class="task_pool_header  dotted_separator">To Do</th>
                     <th class="task_pool_header  dotted_separator">Doing</th>
@@ -78,7 +78,7 @@ Kanban
                 <th class="task_pool_header  dotted_separator"><span class="title_text">{{ Actividad.nombre }}</span></th>
             </tr>
             <tr id="task_pool_container">
-                <td class="task_pool dotted_separator ui-sortable"><div></div></td>
+                <!--<td class="task_pool dotted_separator ui-sortable"><div></div></td>-->
                 {% for Actividad in actividades  %}
                     <td class="task_pool dotted_separator ui-sortable"><div></div>
 

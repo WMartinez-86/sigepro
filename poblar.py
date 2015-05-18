@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 
 def populate():
     cli = agregar_rol('Cliente')
@@ -7,13 +6,31 @@ def populate():
     des = agregar_rol('Desarrollador')
     sm = agregar_rol('Scrum Master')
 
-    u = agregar_usuario('manuel')
-    c = agregar_usuario('juan')
+    m = agregar_usuario('manuel')
+    e = agregar_usuario('ema')
+    d = agregar_usuario('david')
+    w = agregar_usuario('willian')
+    o = agregar_usuario('otto')
+    j = agregar_usuario('juan')
     s = agregar_superUsuario('sergio')
-    p = agregar_proyecto('PoblarBD', 'Poblar la Base de Datos')
-    #agregar_miembrosEquipo(u, p, adm)
-    #agregar_miembrosEquipo(c, p, cli)
-    #agregar_miembrosEquipo(s, p, sm)
+    pb = agregar_proyecto('PoblarBD', 'Poblar la Base de Datos')
+    pp = agregar_proyecto('Pintar', 'Pintar la casa')
+    pa = agregar_proyecto('ArmComp', 'Armar Computadora')
+    agregar_miembrosEquipo(m, pb, adm)
+    # agregar_miembrosEquipo(w, pb, cli)
+    # agregar_miembrosEquipo(e, pb, sm)
+    # agregar_miembrosEquipo(d, pb, des)
+    # agregar_miembrosEquipo(d, pp, adm)
+    # agregar_miembrosEquipo(o, pp, cli)
+    # agregar_miembrosEquipo(s, pp, sm)
+    # agregar_miembrosEquipo(m, pp, des)
+    # agregar_miembrosEquipo(j, pp, des)
+    # agregar_miembrosEquipo(m, pa, adm)
+    # agregar_miembrosEquipo(j, pa, cli)
+    # agregar_miembrosEquipo(s, pa, sm)
+    # agregar_miembrosEquipo(d, pa, des)
+    # agregar_miembrosEquipo(o, pa, des)
+    # agregar_miembrosEquipo(w, pa, des)
 
     print "terminado"
 
@@ -55,11 +72,18 @@ def agregar_proyecto(nombreCorto, nombre, sprint=30):
     return p
 
 
+def agregar_miembrosEquipo(user, project, role):
+    try:
+        t = MiembroEquipo.objects.get(usuario=user.id, proyecto=project.id, rol=role.id, horasPorDia=10)
+    except MiembroEquipo.DoesNotExist:
+        t = MiembroEquipo.objects.create(usuario=user, proyecto=project, rol_id=role, horasPorDia=10)
+    return t
+
 # def agregar_miembrosEquipo(user, project, role):
 #     try:
-#         t = MiembroEquipo.objects.get(usuario=user.id, proyecto=project.id, rol=role.id)
+#         t = MiembroEquipo.objects.get(usuario=user.id, proyecto=project.id, rol=role.id, horasPorDia=10)
 #     except MiembroEquipo.DoesNotExist:
-#         t = MiembroEquipo.objects.create(usuario=user, proyecto=project, rol=role)
+#         t = MiembroEquipo.objects.create(usuario=user, proyecto=project, rol=role, horasPorDia=10)
 #     return t
 
 # Start execution here!
@@ -69,8 +93,10 @@ if __name__ == '__main__':
     import django
 
     django.setup()
-    from apps.proyectos.models import Proyecto#, MiembroEquipo
+    from apps.proyectos.models import Proyecto
     from django.contrib.auth.models import User, Group
     from django.utils import timezone
+    from datetime import timedelta
+    from apps.equipos.models import MiembroEquipo
 
     populate()

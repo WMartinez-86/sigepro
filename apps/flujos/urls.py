@@ -4,8 +4,8 @@ __author__ = 'juanma'
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos,estadoKanban, asignar_usuario
-from views import editar_flujo,flujos_todas, eliminar_flujo, desasignar_usuario
+from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos,estadoKanban
+from views import editar_flujo,flujos_todas, eliminar_flujo, asignar_userStory, asignar_userStoryFlujo, desasignar_userStoryFlujo, desasignar_usuario
 
 urlpatterns = patterns('',
         #Administracion de Flujos
@@ -22,8 +22,9 @@ urlpatterns = patterns('',
         #url(r'^roles/detalle/(?P<id_rol>\d+)-(?P<id_flujo>\d+)$', detallerol_proyecto, name='detallerol_proyecto'),
         #url(r'^roles/modificar/(?P<id_rol>\d+)-(?P<id_flujo>\d+)$', modificarrol_proyecto, name='modificarrol_proyecto'),
         #url(r'^roles/eliminar/(?P<id_rol>\d+)-(?P<id_flujo>\d+)$', eliminarrol_proyecto, name='eliminarrol_proyecto'),
-        #url(r'^asignar/(?P<id_flujo>\d+)$', asignar_usuario, name='asignar_usuario'),
-        #url(r'^asignar/(?P<id_usuario>\d+)/(?P<id_flujo>\d+)$', asignar_rol, name='asignar_rol'),
+        url(r'^asignar/(?P<id_flujo>\d+)$', asignar_userStory, name='asignar_usuario'),
+        url(r'^asignar/(?P<id_userStory>\d+)/(?P<id_flujo>\d+)$', asignar_userStoryFlujo, name='asignar_user_StoryFlujo'),
+        url(r'^desasignar/(?P<id_userStory>\d+)/(?P<id_flujo>\d+)$', desasignar_userStoryFlujo, name='desasignar_user_StoryFlujo'),
         #url(r'^asociar/(?P<id_rol>\d+)-(?P<id_usuario>\d+)-(?P<id_flujo>\d+)$', asociar,name='asociar'),
         #url(r'^desasignar/(?P<id_flujo>\d+)$', desasignar_usuario, name='des'),
         #url(r'^desasignar/(?P<id_usuario>\d+)/(?P<id_flujo>\d+)$', desasociar,name='desasociar'),

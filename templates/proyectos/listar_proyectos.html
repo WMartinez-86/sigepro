@@ -64,7 +64,11 @@ Proyectos
                                 <a>Estado</a>
                             </div>
                         </th>
-
+                        <th scope="col">
+                            <div class="text">
+                                <a>Scrum Master</a>
+                            </div>
+                        </th>
                         <th scope="col">
                             <div class="text">
                                 <a>Fecha de Inicio</a>
@@ -103,10 +107,21 @@ Proyectos
                     </tr>
                     </thead>
                     <tbody>
-                    {% for proyecto in object_list  %}
+                    {% for proyecto in proyectos  %}
                     <tr>
                         <td><center>{{ proyecto.nombre }}</center></td>
-                        <td><center>{{ proyecto.estado }}</center></td>
+                        <td><center>{{ proyecto.get_estado_display }}</center></td>
+
+                        {% for MiembroEquipo in equipos  %}
+                            {% if MiembroEquipo.proyecto_id == proyecto.id %}
+                                <td><center>{{ MiembroEquipo.usuario }}</center></td>
+                            {% else %}
+                                <td><center>No asignado</center></td>
+                            {% endif %}
+                        {% empty %}
+                            <td><center>No hay equipos</center></td>
+                        {% endfor %}
+
                         <td><center>{{ proyecto.fecha_ini }}</center></td>
                         <td><center>{{ proyecto.fecha_fin }}</center></td>
                         <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>

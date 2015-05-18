@@ -10,7 +10,7 @@ urlpatterns = patterns('',
         #url(r'^registrar/$',registra_proyecto.as_view()),
         url(r'^registrar/$',registra_proyecto, name='registrar_proyectos'),
         #Administracion de Proyectos
-        url(r'^$',lista_proyectos.as_view()),
+        url(r'^$',lista_proyectos, name='listar_proyectos'),
         url(r'^register/success/$',RegisterSuccessView ,name='RegisterSuccessView'),
         url(r'^modificar/(?P<id_proyecto>\d+)$', editar_proyecto, name='edit_proyecto'),
         url(r'^search/$',buscar_proyecto, name='buscar_proyectos'),

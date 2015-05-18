@@ -7,6 +7,9 @@ from apps.userStories.models import UserStory
 from apps.trabajos.models import Trabajo, Archivo
 from apps.trabajos.forms import crearTrabajoForm
 from datetime import date
+from apps.equipos.models import MiembroEquipo
+from django.core.mail import send_mail
+from django.contrib.auth.models import User, Group
 
 # Create your views here.
 # @login_required
@@ -68,9 +71,20 @@ def crear_trabajo(request):
             #obtener item con el cual relacionar
             #item_nombre=request.POST.get('entradalista')
 
-            newTrabajo=Trabajo(descripcion=request.POST['descripcion'], tipo_trabajo=request.POST['tipo_trabajo'], fecha=date, userStory_id=request.POST['userStory'],
+            newTrabajo=Trabajo(descripcion=request.POST['descripcion'], tipo_trabajo=request.POST['tipo_trabajo'],hora=request.POST['hora'], fecha=date, userstory_id=request.POST['userstory'],
                                sprint_id=request.POST['sprint'])
             newTrabajo.save()
+
+            # enviar correo de notificacion al scrum master
+            proyecto = newTrabajo.userstory.proyecto
+            id_proyecto = proyecto.id
+            rolSM = Group.objects.filter(name = "Scrum Master")
+            equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
+            SM = equipi.usuario
+            correo = SM.email
+            send_mail("Asunto", "Mensaje del sistema. \n\nSe ha creado un nuevo Trabajo en el user story '" + newTrabajo.userstory.nombre + "'",
+                      '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
+
             #guardar archivo
             if request.FILES.get('file')!=None:
                 archivo=Archivo(archivo=request.FILES['file'],nombre='', id=newTrabajo.id)
@@ -84,4 +98,3 @@ def crear_trabajo(request):
         hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
         return render_to_response('trabajos/crear_trabajos.html', { 'formulario': formulario}, context_instance=RequestContext(request))
-

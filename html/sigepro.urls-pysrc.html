@@ -53,19 +53,24 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="sigepro.urls-module.html">Module sigepro.urls</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">conf</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module apps.flujos.urls=apps.flujos.urls-module.html,Module apps.inicio.urls=apps.inicio.urls-module.html,Module apps.proyectos.urls=apps.proyectos.urls-module.html,Module apps.roles.urls=apps.roles.urls-module.html,Module apps.sprints.urls=apps.sprints.urls-module.html,Module apps.userStories.urls=apps.userStories.urls-module.html,Module apps.usuarios.urls=apps.usuarios.urls-module.html,Module sigepro.urls=sigepro.urls-module.html"><a title="apps.flujos.urls
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">conf</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module apps.actividades.urls=apps.actividades.urls-module.html,Module apps.flujos.urls=apps.flujos.urls-module.html,Module apps.inicio.urls=apps.inicio.urls-module.html,Module apps.proyectos.urls=apps.proyectos.urls-module.html,Module apps.roles.urls=apps.roles.urls-module.html,Module apps.sprints.urls=apps.sprints.urls-module.html,Module apps.trabajos.urls=apps.trabajos.urls-module.html,Module apps.userStories.urls=apps.userStories.urls-module.html,Module apps.usuarios.urls=apps.usuarios.urls-module.html,Module sigepro.urls=sigepro.urls-module.html"><a title="apps.actividades.urls
+apps.flujos.urls
 apps.inicio.urls
 apps.proyectos.urls
 apps.roles.urls
 apps.sprints.urls
+apps.trabajos.urls
 apps.userStories.urls
 apps.usuarios.urls
 sigepro.urls" class="py-name" href="#" onclick="return doclink('link-0', 'urls', 'link-0');">urls</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">patterns</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">,</tt> <tt class="py-name">url</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Module apps.flujos.admin=apps.flujos.admin-module.html,Module apps.inicio.admin=apps.inicio.admin-module.html,Module apps.proyectos.admin=apps.proyectos.admin-module.html,Module apps.roles.admin=apps.roles.admin-module.html,Module apps.sprints.admin=apps.sprints.admin-module.html,Module apps.userStories.admin=apps.userStories.admin-module.html,Module apps.usuarios.admin=apps.usuarios.admin-module.html"><a title="apps.flujos.admin
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Module apps.actividades.admin=apps.actividades.admin-module.html,Module apps.equipos.admin=apps.equipos.admin-module.html,Module apps.flujos.admin=apps.flujos.admin-module.html,Module apps.inicio.admin=apps.inicio.admin-module.html,Module apps.proyectos.admin=apps.proyectos.admin-module.html,Module apps.roles.admin=apps.roles.admin-module.html,Module apps.sprints.admin=apps.sprints.admin-module.html,Module apps.trabajos.admin=apps.trabajos.admin-module.html,Module apps.userStories.admin=apps.userStories.admin-module.html,Module apps.usuarios.admin=apps.usuarios.admin-module.html"><a title="apps.actividades.admin
+apps.equipos.admin
+apps.flujos.admin
 apps.inicio.admin
 apps.proyectos.admin
 apps.roles.admin
 apps.sprints.admin
+apps.trabajos.admin
 apps.userStories.admin
 apps.usuarios.admin" class="py-name" href="#" onclick="return doclink('link-1', 'admin', 'link-1');">admin</a></tt> </tt>
 <a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt> <tt class="py-keyword">import</tt> <tt class="py-name">setup</tt> </tt>
@@ -73,19 +78,24 @@ apps.usuarios.admin" class="py-name" href="#" onclick="return doclink('link-1', 
 <a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
 <a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-name">setup</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
 <a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt id="link-2" class="py-name"><a title="apps.flujos.admin
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt id="link-2" class="py-name"><a title="apps.actividades.admin
+apps.equipos.admin
+apps.flujos.admin
 apps.inicio.admin
 apps.proyectos.admin
 apps.roles.admin
 apps.sprints.admin
+apps.trabajos.admin
 apps.userStories.admin
 apps.usuarios.admin" class="py-name" href="#" onclick="return doclink('link-2', 'admin', 'link-1');">admin</a></tt><tt class="py-op">.</tt><tt class="py-name">autodiscover</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
 <a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable apps.flujos.urls.urlpatterns=apps.flujos.urls-module.html#urlpatterns,Variable apps.inicio.urls.urlpatterns=apps.inicio.urls-module.html#urlpatterns,Variable apps.proyectos.urls.urlpatterns=apps.proyectos.urls-module.html#urlpatterns,Variable apps.roles.urls.urlpatterns=apps.roles.urls-module.html#urlpatterns,Variable apps.sprints.urls.urlpatterns=apps.sprints.urls-module.html#urlpatterns,Variable apps.userStories.urls.urlpatterns=apps.userStories.urls-module.html#urlpatterns,Variable apps.usuarios.urls.urlpatterns=apps.usuarios.urls-module.html#urlpatterns,Variable sigepro.urls.urlpatterns=sigepro.urls-module.html#urlpatterns"><a title="apps.flujos.urls.urlpatterns
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable apps.actividades.urls.urlpatterns=apps.actividades.urls-module.html#urlpatterns,Variable apps.flujos.urls.urlpatterns=apps.flujos.urls-module.html#urlpatterns,Variable apps.inicio.urls.urlpatterns=apps.inicio.urls-module.html#urlpatterns,Variable apps.proyectos.urls.urlpatterns=apps.proyectos.urls-module.html#urlpatterns,Variable apps.roles.urls.urlpatterns=apps.roles.urls-module.html#urlpatterns,Variable apps.sprints.urls.urlpatterns=apps.sprints.urls-module.html#urlpatterns,Variable apps.trabajos.urls.urlpatterns=apps.trabajos.urls-module.html#urlpatterns,Variable apps.userStories.urls.urlpatterns=apps.userStories.urls-module.html#urlpatterns,Variable apps.usuarios.urls.urlpatterns=apps.usuarios.urls-module.html#urlpatterns,Variable sigepro.urls.urlpatterns=sigepro.urls-module.html#urlpatterns"><a title="apps.actividades.urls.urlpatterns
+apps.flujos.urls.urlpatterns
 apps.inicio.urls.urlpatterns
 apps.proyectos.urls.urlpatterns
 apps.roles.urls.urlpatterns
 apps.sprints.urls.urlpatterns
+apps.trabajos.urls.urlpatterns
 apps.userStories.urls.urlpatterns
 apps.usuarios.urls.urlpatterns
 sigepro.urls.urlpatterns" class="py-name" href="#" onclick="return doclink('link-3', 'urlpatterns', 'link-3');">urlpatterns</a></tt> <tt class="py-op">=</tt> <tt class="py-name">patterns</tt><tt class="py-op">(</tt><tt class="py-string">''</tt><tt class="py-op">,</tt> </tt>
@@ -93,17 +103,22 @@ sigepro.urls.urlpatterns" class="py-name" href="#" onclick="return doclink('link
 <a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt class="py-comment"># url(r'^$', 'sigepro.views.home', name='home'),</tt> </tt>
 <a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-comment"># url(r'^blog/', include('blog.urls')),</tt> </tt>
 <a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^admin/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt id="link-4" class="py-name"><a title="apps.flujos.admin
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^admin/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt id="link-4" class="py-name"><a title="apps.actividades.admin
+apps.equipos.admin
+apps.flujos.admin
 apps.inicio.admin
 apps.proyectos.admin
 apps.roles.admin
 apps.sprints.admin
+apps.trabajos.admin
 apps.userStories.admin
-apps.usuarios.admin" class="py-name" href="#" onclick="return doclink('link-4', 'admin', 'link-1');">admin</a></tt><tt class="py-op">.</tt><tt class="py-name">site</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="apps.flujos.urls
+apps.usuarios.admin" class="py-name" href="#" onclick="return doclink('link-4', 'admin', 'link-1');">admin</a></tt><tt class="py-op">.</tt><tt class="py-name">site</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="apps.actividades.urls
+apps.flujos.urls
 apps.inicio.urls
 apps.proyectos.urls
 apps.roles.urls
 apps.sprints.urls
+apps.trabajos.urls
 apps.userStories.urls
 apps.usuarios.urls
 sigepro.urls" class="py-name" href="#" onclick="return doclink('link-5', 'urls', 'link-0');">urls</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
@@ -121,9 +136,13 @@ sigepro.urls" class="py-name" href="#" onclick="return doclink('link-5', 'urls',
 <a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^userStories/'</tt><tt class="py-op">,</tt><tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'apps.userStories.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
 <a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt class="py-comment">#SPRINTS</tt> </tt>
 <a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^sprints/'</tt><tt class="py-op">,</tt><tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'apps.sprints.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt class="py-comment">#TRABAJOS</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^trabajos/'</tt><tt class="py-op">,</tt><tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'apps.trabajos.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt class="py-comment">#ACTIVIDADES</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^actividades/'</tt><tt class="py-op">,</tt><tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'apps.actividades.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -153,7 +172,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon May  4 13:37:56 2015
+    Generated by Epydoc 3.0.1 on Mon May 18 18:39:45 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

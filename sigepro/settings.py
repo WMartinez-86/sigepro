@@ -113,3 +113,13 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ANONYMOUS_USER_ID = -1
+
+
+# EMAIL SETTINGS
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sigepro.is2@gmail.com'
+EMAIL_HOST_PASSWORD = 'sigeprosystem'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'sigepro.is2@gmail.com'
+DEFAULT_TO_EMAIL = 'juanmayegros@gmail.com'

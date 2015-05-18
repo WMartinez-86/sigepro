@@ -1,12 +1,14 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.auth.models import User, Group
 from apps.proyectos.models import Proyecto
 from django.views.generic import TemplateView, ListView
 from django.utils import timezone
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from apps.proyectos.forms import ProyectoForm, CambiarEstadoForm
+from apps.equipos.models import MiembroEquipo
 
 from apps.flujos.models import Flujo
 from django.contrib import messages
@@ -18,10 +20,17 @@ __text__ = 'Este modulo contiene funciones que permiten el control de proyectos'
 
 __author__ = 'juanma'
 
+@login_required
+@permission_required('proyectos')
+def lista_proyectos(request):
 
-class lista_proyectos(ListView):
-    template_name = 'proyectos/listar_proyectos.html'
-    model = Proyecto
+    proyectos = Proyecto.objects.all()
+    # proyecto = Proyecto.objects.get(id=id_proyecto)
+    rolSM = Group.objects.filter(name = "Scrum Master")
+    equipos = MiembroEquipo.objects.filter(rol = rolSM)
+
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'equipos' : equipos},
+                              context_instance=RequestContext(request))
 
 
 @login_required

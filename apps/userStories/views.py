@@ -16,6 +16,9 @@ from apps.userStories.models import UserStory
 from apps.proyectos.models import Proyecto
 from apps.userStories.forms import crearUserStoryForm
 from django import forms
+from django.core.mail import EmailMessage, send_mail
+from apps.equipos.models import MiembroEquipo
+from django.contrib.auth.models import User, Group
 
 
 
@@ -83,12 +86,20 @@ def crear_userStory(request):
             newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],prioridad=request.POST['prioridad'],
                                        valor_negocio=request.POST['valor_negocio'],valor_tecnico=request.POST['valor_tecnico'],tiempo_estimado=request.POST['tiempo_estimado'],
                                        tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime, proyecto_id=request.POST['proyecto'],
-                                       desarrollador_id=request.POST['desarrollador'], sprint_id=request.POST['sprint'],
-                                       flujo_id=request.POST['flujo'])
+                                       desarrollador_id=request.POST['desarrollador'], sprint_id=request.POST['sprint'])
             newUserStory.save()
-            #guardar archivo
 
-            #guardar atributos
+            # enviar correo de notificacion al scrum master
+            proyecto = newUserStory.proyecto
+            id_proyecto = proyecto.id
+            rolSM = Group.objects.filter(name = "Scrum Master")
+            equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
+            SM = equipi.usuario
+            correo = SM.email
+            send_mail("Asunto", "Mensaje del sistema. \n\nSe ha creado un nuevo user story con el nombre de '" + newUserStory.nombre + "'",
+                      '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
+
+
         return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
     else:
 
@@ -162,6 +173,18 @@ def editar_userStory(request,id_userStory):
             #userStory_nuevo.version=userStory_nuevo.version+1
             userStory_nuevo.save()
 
+            # enviar correo de notificacion al scrum master
+            proyecto = userStory_nuevo.proyecto
+            id_proyecto = proyecto.id
+            rolSM = Group.objects.filter(name = "Scrum Master")
+            equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
+            # equipi = MiembroEquipo.objects.get(proyecto_id = id_proyecto)
+            SM = equipi.usuario
+            correo = SM.email
+            # print (correo)
+            send_mail("Asunto", "Mensaje del sistema. \n Se ha editado el user story '" + userStory_nuevo.nombre + "'",
+                      '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
+
             return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
 
     else:
@@ -221,7 +244,18 @@ def eliminar_userStory(request, id_userStory):
 
 
 
+def notificar(sender, instance, created, **kwargs):
+    """
+    Funcion que notifica al scrum master cuando se crea y se edita un user story
 
+    :param sender:
+    :param instance:
+    :param created:
+    :param kwargs:
+    :return:
+    """
+    if created:
+        us = instance.UserStory
 
 
 
