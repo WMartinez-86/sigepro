@@ -30,29 +30,39 @@ def listar_userStories(request, id_proyecto):
     @param id_userStory: clave foranea a la flujo
     @return render_to_response(..) o HttpResponse(...)
     """
-    #tuserStory=get_object_or_404(Flujo,id=id_flujo)
-    #flujo=Flujo.objects.filter(id=id_flujo)
-    #if es_miembro(request.user.id,flujo,''):
-    userStories=UserStory.objects.filter(proyecto_id = id_proyecto)
-    #if puede_add_userStories(flujo):
-    nivel = 3
-    #id_proyecto=Flujo.objects.get().proyecto_id
-    #proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
-    return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'nivel':nivel},
+    rolSM = Group.objects.filter(name = "Scrum Master")
+    equipi = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = id_proyecto)
+    if equipi.count() == 0:
+        mensaje = 101
+        proyectos = Proyecto.objects.all()
+        # proyecto = Proyecto.objects.get(id=id_proyecto)
+        rolSM = Group.objects.filter(name = "Scrum Master")
+        equipos = MiembroEquipo.objects.filter(rol = rolSM)
+        return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'equipos' : equipos, 'mensaje': mensaje}, context_instance=RequestContext(request))
+    else:
+        #tuserStory=get_object_or_404(Flujo,id=id_flujo)
+        #flujo=Flujo.objects.filter(id=id_flujo)
+        #if es_miembro(request.user.id,flujo,''):
+        userStories=UserStory.objects.filter(proyecto_id = id_proyecto)
+        #if puede_add_userStories(flujo):
+        nivel = 3
+        #id_proyecto=Flujo.objects.get().proyecto_id
+        #proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
+        return render_to_response('userStories/listar_userStories.html', {'datos': userStories, 'id_proyecto': id_proyecto, 'nivel':nivel},
                                   context_instance=RequestContext(request))
-    #else:
+        #else:
         #ESTE HAY QUE CORREGIR SI HAY TIEMPO
         #return HttpResponse("<h1>No se pueden administrar los UserStories de esta flujo. La flujo anterior aun no tiene userStories finalizados<h1>")
 
-    #else:
-    #return render_to_response('403.html')
+        #else:
+        #return render_to_response('403.html')
 
 
 
 
 @login_required
 
-def crear_userStory(request):
+def crear_userStory(request, id_proyecto):
     """
     Vista para crear un user story. Ademas se dan las opciones de agregar un
     archivo al item, y de completar todos los atributos de su tipo de item
@@ -62,15 +72,15 @@ def crear_userStory(request):
     """
     atri=1
 
-       # print(cantidad_items(id_tipoItem))
-        #id_fase=TipoItem.objects.get(id=id_tipoItem).fase_id
-        #flag=es_miembro(request.user.id,id_fase,'add_item')
+    # print(cantidad_items(id_tipoItem))
+    #id_fase=TipoItem.objects.get(id=id_tipoItem).fase_id
+    #flag=es_miembro(request.user.id,id_fase,'add_item')
 
 
-        #flujo=Flujo.objects.get(id=id_fase)
-        #proyecto=flujo.proyecto_id
-        #items=[]
-        #tipoitem=[]
+    #flujo=Flujo.objects.get(id=id_fase)
+    #proyecto=flujo.proyecto_id
+    #items=[]
+    #tipoitem=[]
     #proyecto=Proyecto.objects.get(UserStory.proyecto)
 
     if request.method=='POST':
@@ -84,14 +94,13 @@ def crear_userStory(request):
             #item_nombre=request.POST.get('entradalista')
 
             newUserStory=UserStory(nombre=request.POST['nombre'],descripcion=request.POST['descripcion'],prioridad=request.POST['prioridad'],
-                                       valor_negocio=request.POST['valor_negocio'],valor_tecnico=request.POST['valor_tecnico'],tiempo_estimado=request.POST['tiempo_estimado'],
-                                       tiempo_registrado=request.POST['tiempo_registrado'], ultimo_cambio=datetime, proyecto_id=request.POST['proyecto'],
-                                       desarrollador_id=request.POST['desarrollador'], sprint_id=request.POST['sprint'])
+                                   valor_negocio=request.POST['valor_negocio'],valor_tecnico=request.POST['valor_tecnico'],tiempo_estimado=request.POST['tiempo_estimado'],
+                                   ultimo_cambio=datetime, proyecto_id=id_proyecto, flujo_id = None, estadoScrum=0)
             newUserStory.save()
 
             # enviar correo de notificacion al scrum master
-            proyecto = newUserStory.proyecto
-            id_proyecto = proyecto.id
+            # proyecto = newUserStory.proyecto
+            # id_proyecto = proyecto.id
             rolSM = Group.objects.filter(name = "Scrum Master")
             equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
             SM = equipi.usuario
@@ -102,11 +111,10 @@ def crear_userStory(request):
 
         return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
     else:
-
         formulario = crearUserStoryForm()
         hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
-        return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario}, context_instance=RequestContext(request))
+        return render_to_response('userStories/crear_userStories.html', { 'formulario': formulario, 'id_proyecto': id_proyecto}, context_instance=RequestContext(request))
 
 
 

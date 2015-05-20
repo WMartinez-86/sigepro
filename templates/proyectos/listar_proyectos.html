@@ -47,8 +47,10 @@ Proyectos
 
             <div class="results" >
                 <ul class="errorlist">
-                    {% if  mensaje == 1 %}
-                    <li>Error: No se puede modificar. Ya no esta en estado Pendiente.</li>
+                    {% if  mensaje == 100 %}
+                        <li>Error: El proyecto ya no esta en Produccion.</li>
+                    {% elif mensaje == 101 %}
+                        <li>Error: No puede crear User Story sin asignar un Scrum Master en el equipo del Proyecto.</li>
                     {% endif %}
                 </ul>
                 <table >
@@ -96,7 +98,12 @@ Proyectos
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Flujos</a>
+                                <a>Equipo</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Sprints</a>
                             </div>
                         </th>
                         <th scope="col">
@@ -106,7 +113,7 @@ Proyectos
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Sprints</a>
+                                <a>Flujos</a>
                             </div>
                         </th>
                     </tr>
@@ -132,9 +139,10 @@ Proyectos
                         <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                         <td><center><a href="/proyectos/modificar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
                         <td><center><a href="/proyectos/cambiarEstado/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center>
-                        <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list-alt icon-white"></i></a></center></td>
-                        <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                        <td><center><a href="/equipos/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
                         <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
+                        <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                        <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list-alt icon-white"></i></a></center></td>
                     </tr>
                     {% endfor %}
                     </tbody>

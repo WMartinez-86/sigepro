@@ -29,7 +29,7 @@
 <ul class="object-tools">
     <li>
 
-        <a href="/userStories/crear" class="addlink">Nuevo User Story</a>
+        <a href="/userStories/crear/{{ id_proyecto}}" class="addlink">Nuevo User Story</a>
 
     </li>
 </ul>
@@ -121,7 +121,7 @@
                 <td><center><a href="/userStories/modificar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
                 <td><center><a href="/desarrollo/item/cambiar_estado/{{ dato.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center></td>
                 <td><center><a href="/userStories/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
-                <td><center><a href="/userStories/trabajos/{{ dato.pk }}" class="btn btn-info"><i class="icon-bookmark icon-white"></i></a></center></td>
+                <td><center><a href="/userStories/trabajos/{{ dato.pk }}" class="btn btn-info"><i class="icon-lock icon-white"></i></a></center></td>
             </tr>
         {% endfor %}
         </tbody>

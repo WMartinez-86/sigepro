@@ -1,37 +1,37 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Nuevo User Story
+Nuevo User Story
 {% endblock %}
 {% block content %}
-    <head>
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
 
 </head>
-    <div class="breadcrumbs">
+<div class="breadcrumbs">
 
-        <a href="/userStories/">Administracion de User Stories</a> >>
+    <a href="/userStories/{{ id_proyecto}}">Administracion de User Stories</a> >>
 
-        "Crear User Story"
-    </div>
+    "Crear User Story"
+</div>
 
-                <div id="content">
-                <h1>Crear User Story</h1>
-       <fieldset class="module aligned wide">
-<form method='post' action='' enctype="multipart/form-data">{% csrf_token %}
-    <div class="form-row" >
-    	{{formulario.as_p}}
-        <br>
+<div id="content">
+    <h1>Crear User Story</h1>
+    <fieldset class="module aligned wide">
+        <form method='post' action='' enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-row" >
+                {{formulario.as_p}}
+                <br>
 
 
-    </div>
+            </div>
 
-        </div>
-    <div class="submit-row">
+</div>
+<div class="submit-row">
     <input type="submit" value="Confirmar" />
-        </div>
+</div>
 </form>
-            </fieldset>
-                    </div>
+</fieldset>
+</div>
 
 {% endblock %}

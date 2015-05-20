@@ -123,3 +123,5 @@ EMAIL_HOST_PASSWORD = 'sigeprosystem'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'sigepro.is2@gmail.com'
 DEFAULT_TO_EMAIL = 'juanmayegros@gmail.com'
+
+DATE_FORMAT = "d/m/Y"
