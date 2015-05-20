@@ -51,6 +51,12 @@ Flujos
 
 
             <div class="results" >
+                <ul class="errorlist">
+                    {% if  mensaje == 100 %}
+                        <li>Atencion: Debe crear actividades al flujo antes de asignarle User Stories</li>
+                    {% endif %}
+                </ul>
+
                 <table >
                     <thead>
                     <tr>

@@ -64,6 +64,7 @@ def listar_flujos(request,id_proyecto):
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return render_to_response('flujos/listar_flujos.html', {'datos': flujos}, context_instance=RequestContext(request))
     """
+    mensaje = 0 # sin errores
     flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
     if proyecto.estado!='PRO':
@@ -71,7 +72,7 @@ def listar_flujos(request,id_proyecto):
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
                               context_instance=RequestContext(request))
     else:
-        return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+        return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto, 'mensaje': mensaje}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -246,17 +247,22 @@ def asignar_userStory(request,id_flujo):
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response
     """
-    # if request.method == 'POST':
-    #
+    mensaje = 0 # sin errores
     flujo=Flujo.objects.get(id=id_flujo)
     proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
+    actividad1 = Actividad.objects.filter(flujo_id = id_flujo, orden = 1)
+    cantActividad = actividad1.count()
+    if cantActividad == 0:
+        flujos = Flujo.objects.filter(proyecto_id=proyecto.id).order_by('orden')
+        mensaje = 100 # Debe crear actividades al flujo antes de asignarle User Stories
+        return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto, 'mensaje': mensaje}, context_instance=RequestContext(request))
     userStories=UserStory.objects.filter(proyecto_id = flujo.proyecto)
 
     # roles=Group.objects.filter(flujo__id=id_flujo)
     # for rol in roles:       #Un usuario tiene un rol por flujo
     #     usuarios=usuarios.exclude(groups__id=rol.id)
 
-    return render_to_response('flujos/asignar_userStories.html', {'datos': userStories, 'flujo' : flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
+    return render_to_response('flujos/asignar_userStories.html', {'userStories': userStories, 'flujo' : flujo,'proyecto':proyecto}, context_instance=RequestContext(request))
 
 @login_required
 @permission_required('flujo')
@@ -284,7 +290,7 @@ def asignar_userStoryFlujo(request, id_userStory, id_flujo):
     # for rol in roles:       #Un usuario tiene un rol por flujo
     #     usuarios=usuarios.exclude(groups__id=rol.id)
 
-    return render_to_response('flujos/asignar_userStories.html', {'datos': userStories, 'flujo' : flujo,'proyecto':proyecto, 'mensaje' : mensaje}, context_instance=RequestContext(request))
+    return render_to_response('flujos/asignar_userStories.html', {'userStories': userStories, 'flujo' : flujo,'proyecto':proyecto, 'mensaje' : mensaje}, context_instance=RequestContext(request))
 
 @login_required
 @permission_required('flujo')
@@ -311,7 +317,7 @@ def desasignar_userStoryFlujo(request, id_userStory, id_flujo):
     # for rol in roles:       #Un usuario tiene un rol por flujo
     #     usuarios=usuarios.exclude(groups__id=rol.id)
 
-    return render_to_response('flujos/asignar_userStories.html', {'datos': userStories, 'flujo' : flujo,'proyecto':proyecto, 'mensaje' : mensaje}, context_instance=RequestContext(request))
+    return render_to_response('flujos/asignar_userStories.html', {'userStories': userStories, 'flujo' : flujo,'proyecto':proyecto, 'mensaje' : mensaje}, context_instance=RequestContext(request))
 
 
 @login_required

@@ -41,7 +41,7 @@ Flujos
                         <li>info: User Story desasignado correctamente</li>
                     {% endif %}
                 </ul>-->
-                <h2>User Stories nuevos</h2>
+                <h2>Product Backlog/h2>
                 <table >
                     <thead>
                     <tr>
@@ -58,11 +58,11 @@ Flujos
                     </tr>
                     </thead>
                     <tbody>
-                    {% for dato in datos  %}
-                        {% if dato.estadoScrum == 0 %}
+                    {% for userStory in userStories  %}
+                        {% if userStory.estadoScrum == 0 %}
                             <tr>
-                                <td><center>{{ dato.nombre }}</center></td>
-                                <td><center><a href="/flujos/asignar/{{ dato.pk }}/{{ flujo.id }}" class="btn btn-success"><i class="icon-plus icon-white"></i></a></center></td>
+                                <td><center>{{ userStory.nombre }}</center></td>
+                                <td><center><a href="/flujos/asignar/{{ userStory.pk }}/{{ flujo.id }}" class="btn btn-success"><i class="icon-plus icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                         {% empty %}
@@ -72,7 +72,7 @@ Flujos
 
                 </table>
 
-                <h2>User Stories iniciados</h2>
+                <h2>User Stories iniciados del flujo</h2>
                 <table >
                     <thead>
                     <tr>
@@ -89,11 +89,11 @@ Flujos
                     </tr>
                     </thead>
                     <tbody>
-                    {% for dato in datos  %}
-                        {% if dato.estadoScrum == 1 %}
+                    {% for userStory in userStories  %}
+                        {% if userStory.estadoScrum == 1 and userStory.flujo_id == flujo.id %}
                             <tr>
-                                <td><center>{{ dato.nombre }}</center></td>
-                                <td><center><a href="/flujos/desasignar/{{ dato.pk }}/{{ flujo.id }}" class="btn btn-danger"><i class=" icon-minus icon-white"></i></a></center></td>
+                                <td><center>{{ userStory.nombre }}</center></td>
+                                <td><center><a href="/flujos/desasignar/{{ userStory.pk }}/{{ flujo.id }}" class="btn btn-danger"><i class=" icon-minus icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                         {% empty %}
@@ -103,55 +103,6 @@ Flujos
 
                 </table>
 
-                <h2>User Stories suspendidos</h2>
-                <table >
-                    <thead>
-                    <tr>
-                        <th scope="col" class="sortable" >
-                            <div class="text">
-                                <a>Nombre</a>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for dato in datos  %}
-                        {% if dato.estadoScrum == 2 %}
-                            <tr>
-                                <td><center>{{ dato.nombre }}</center></td>
-                            </tr>
-                        {% endif %}
-                        {% empty %}
-                            <li>No hay user Stories nuevos</li>
-                    {% endfor %}
-                    </tbody>
-
-                </table>
-
-                <h2>User Stories eliminados</h2>
-                <table >
-                    <thead>
-                    <tr>
-                        <th scope="col" class="sortable" >
-                            <div class="text">
-                                <a>Nombre</a>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for dato in datos  %}
-                        {% if dato.estadoScrum == 3 %}
-                            <tr>
-                                <td><center>{{ dato.nombre }}</center></td>
-                            </tr>
-                        {% endif %}
-                        {% empty %}
-                            <li>No hay user Stories nuevos</li>
-                    {% endfor %}
-                    </tbody>
-
-                </table>
             </div>
         </div>
 
