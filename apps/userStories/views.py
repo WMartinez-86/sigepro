@@ -23,7 +23,7 @@ from django.contrib.auth.models import User, Group
 
 
 @login_required
-def listar_userStories(request):
+def listar_userStories(request, id_proyecto):
     """
     vista para listar los userStories pertenecientes a la flujo
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
@@ -33,7 +33,7 @@ def listar_userStories(request):
     #tuserStory=get_object_or_404(Flujo,id=id_flujo)
     #flujo=Flujo.objects.filter(id=id_flujo)
     #if es_miembro(request.user.id,flujo,''):
-    userStories=UserStory.objects.filter()
+    userStories=UserStory.objects.filter(proyecto_id = id_proyecto)
     #if puede_add_userStories(flujo):
     nivel = 3
     #id_proyecto=Flujo.objects.get().proyecto_id

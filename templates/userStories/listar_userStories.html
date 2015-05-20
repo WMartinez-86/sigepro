@@ -59,11 +59,6 @@
                     <a>Nombre</a>
                 </div>
             </th>
-            <th scope="col" class="sortable" >
-                <div class="text">
-                    <a>Proyecto</a>
-                </div>
-            </th>
              <th scope="col">
                 <div class="text">
                     <a>Estado</a>
@@ -118,7 +113,6 @@
         {% for dato in datos  %}
             <tr>
                 <td><center>{{ dato.nombre}}</center></td>
-                <td><center>{{ dato.proyecto.nombre }}</center></td>
 				<td><center>{{ dato.get_estadoScrum_display }}</center></td>
                 <td><center>{{ dato.tiempo_estimado }}</center></td>
                 <td><center>{{ dato.tiempo_registrado }}</center></td>
