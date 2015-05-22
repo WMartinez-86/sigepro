@@ -89,10 +89,16 @@
                     <a>Fecha</a>
                 </div>
             </th>
-
+            <th scope="col">
+                <div class="text">
+                    <a>Hora</a>
+                </div>
             </th>
+            <th scope="col">
+                <div class="text">
+                    <a>Adjunto</a>
+                </div>
 
-                 </th>
 
 
             </th>
@@ -110,6 +116,8 @@
                 <td><center>{{ Trabajo.userstory }}</center></td>
                 <td><center>{{ Trabajo.sprint }}</center></td>
                 <td><center>{{ Trabajo.fecha }}</center></td>
+                <td><center>{{ Trabajo.hora }}</center></td>
+                <td><center><a href="/trabajos/adjunto/{{ Trabajo.id }}"  class="btn btn-success"><i class="icon-file icon-white"></i></a></center></td>
 
             </tr>
         {% endfor %}
