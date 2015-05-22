@@ -4,12 +4,13 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from apps.userStories.models import UserStory
-from apps.trabajos.models import Trabajo, Archivo
+from apps.trabajos.models import Trabajo, Adjunto
 from apps.trabajos.forms import crearTrabajoForm
 from datetime import date
 from apps.equipos.models import MiembroEquipo
 from django.core.mail import send_mail
 from django.contrib.auth.models import User, Group
+from base64 import b64encode
 
 # Create your views here.
 # @login_required
@@ -71,7 +72,7 @@ def crear_trabajo(request):
             #obtener item con el cual relacionar
             #item_nombre=request.POST.get('entradalista')
 
-            newTrabajo=Trabajo(descripcion=request.POST['descripcion'], tipo_trabajo=request.POST['tipo_trabajo'],hora=request.POST['hora'], fecha=date, userstory_id=request.POST['userstory'],
+            cod = newTrabajo=Trabajo(descripcion=request.POST['descripcion'], tipo_trabajo=request.POST['tipo_trabajo'],hora=request.POST['hora'], fecha=date, userstory_id=request.POST['userstory'],
                                sprint_id=request.POST['sprint'])
             newTrabajo.save()
 
@@ -86,9 +87,6 @@ def crear_trabajo(request):
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
             #guardar archivo
-            if request.FILES.get('file')!=None:
-                archivo=Archivo(archivo=request.FILES['file'],nombre='', id=newTrabajo.id)
-                archivo.save()
 
                 #guardar atributos
         return render_to_response('trabajos/creacion_correcta.html',{}, context_instance=RequestContext(request))
@@ -98,3 +96,24 @@ def crear_trabajo(request):
         hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
         return render_to_response('trabajos/crear_trabajos.html', { 'formulario': formulario}, context_instance=RequestContext(request))
+
+
+
+def upload_handler(request, attachment, uploaded_file):
+        #attachment.user_story = self.user_story
+        attachment.nombre = uploaded_file.name
+
+        # if uploaded_file.content_type.startswith('image'):
+        #     attachment.tipo = 'img'
+        # else:
+        #     _, ext = splitext(uploaded_file.name)
+        #     if ext in lang:
+        #         attachment.lenguaje = lang[ext]
+        #         attachment.tipo = 'src'
+        #     elif uploaded_file.content_type == 'text/plain':
+        #         attachment.tipo = 'text'
+
+        attachment.content_type = uploaded_file.content_type
+        attachment.binario = uploaded_file.read()
+        attachment.save()
+        return render_to_response('trabajos/adjunto.html',{},context_instance = RequestContext(request))
