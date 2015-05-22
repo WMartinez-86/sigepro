@@ -1,6 +1,8 @@
 from django.db import models
 from apps.userStories.models import UserStory
 from apps.sprints.models import Sprint
+from django.utils.encoding import force_bytes
+from base64 import b64encode
 # Create your models here.
 
 class Trabajo(models.Model):
@@ -33,13 +35,17 @@ class Trabajo(models.Model):
         return self.descripcion
 
 
-class Archivo(models.Model):
+class Adjunto(models.Model):
     """
     Modelo que repsenta a un archivo
-    @cvar archivo: Campo de tipo de archivo
+    @cvar binario: Campo de tipo binario que almacena el archivo adjunto
     @cvar id_trabajo: clave foranea a un trabajo en el cual se cargo el archivo
     @cvar nombre: un campo de texto con el nombre que representa el archivo
     """
-    archivo = models.FileField(upload_to='archivo')
+    binario = models.BinaryField(null=True, blank=True)
     id_trabajo = models.ForeignKey(Trabajo)
     nombre = models.TextField(max_length=40)
+
+
+    def img64(self):
+        return b64encode(force_bytes(self.binario))
