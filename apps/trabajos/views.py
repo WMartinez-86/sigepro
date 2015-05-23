@@ -77,13 +77,20 @@ def crear_trabajo(request):
             newTrabajo.save()
 
             # enviar correo de notificacion al scrum master
+            objdev = request.user
+            desarrollador = User.get_full_name(objdev)
             proyecto = newTrabajo.userstory.proyecto
             id_proyecto = proyecto.id
             rolSM = Group.objects.filter(name = "Scrum Master")
             equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
             SM = equipi.usuario
             correo = SM.email
-            send_mail("Asunto", "Mensaje del sistema. \n\nSe ha creado un nuevo Trabajo en el user story '" + newTrabajo.userstory.nombre + "'",
+            send_mail("Asunto", "Mensaje del sistema. \nEl usuario " + str(desarrollador) + " ha creado el siguiente Trabajo\n" +
+                      "\nDescrpcion: " + newTrabajo.descripcion +
+                      "\nUser Story: " + newTrabajo.userstory.nombre +
+                      "\nTipo de trabajo: " + newTrabajo.tipo_trabajo +
+                      "\nHoras: " + newTrabajo.hora +
+                      "\nFecha: " + str(newTrabajo.fecha),
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
             #guardar archivo
