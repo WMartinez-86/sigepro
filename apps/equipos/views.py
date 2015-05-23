@@ -43,6 +43,7 @@ def ver_equipo(request, id_proyecto):
 @permission_required('proyectos')
 def agregar_miembro(request, id_proyecto):
 
+
      if request.method=='POST':
         #formset = ItemFormSet(request.POST)
         formulario = crearEquipoForm(request.POST)
@@ -59,3 +60,21 @@ def agregar_miembro(request, id_proyecto):
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
         return render_to_response('equipos/agregar_miembro.html', { 'formulario': formulario, 'id_proyecto': id_proyecto},
                                   context_instance=RequestContext(request))
+
+
+
+@login_required
+@permission_required('proyectos')
+def eliminar_miembro(request,id_user):
+    """
+    Vista para eliminar un miembro de un equipo. Busca la sprint por su id_sprint y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_sprint: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    usuario = get_object_or_404(User, pk=id_user)
+    #proyecto = MiembroEquipo.objects.get(id=proyecto_id)
+    #if proyecto.estado =='PRO':
+    usuario.delete()
+    #sprints = Sprint.objects.filter(proyecto_id=proyecto.id).order_by('orden')
+    return render_to_response('equipos/ver_equipo.html', {}, context_instance=RequestContext(request))
