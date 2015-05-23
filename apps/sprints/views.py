@@ -50,55 +50,16 @@ def registrar_sprint(request, id_proyecto):
         proyecto = Proyecto.objects.get(id=id_proyecto)
         formulario = CrearSprintForm(request.POST)
         if formulario.is_valid():
-            if len(str(request.POST["inicio"])) != 10 : #Comprobacion de formato de fecha
-                mensaje=0
-                return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':mensaje,'id':id_proyecto}, context_instance=RequestContext(request))
+            newSprint = Sprint(nombre = request.POST["nombre"], proyecto_id = id_proyecto, descripcion = request.POST["descripcion"])
+
+            orden = Sprint.objects.filter(proyecto_id=id_proyecto)
+            cantidad = orden.count()
+            if cantidad>0: # comprobaciones de fecha
+                newSprint.orden=orden.count()+1 #Calculo del orden del sprint a crear
             else:
-                fechaI = datetime.strptime(str(request.POST["inicio"]), '%d/%m/%Y')#convert string to datetime
-                fechaI = fechaI.strftime('%Y-%m-%d')# fecha con formato
-                fechaIni = datetime.strptime(fechaI, '%Y-%m-%d') #convert string to datetime
-                fechaF = datetime.strptime(str(request.POST["fin"]), '%d/%m/%Y')#convert string to datetime
-                fechaF = fechaF.strftime('%Y-%m-%d')# fecha con formato
-                fechaFin = datetime.strptime(fechaF, '%Y-%m-%d') #convert string to datetime
-                #fechaFin=fechaFin.strftime('%Y-%m-%d')
-                #fecha1=datetime.strptime(fecha,'%Y-%m-%d')
-                #sprint_time = proyecto.duracion_sprint
-                #fechafin=fecha1 + timedelta(days=sprint_time)
-                #print (fechafin)
-
-                newSprint = Sprint(nombre = request.POST["nombre"],
-                                   inicio = fechaIni, proyecto_id = id_proyecto, fin = fechaFin, descripcion = request.POST["descripcion"])
-                aux=0
-                orden = Sprint.objects.filter(proyecto_id=id_proyecto)
-
-                if aux>0:
-                    aux=1
-                else:
-                    proyecto=Proyecto.objects.get(id=id_proyecto)
-                    cantidad = orden.count()
-                    if cantidad>0:#comprobaciones de fecha
-                        anterior = Sprint.objects.get(orden=cantidad, proyecto_id=id_proyecto)
-                        if fechaFin<datetime.strptime(str(anterior.inicio),'%Y-%m-%d'):
-                            #Fecha de inicio no puede ser menor a la fecha de fin del sprint anterior
-                            return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':1,'id':id_proyecto,'proyecto':proyecto},
-                                                      context_instance=RequestContext(request))
-                        else:
-                            #if proyecto.fecha_ini>=fechaFin or proyecto.fecha_fin<=fechaFin:
-                            if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fechaFin or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fechaIni:
-                                #Fecha de inicio no concuerda con proyecto
-                                print(fechaFin)
-                                print(datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d'))
-                                print (datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d'))
-                                return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'mensaje':2,'id':id_proyecto,'proyecto':proyecto},
-                                                          context_instance=RequestContext(request))
-                            else:
-                                newSprint.orden=orden.count()+1 #Calculo del orden del sprint a crear
-                                newSprint.save()
-                                return render_to_response('sprints/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
-                    else:
-                        newSprint.orden=1
-                        newSprint.save()
-                        return render_to_response('sprints/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                newSprint.orden=1
+            newSprint.save()
+            return render_to_response('sprints/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
     else:
         formulario = CrearSprintForm() #formulario inicial
     return render_to_response('sprints/registrar_sprints.html',{'formulario':formulario,'id':id_proyecto, 'proyecto':proyecto, 'mensaje':mensaje},

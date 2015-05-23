@@ -25,8 +25,7 @@ class Trabajo(models.Model):
     )
 
     descripcion = models.TextField(max_length=140)
-    userstory = models.ForeignKey(UserStory)
-    sprint = models.ForeignKey(Sprint)
+    userStory = models.ForeignKey(UserStory)
     tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=TIPO_NORMAL)
     hora = models.PositiveIntegerField(default=0)
     fecha = models.DateField(auto_now=True, verbose_name='Fecha')
@@ -42,9 +41,13 @@ class Adjunto(models.Model):
     @cvar id_trabajo: clave foranea a un trabajo en el cual se cargo el archivo
     @cvar nombre: un campo de texto con el nombre que representa el archivo
     """
+
+    nombre = models.CharField(max_length=100, null=True)
+    descripcion = models.TextField()
     binario = models.BinaryField(null=True, blank=True)
-    id_trabajo = models.ForeignKey(Trabajo)
-    nombre = models.TextField(max_length=40)
+    fechaCreacion = models.DateTimeField(auto_now_add=True)
+    trabajo = models.ForeignKey(Trabajo)
+
 
 
     def img64(self):

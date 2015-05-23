@@ -1,0 +1,36 @@
+{% extends 'base2.html' %}
+{% block title %}
+Adjuntar
+{% endblock %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+
+</head>
+<div class="breadcrumbs">
+    <a href="/proyectos/">Proyecto {{ proyecto.nombre }}</a> >>>>
+    <a href="/flujos/proyecto/{{ proyecto.id }}">Flujo {{ flujo.nombre }}</a> >>>
+    <a href="/userStories/{{ proyecto.id }}">Administracion de User Stories</a> >>
+    <a href="/userStories/trabajos/{{ id_trabajo }}" > Trabajos del User Story</a> >
+    "Adjuntar Archivo"
+</div>
+
+<div id="content">
+    <h1>Adjuntar Archivo</h1>
+    <fieldset class="module aligned wide">
+        <form method='post' action='' enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-row" >
+                {{formulario.as_p}}
+                <br>
+                <center><input type="file" name="file" id="id_file" /></center>
+                <br>
+            </div>
+            <div class="submit-row">
+                <input type="submit" value="Adjuntar" />
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+{% endblock %}

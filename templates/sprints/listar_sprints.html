@@ -47,8 +47,84 @@ Sprints
         </ul>
         <div id="content-main">
 
-
+            <h2>Sprint BackLog</h2>
             <div class="results" >
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Nombre</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Descripcion</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Eliminar</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for dato in datos  %}
+                        {% if dato.estado == 0  %}
+                            <tr>
+                                <td><center>{{ dato.nombre }}</center></td>
+                                <td><center>{{ dato.descripcion }}</center></td>
+                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <h2>Sprint Iniciados</h2>
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Nombre</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Descripcion</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Inicio</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Eliminar</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for dato in datos  %}
+                        {% if dato.estado == 1  %}
+                            <tr>
+                                <td><center>{{ dato.nombre }}</center></td>
+                                <td><center>{{ dato.descripcion }}</center></td>
+                                <td><center>{{ dato.inicio }}</center></td>
+                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <h2>Sprints Finalizados</h2>
                 <table >
                     <thead>
                     <tr>
@@ -81,13 +157,15 @@ Sprints
                     </thead>
                     <tbody>
                     {% for dato in datos  %}
-                    <tr>
-                        <td><center>{{ dato.nombre }}</center></td>
-                        <td><center>{{ dato.descripcion }}</center></td>
-                        <td><center>{{ dato.inicio }}</center></td>
-                        <td><center>{{ dato.fin }}</center></td>
-                        <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
-                    </tr>
+                        {% if dato.estado == 2  %}
+                            <tr>
+                                <td><center>{{ dato.nombre }}</center></td>
+                                <td><center>{{ dato.descripcion }}</center></td>
+                                <td><center>{{ dato.inicio }}</center></td>
+                                <td><center>{{ dato.fin }}</center></td>
+                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
 

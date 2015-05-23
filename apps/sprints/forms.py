@@ -16,7 +16,7 @@ class CrearSprintForm(ModelForm):
 
     class Meta:
         model = Sprint
-        fields = ('nombre', 'descripcion', 'inicio', 'fin')
+        fields = ('nombre', 'descripcion')
 
 class RolesForm(forms.Form):
     roles = forms.ModelMultipleChoiceField(queryset=Group.objects.none() )
