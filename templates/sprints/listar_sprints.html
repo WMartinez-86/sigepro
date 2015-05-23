@@ -62,6 +62,13 @@ Sprints
                                 <a>Descripcion</a>
                             </div>
                         </th>
+                        {% if sprintActivo == 0  %}
+                            <th scope="col">
+                                <div class="text">
+                                    <a>Iniciar</a>
+                                </div>
+                            </th>
+                        {% endif %}
                         <th scope="col">
                             <div class="text">
                                 <a>Eliminar</a>
@@ -75,6 +82,9 @@ Sprints
                             <tr>
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
+                                {% if sprintActivo == 0  %}
+                                    <td><center><a href="/sprints/iniciar/{{ dato.pk }}" class="btn btn-info"><i class=" icon-ok icon-white"></i></a></center></td>
+                                {% endif %}
                                 <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
@@ -104,7 +114,7 @@ Sprints
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Eliminar</a>
+                                <a>Finalizar</a>
                             </div>
                         </th>
                     </tr>
@@ -116,7 +126,7 @@ Sprints
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
                                 <td><center>{{ dato.inicio }}</center></td>
-                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/finalizar/{{ dato.pk }}" class="btn btn-info"><i class=" icon-stop icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -148,11 +158,6 @@ Sprints
                                 <a>Fin</a>
                             </div>
                         </th>
-                        <th scope="col">
-                            <div class="text">
-                                <a>Eliminar</a>
-                            </div>
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -163,7 +168,6 @@ Sprints
                                 <td><center>{{ dato.descripcion }}</center></td>
                                 <td><center>{{ dato.inicio }}</center></td>
                                 <td><center>{{ dato.fin }}</center></td>
-                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}

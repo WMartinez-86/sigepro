@@ -4,7 +4,7 @@ __author__ = 'juanma'
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-from views import listar_sprints, registrar_sprint, eliminar_sprint, buscar_sprints#, detalle_sprint, asignar_usuario
+from views import listar_sprints, registrar_sprint, eliminar_sprint, buscar_sprints, iniciar_sprint, finalizar_sprint#, detalle_sprint, asignar_usuario
 #from views import editar_sprint,sprints_todas, importar_sprint, desasignar_usuario
 
 urlpatterns = patterns('',
@@ -16,6 +16,8 @@ urlpatterns = patterns('',
         #url(r'^importar/(?P<id_sprint>\d+)-(?P<id_proyecto>\d+)$', importar_sprint,name='importar_sprint'),
         #url(r'^(?P<id_sprint>\d+)$', detalle_sprint, name='detalle_sprint'),
         url(r'^eliminar/(?P<id_sprint>\d+)$', eliminar_sprint, name='eliminar_sprint'),
+        url(r'^iniciar/(?P<id_sprint>\d+)$', iniciar_sprint, name='iniciar_sprint'),
+        url(r'^finalizar/(?P<id_sprint>\d+)$', finalizar_sprint, name='finalizar_sprint'),
         url(r'^search/(?P<id_proyecto>\d+)$',buscar_sprints, name='buscar_sprints'),
         #url(r'^roles/(?P<id_sprint>\d+)$', rol_proyecto, name='rol_proyecto'),
         #url(r'^roles/crear/(?P<id_sprint>\d+)$', crearol_proyecto, name='crearol_proyecto'),

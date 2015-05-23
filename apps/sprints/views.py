@@ -27,12 +27,9 @@ def listar_sprints(request,id_proyecto):
     """
     sprints = Sprint.objects.filter(proyecto_id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    if proyecto.estado!='PRO':
-        proyectos = Proyecto.objects.all().exclude(estado='ELI')
-        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                              context_instance=RequestContext(request))
-    else:
-        return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    haySprintActivo = Sprint.objects.filter(proyecto_id=id_proyecto, estado = 1)
+
+    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -105,3 +102,40 @@ def buscar_sprints(request,id_proyecto):
     return render_to_response('sprints/listar_sprints.html', {'datos': results, 'proyecto' : proyecto}, context_instance=RequestContext(request))
 
 
+@login_required
+@permission_required('sprint')
+def iniciar_sprint(request, id_sprint):
+    """
+    vista para iniciar el sprint
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
+    """
+    sprint = Sprint.objects.get(id = id_sprint)
+    sprint.estado = 1
+    sprint.inicio = datetime.now()
+    sprint.save()
+
+    sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+
+    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('sprint')
+def finalizar_sprint(request, id_sprint):
+    """
+    vista para iniciar el sprint
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
+    """
+    sprint = Sprint.objects.get(id = id_sprint)
+    sprint.estado = 2
+    sprint.fin = datetime.now()
+    sprint.save()
+
+    sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+
+    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
