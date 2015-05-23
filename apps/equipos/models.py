@@ -17,7 +17,7 @@ class MiembroEquipo(models.Model):
     usuario = models.ForeignKey(User)
     proyecto = models.ForeignKey(Proyecto)
     rol = models.ManyToManyField(Group)
-    horasPorDia = models.IntegerField(default=0)
+    horasPorDia = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.proyecto.nombre
