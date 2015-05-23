@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from apps.proyectos.models import Proyecto
 from apps.flujos.models import Flujo
 from apps.equipos.models import MiembroEquipo
+from apps.equipos.forms import crearEquipoForm
 
 # Create your views here.
 
@@ -38,3 +39,22 @@ def ver_equipo(request, id_proyecto):
 
 
 
+@login_required
+@permission_required('proyectos')
+def agregar_miembro(request, id_proyecto):
+
+     if request.method=='POST':
+        #formset = ItemFormSet(request.POST)
+        formulario = crearEquipoForm(request.POST)
+
+        if formulario.is_valid():
+            newEquipo=MiembroEquipo(usuario_id = request.POST['id_usuario'], proyecto_id= request.POST['id_proyecto'], rol_id = request.POST['id_rol'],
+                                    horasPorDia=request.POST['horasPorDia'])
+            newEquipo.save()
+        return render_to_response('equipos/creacion_correcta.html',{}, context_instance=RequestContext(request))
+     else:
+        formulario = crearEquipoForm()
+        #hijo=False
+        #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
+        return render_to_response('equipos/agregar_miembro.html', { 'formulario': formulario, 'id_proyecto': id_proyecto},
+                                  context_instance=RequestContext(request))
