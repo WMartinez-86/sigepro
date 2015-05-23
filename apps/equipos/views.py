@@ -65,16 +65,30 @@ def agregar_miembro(request, id_proyecto):
 
 @login_required
 @permission_required('proyectos')
-def eliminar_miembro(request,id_user):
+def eliminar_miembro(request,id_miembro): #id_miembro = id_MiembroEquipo
     """
     Vista para eliminar un miembro de un equipo. Busca la sprint por su id_sprint y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
     """
-    usuario = get_object_or_404(User, pk=id_user)
+    miembro = get_object_or_404(MiembroEquipo, pk=id_miembro)
     #proyecto = MiembroEquipo.objects.get(id=proyecto_id)
     #if proyecto.estado =='PRO':
-    usuario.delete()
+
     #sprints = Sprint.objects.filter(proyecto_id=proyecto.id).order_by('orden')
-    return render_to_response('equipos/ver_equipo.html', {}, context_instance=RequestContext(request))
+
+    rolSM = Group.objects.filter(name = "Scrum Master")
+    haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = miembro.proyecto_id)
+    if haySM.count() > 0: #si hay Scrum Master
+        SM = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = miembro.proyecto_id)
+        SMUser = User.objects.get(id = SM.usuario_id)
+    else:
+        SMUser = None
+    proyecto = get_object_or_404(Proyecto, pk=miembro.proyecto_id)
+    equipos = MiembroEquipo.objects.filter(proyecto_id = miembro.proyecto_id)
+
+    miembro.delete() # borra desde de usar para saber de que proyecto es
+    return render_to_response('equipos/ver_equipo.html',
+                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser},
+                          context_instance=RequestContext(request))
