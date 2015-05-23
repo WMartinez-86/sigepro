@@ -7,10 +7,11 @@ __author__ = 'juanma'
 
 ESTADOS = (
 
-    ('PRO', 'Produccion'),
-    ('APR', 'Aprobado'),
-    ('FIN','Finalizado'),
-    ('ELI','Eliminado'),
+    ('NUE', 'Nuevo'), # cuando se crea
+    ('PRO', 'Produccion'), # cuando se inicia
+    ('FIN','Finalizado'), # cuando se termina
+    ('APR', 'Aprobado'), # cuando se aprueba uno finalizado
+    ('ELI','Eliminado'), # cuando se elimina o cancela
 )
 
 class Proyecto(models.Model):
