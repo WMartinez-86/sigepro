@@ -39,5 +39,5 @@ class Flujo(models.Model):
     proyecto = models.ForeignKey(Proyecto)
 
 
-    def __str__(self):
-        return self.nombre
+    def __unicode__(self):
+        return unicode(self.nombre)
