@@ -66,24 +66,6 @@
                     <a>Descripcion</a>
                 </div>
             </th>
-
-                </div>
-            </th>
-             <th scope="col">
-                <div class="text">
-                    <a>Tipo de trabajo</a>
-                </div>
-            </th>
-             <th scope="col">
-                <div class="text">
-                    <a> User Story </a>
-                </div>
-            </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Sprint</a>
-                </div>
-            </th>
              <th scope="col">
                 <div class="text">
                     <a>Fecha</a>
@@ -98,23 +80,14 @@
                 <div class="text">
                     <a>Adjunto</a>
                 </div>
-
-
-
             </th>
 
-            </th>
-
-            </th>
         </tr>
         </thead>
         <tbody>
         {% for Trabajo in datos  %}
             <tr>
                 <td><center>{{ Trabajo.descripcion }}</center></td>
-				<td><center>{{ Trabajo.tipo_trabajo }}</center></td>
-                <td><center>{{ Trabajo.userstory }}</center></td>
-                <td><center>{{ Trabajo.sprint }}</center></td>
                 <td><center>{{ Trabajo.fecha }}</center></td>
                 <td><center>{{ Trabajo.hora }}</center></td>
                 <td><center><a href="/trabajos/adjunto/{{ Trabajo.id }}"  class="btn btn-success"><i class="icon-file icon-white"></i></a></center></td>

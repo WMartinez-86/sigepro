@@ -2,7 +2,7 @@ __author__ = 'juanma'
 
 from django import forms
 
-from apps.trabajos.models import Trabajo
+from apps.trabajos.models import Trabajo, Adjunto
 #from apps.solicitudes.models import Solicitud
 
 
@@ -18,5 +18,10 @@ class crearTrabajoForm(forms.ModelForm):
 #         model=Trabajo
 #         fields=['estado']
 
+class NuevoAdjunto(forms.ModelForm):
+    class Meta:
+        model= Adjunto
+#        fields=['nombre', 'descripcion']
+        exclude = ('id_trabajo', 'creacion')
 
 

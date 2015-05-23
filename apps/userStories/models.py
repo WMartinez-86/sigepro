@@ -32,6 +32,7 @@ class UserStory(models.Model):
     """
     estados_kanban = ((0, 'ToDo'), (1, 'Doing'), (2, 'Done'), (3, 'Pendiente Aprobacion'), (4, 'Aprobado'))
     estados_scrum = ((0, 'Nuevo'), (1, 'Iniciado'), (2, 'Suspendido'), (3, 'Eliminado'))
+
     nombre = models.CharField(max_length=20, verbose_name='Nombre')
     descripcion = models.TextField(verbose_name='Descripcion')
     prioridad = models.IntegerField(choices=((i, i) for i in range(1, 10)), default=1)

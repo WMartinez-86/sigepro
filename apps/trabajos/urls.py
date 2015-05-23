@@ -2,7 +2,7 @@ __author__ = 'juanma'
 
 from django.conf.urls import patterns, url
 from django.contrib import admin
-from apps.trabajos.views import listar_trabajos, crear_trabajo, upload_handler
+from apps.trabajos.views import listar_trabajos, crear_trabajo, upload_handler, upload_listar
 
 admin.autodiscover()
 
@@ -19,6 +19,6 @@ urlpatterns = patterns('',
                        #url(r'^nota/(?P<pk>\d+)/$', views.NotaDetail.as_view(), name='nota_detail'),
                        #url(r'^userstory/(?P<pk>\d+)/notas/$', views.NotaList.as_view(), name="nota_list"),
                        #url(r'^userstory/(?P<pk>\d+)/files/$', views.FileList.as_view(), name="file_list"),
-                       url(r'^adjunto/$', upload_handler, name='upload_handler'),
+                       url(r'^adjunto/(?P<id_trabajo>\d+)$', upload_listar, name='upload_listar'),
 
 )
