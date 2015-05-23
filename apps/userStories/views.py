@@ -101,11 +101,22 @@ def crear_userStory(request, id_proyecto):
             # enviar correo de notificacion al scrum master
             # proyecto = newUserStory.proyecto
             # id_proyecto = proyecto.id
+            objdev = request.user
+            desarrollador = User.get_full_name(objdev)
             rolSM = Group.objects.filter(name = "Scrum Master")
             equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
             SM = equipi.usuario
             correo = SM.email
-            send_mail("Asunto", "Mensaje del sistema. \n\nSe ha creado un nuevo user story con el nombre de '" + newUserStory.nombre + "'",
+            send_mail("Asunto", "Mensaje del sistema. \nEl usuario " + str(desarrollador) + " ha creado el siguiente User Story\n" +
+                      "\nNombre: " + newUserStory.nombre +
+                      "\nDescrpcion: " + newUserStory.descripcion +
+                      "\nPrioridad: " + str(newUserStory.prioridad) +
+                      "\nValor de negocio: " + str(newUserStory.valor_negocio) +
+                      "\nValor tecnico: " + str(newUserStory.valor_tecnico) +
+                      "\nTiempo estimado: " + str(newUserStory.tiempo_estimado) +
+                      "\nUltimo cambio: " + str(newUserStory.ultimo_cambio) +
+                      "\nEstado del Kanban: " + str(newUserStory.estadoKanban) +
+                      "\nEstado del Scrum: " + str(newUserStory.estadoScrum),
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
 
@@ -182,6 +193,8 @@ def editar_userStory(request,id_userStory):
             userStory_nuevo.save()
 
             # enviar correo de notificacion al scrum master
+            objdev = request.user
+            desarrollador = User.get_full_name(objdev)
             proyecto = userStory_nuevo.proyecto
             id_proyecto = proyecto.id
             rolSM = Group.objects.filter(name = "Scrum Master")
@@ -189,8 +202,18 @@ def editar_userStory(request,id_userStory):
             # equipi = MiembroEquipo.objects.get(proyecto_id = id_proyecto)
             SM = equipi.usuario
             correo = SM.email
+            #print str(userStory_nuevo.flujo.nombre)
             # print (correo)
-            send_mail("Asunto", "Mensaje del sistema. \n Se ha editado el user story '" + userStory_nuevo.nombre + "'",
+            send_mail("Asunto", "Mensaje del sistema. \nEl usuario " + str(desarrollador) + " ha editado el siguiente User Story\n" +
+                      "\nNombre: " + userStory_nuevo.nombre +
+                      "\nDescrpcion: " + userStory_nuevo.descripcion +
+                      "\nPrioridad: " + str(userStory_nuevo.prioridad) +
+                      "\nValor de negocio: " + str(userStory_nuevo.valor_negocio) +
+                      "\nValor tecnico: " + str(userStory_nuevo.valor_tecnico) +
+                      "\nTiempo estimado: " + str(userStory_nuevo.tiempo_estimado) +
+                      "\nUltimo cambio: " + str(userStory_nuevo.ultimo_cambio) +
+                      "\nEstado del Kanban: " + str(userStory_nuevo.estadoKanban) +
+                      "\nEstado del Scrum: " + str(userStory_nuevo.estadoScrum),
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
             return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
