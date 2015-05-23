@@ -12,15 +12,16 @@
     "> Ver_Equipo"
     </div>
     <div id="content">
-    <h1>Equipo de {{proyectos.nombre|title}}</h1>
+    <h1>Equipo de {{proyecto.nombre|title}}</h1>
         <fieldset class="module aligned wide">
 <form method="post">{% csrf_token %}
     <div class="form-row">
-    <div><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }})</div>
 
-             <div><strong>Equipo: </strong></div>
-            {% for usuario in usuarios %}
-                <li><b> </b>{{ usuario}}</li>
+             <div><h3><strong>Equipo: </strong></h3></div>
+            {% for equipo in equipos %}
+                {% for rol in equipo.rol.all %}
+                    <li><b> {{ rol }} </b> {{ equipo.usuario }}</li>
+                {% endfor %}
             {% endfor %}
         </div>
 </form>
