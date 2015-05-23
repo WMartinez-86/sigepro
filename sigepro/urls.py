@@ -31,5 +31,7 @@ urlpatterns = patterns('',
     url(r'^trabajos/',include('apps.trabajos.urls')),
     #ACTIVIDADES
     url(r'^actividades/',include('apps.actividades.urls')),
+    #EQUIPOS
+    url(r'^equipos/',include('apps.equipos.urls')),
 
 )

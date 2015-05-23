@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 from views import lista_proyectos, registra_proyecto, RegisterSuccessView, editar_proyecto, buscar_proyecto, cambiar_estado_proyecto, detalle_proyecto
 #from views import editar_proyecto, importar_proyecto, ver_equipo, cambiar_estado_proyecto
+from apps.equipos.views import ver_equipo
 
 urlpatterns = patterns('',
         #url(r'^registrar/$',registra_proyecto.as_view()),
@@ -16,6 +17,6 @@ urlpatterns = patterns('',
         url(r'^search/$',buscar_proyecto, name='buscar_proyectos'),
         url(r'^cambiarEstado/(?P<id_proyecto>\d+)$', cambiar_estado_proyecto, name='camb_est_proyect'),
         url(r'^(?P<id_proyecto>\d+)$', detalle_proyecto, name='detalle_proyecto'),
-
+        #url(r'^equipo/(?P<id_proyecto>\d+)$', ver_equipo, name='equipo'),
         )
 print urlpatterns

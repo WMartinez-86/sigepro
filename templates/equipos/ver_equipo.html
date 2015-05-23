@@ -1,0 +1,29 @@
+{% extends 'base2.html' %}
+{% block title %}
+	Equipo
+{% endblock %}
+{% block content %}
+<head>
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+</head>
+    <div class="breadcrumbs">
+    <a href="/proyectos/">Proyectos</a>
+    "> Ver_Equipo"
+    </div>
+    <div id="content">
+    <h1>Equipo de {{proyectos.nombre|title}}</h1>
+        <fieldset class="module aligned wide">
+<form method="post">{% csrf_token %}
+    <div class="form-row">
+    <div><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }})</div>
+
+             <div><strong>Equipo: </strong></div>
+            {% for usuario in usuarios %}
+                <li><b> </b>{{ usuario}}</li>
+            {% endfor %}
+        </div>
+</form>
+            </fieldset>
+    </div>
+{% endblock %}

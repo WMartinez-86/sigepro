@@ -6,51 +6,52 @@ from apps.inicio.forms import UserForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required, permission_required
+from apps.proyectos.models import Proyecto
+from apps.flujos.models import Flujo
+from apps.equipos.models import MiembroEquipo
 
 # Create your views here.
 
+@login_required
+@permission_required('proyectos')
+def ver_equipo(request, id_proyecto):
+    """
+    vista para ver todos los usuarios que forman parte de un proyectos
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/ver_equipo.html', {'proyectos':dato,'lider': lider, 'comite':comite, 'usuarios':usuarios}, context_instance=RequestContext(request))
+    """
+    rolSM = Group.objects.filter(name = "Scrum Master")
+    SM = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
+    SMUser = User.objects.get(id = SM.usuario_id)
 
-grupo, created = Group.objects.get_or_create(name='Equipo de trabajo')
-if created:
-    print 'grupo creado'
-    grupo.save()
+    dato = get_object_or_404(Proyecto, pk=id_proyecto)
+    equipos = MiembroEquipo.objects.filter(proyecto_id = id_proyecto)
+    #usuarios = User.objects.filter(id = equipos.usuario)
+
+    # equipi = MiembroEquipo.objects.get(proyecto_id = id_proyecto)
+    # comite = User.objects.filter(miembroequipo__id=id_proyecto) #filtra usuarios del comite
+    #lider = get_object_or_404(User, pk=dato.lider_id)
+    #flujos = Flujo.objects.filter(proyecto_id=id_proyecto)
+    # nombre_roles = []
+    usuarios = []
+    #
+    # roles = Group.objects.filter(proyecto_id=id_proyecto)
+    # for rol in roles:
+    #     nombre_roles.append(rol)
+    #     u = User.objects.filter(groups__id=rol.id)
+    #
+    for nose in equipos:
+        u = User.objects.filter(id = nose.usuario_id)
+        #rol = Group.objects.filter(id = nose.rol_id)
+        for user in u:
+            uu = user.first_name + " " + user.last_name  + ", "  +"\n"
+            usuarios.append(uu)
 
 
-#obtenemos el id del permiso, el que es creado de forma automática cuando usamos syncdb
-permiso = Permission.objects.get_by_natural_key(name='Can add escritor')
-#agregamos el permiso
-grupo.permissions.add(permiso)
+    return render_to_response('equipos/ver_equipo.html',
+                          {'proyectos': dato, 'usuarios': usuarios, 'scrumMaster': SMUser},
+                          context_instance=RequestContext(request))
 
 
 
-def ingresar_usuario(request):
-    user_form = UserFormStaff(request.POST or None)
-    escritor_form = escritorForm(request.POST or None)
-
-    if request.POST:
-        user_form_valid = user_form.is_valid()
-        escritor_form_valid = escritor_form.is_valid()
-        if user_form_valid:
-            if escritor_form_valid:
-                new_user = User.objects.create_user(user_form.cleaned_data['username'], '', user_form.cleaned_data['password'])
-                print new_user
-                grupo = get_object_or_404(Group, name = 'Equipo de trabajo')
-                if grupo != None:
-                    new_user.groups.add(grupo)
-                    new_user.is_active = True
-                    new_user.is_staff = True
-                    new_user.is_superuser = False
-                    new_user.set_password(user_form.cleaned_data['password'])
-                    new_user.save()
-                    escritor = escritor_form.save(commit=False)
-                    escritor.user = new_user
-                    escritor.save()
-                    return HttpResponseRedirect('/escritores/')
-                else:
-                    pass
-    context = {
-    'user_form' : user_form,
-    'escritor_form' : escritor_form,
-    }
-
-    return render_to_response('ingresar_escritor.html', context, context_instance=RequestContext(request))
