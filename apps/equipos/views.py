@@ -29,12 +29,12 @@ def ver_equipo(request, id_proyecto):
         SMUser = User.objects.get(id = SM.usuario_id)
     else:
         SMUser = None
-    dato = get_object_or_404(Proyecto, pk=id_proyecto)
+    proyecto = get_object_or_404(Proyecto, pk=id_proyecto)
     equipos = MiembroEquipo.objects.filter(proyecto_id = id_proyecto)
 
 
     return render_to_response('equipos/ver_equipo.html',
-                          {'proyecto': dato, 'equipos': equipos, 'scrumMaster': SMUser},
+                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser},
                           context_instance=RequestContext(request))
 
 
@@ -48,12 +48,13 @@ def agregar_miembro(request, id_proyecto):
         formulario = crearEquipoForm(request.POST)
 
         if formulario.is_valid():
-            newEquipo=MiembroEquipo(usuario_id = request.POST['id_usuario'], proyecto_id= request.POST['id_proyecto'], rol_id = request.POST['id_rol'],
-                                    horasPorDia=request.POST['horasPorDia'])
-            newEquipo.save()
-        return render_to_response('equipos/creacion_correcta.html',{}, context_instance=RequestContext(request))
+            #newEquipo=MiembroEquipo(usuario_id = request.POST['usuario'], proyecto_id= id_proyecto, rol_id = request.POST['id_rol'],
+            #                        horasPorDia=request.POST['horasPorDia'])
+            #newEquipo.save()
+            formulario.save()
+        return render_to_response('equipos/creacion_correcta.html',{'id_proyecto': id_proyecto}, context_instance=RequestContext(request))
      else:
-        formulario = crearEquipoForm()
+        formulario = crearEquipoForm(initial={'proyecto': id_proyecto})
         #hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
         return render_to_response('equipos/agregar_miembro.html', { 'formulario': formulario, 'id_proyecto': id_proyecto},

@@ -12,15 +12,15 @@ Nuevo equipo
 
     <a href="/equipos/{{id_proyecto}}">Administracion de Equipos</a> >>
 
-    "Crear Equipo"
+    "Agregar Miembro"
 </div>
 
 <div id="content">
-    <h1>Crear Equipo</h1>
+    <h1>Agregar Miembro</h1>
     <fieldset class="module aligned wide">
         <form method='post' action='' enctype="multipart/form-data">{% csrf_token %}
             <div class="form-row" >
-                {{formulario.as_p}}
+                {{ formulario.as_p }}
                 <br>
 
 

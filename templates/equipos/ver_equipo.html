@@ -16,27 +16,27 @@ Equipo
 
 <div id="content">
     <h1>Equipo de {{proyecto.nombre|title}}</h1>
-  <div id="container">
-    <ul class="object-tools">
-        <li>
+    <div id="container">
+        <ul class="object-tools">
+            <li>
 
-            <a href="/equipos/agregar/{{ id_proyecto }}" class="addlink">Agregar Usuario</a>
+                <a href="/equipos/agregar/{{ proyecto.id }}" class="addlink">Agregar Usuario</a>
 
-        </li>
-    </ul>
-    <div id="content-main">
-    <fieldset class="module aligned wide">
-        <form method="post">{% csrf_token %}
-            <div class="form-row">
+            </li>
+        </ul>
+        <div id="content-main">
+            <fieldset class="module aligned wide">
+                <form method="post">{% csrf_token %}
+                    <div class="form-row">
 
-                <div><h3><strong>Equipo: </strong></h3></div>
-                {% for equipo in equipos %}
-                {% for rol in equipo.rol.all %}
-                <li><b> {{ rol }} </b> {{ equipo.usuario }}</li>
-                {% endfor %}
-                {% endfor %}
-            </div>
-        </form>
-    </fieldset>
-</div>
-{% endblock %}
+                        <div><h3><strong>Equipo: </strong></h3></div>
+                        {% for equipo in equipos %}
+                            {% for rol in equipo.rol.all %}
+                                <li><b> {{ rol }} </b> {{ equipo.usuario }} <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black"></i></a></li>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        {% endblock %}
