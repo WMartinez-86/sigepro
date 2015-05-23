@@ -27,9 +27,12 @@ def lista_proyectos(request):
     proyectos = Proyecto.objects.all()
     # proyecto = Proyecto.objects.get(id=id_proyecto)
     rolSM = Group.objects.filter(name = "Scrum Master")
-    equipos = MiembroEquipo.objects.filter(rol = rolSM)
+    # equipos = MiembroEquipo.objects.filter(rol = rolSM)
+    equipos = MiembroEquipo.objects.filter()
 
-    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'equipos' : equipos},
+    # haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = miembro.proyecto_id)
+
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'equipos' : equipos, 'rolSM': rolSM},
                               context_instance=RequestContext(request))
 
 
