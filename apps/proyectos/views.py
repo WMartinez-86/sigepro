@@ -28,11 +28,11 @@ def lista_proyectos(request):
     # proyecto = Proyecto.objects.get(id=id_proyecto)
     rolSM = Group.objects.filter(name = "Scrum Master")
     # equipos = MiembroEquipo.objects.filter(rol = rolSM)
-    equipos = MiembroEquipo.objects.filter()
+    # equipos = MiembroEquipo.objects.filter()
 
     # haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = miembro.proyecto_id)
 
-    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'equipos' : equipos, 'rolSM': rolSM},
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'rolSM': rolSM},
                               context_instance=RequestContext(request))
 
 
@@ -139,38 +139,6 @@ def buscar_proyecto(request):
                               context_instance=RequestContext(request))
 
 
-@login_required
-@permission_required('proyectos')
-def cambiar_estado_proyecto(request, id_proyecto):
-    """
-
-    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
-    @param id_proyecto: referencia al proyecto de la base de datos
-    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
-    """
-
-    proyecto = Proyecto.objects.get(id=id_proyecto)
-    nombre = proyecto.nombre
-    if request.method == 'POST':
-        proyecto_form = CambiarEstadoForm(request.POST, instance=proyecto)
-        if proyecto_form.is_valid():
-            if proyecto_form.cleaned_data['estado'] == 'PRO':
-
-                # formulario validado correctamente
-                proyecto_form.save()
-                return HttpResponseRedirect('/proyectos/register/success/')
-            else:
-                if proyecto_form.cleaned_data['estado'] == 'ELI' or proyecto_form.cleaned_data['estado'] == 'PRO' or \
-                                proyecto_form.cleaned_data['estado'] == 'ELI':
-                    proyecto_form.save()
-                    return HttpResponseRedirect('/proyectos/register/success/')
-
-    else:
-        # formulario inicial
-        proyecto_form = CambiarEstadoForm(instance=proyecto)
-        return render_to_response('proyectos/cambiar_estado_proyecto.html',
-                                  {'proyectos': proyecto_form, 'nombre': nombre,'mensaje':1000}, context_instance=RequestContext(request))
-
 
 @login_required
 @permission_required('proyectos')
@@ -185,3 +153,37 @@ def detalle_proyecto(request, id_proyecto):
     dato = get_object_or_404(Proyecto, pk=id_proyecto)
     return render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato},
                               context_instance=RequestContext(request))
+
+
+# cambio de estado de proyecto
+
+@login_required
+@permission_required('proyectos')
+def proyecto_iniciar(request, id_proyecto):
+    """
+    Vista para ver los detalles del proyecto del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
+    rolSM = Group.objects.filter(name = "Scrum Master")
+    equipi = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = id_proyecto)
+    if equipi.count() == 0:
+        mensaje = 102 # no puede iniciar el proyecto sin asignar Scrum Master al equipo
+        proyectos = Proyecto.objects.all()
+        # proyecto = Proyecto.objects.get(id=id_proyecto)
+        rolSM = Group.objects.filter(name = "Scrum Master")
+        equipos = MiembroEquipo.objects.filter(rol = rolSM)
+        return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'mensaje': mensaje}, context_instance=RequestContext(request))
+    else:
+        proyectos = Proyecto.objects.get(id=id_proyecto)
+        proyectos.estado = "PRO"
+        proyectos.fecha_ini = datetime.now()
+        proyectos.save()
+
+        # listar proyectos
+        proyectos = Proyecto.objects.all()
+        return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'rolSM': rolSM},
+                              context_instance=RequestContext(request))
+
+

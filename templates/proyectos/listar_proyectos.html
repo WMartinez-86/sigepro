@@ -45,12 +45,15 @@ Proyectos
 
         <div id="content-main">
 
+            <h2>Proyectos SIN INICIAR</h2>
             <div class="results" >
                 <ul class="errorlist">
                     {% if  mensaje == 100 %}
                         <li>Error: El proyecto ya no esta en Produccion.</li>
                     {% elif mensaje == 101 %}
                         <li>Error: No puede crear User Story sin asignar un Scrum Master en el equipo del Proyecto.</li>
+                    {% elif mensaje == 102 %}
+                        <li>Error: No puede iniciar el proyecto sin asignar Scrum Master al equipo.</li>
                     {% endif %}
                 </ul>
                 <table >
@@ -59,21 +62,6 @@ Proyectos
                         <th scope="col" class="sortable" >
                             <div class="text">
                                 <a>Proyectos</a>
-                            </div>
-                        </th>
-                        <th scope="col">
-                            <div class="text">
-                                <a>Estado</a>
-                            </div>
-                        </th>
-                        <th scope="col">
-                            <div class="text">
-                                <a>Fecha de Inicio</a>
-                            </div>
-                        </th>
-                        <th scope="col">
-                            <div class="text">
-                                <a>Fecha de Finalización</a>
                             </div>
                         </th>
                         <th scope="col">
@@ -88,7 +76,81 @@ Proyectos
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Cambiar Estado</a>
+                                <a>Equipo</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Sprints</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>User Stories</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Flujos</a>
+                            </div>
+                        </th>
+                        <th scope="col", colspan="3">
+                            <div class="text">
+                                <a> </a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>INICIAR</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for proyecto in proyectos  %}
+                        {% if proyecto.estado == "NUE"  %}
+                            <tr>
+                                <td><center>{{ proyecto.nombre }}</center></td>
+                                <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/modificar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+                                <td><center><a href="/equipos/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
+                                <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
+                                <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td><center><a href="/proyectos/iniciar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-play icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <h2>Proyectos EN PRODUCCION</h2>
+                <div class="results" >
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Proyectos</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Inicio</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Descripción</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Modificar</a>
                             </div>
                         </th>
                         <th scope="col">
@@ -115,19 +177,222 @@ Proyectos
                     </thead>
                     <tbody>
                     {% for proyecto in proyectos  %}
+                        {% if proyecto.estado == "PRO"  %}
+                            <tr>
+                                <td><center>{{ proyecto.nombre }}</center></td>
+                                <td><center>{{ proyecto.fecha_ini }}</center></td>
+                                <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/modificar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+                                <td><center><a href="/equipos/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
+                                <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
+                                <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                    <h2>Proyectos FINALIZADOS</h2>
+                <div class="results" >
+                <table >
+                    <thead>
                     <tr>
-                        <td><center>{{ proyecto.nombre }}</center></td>
-                        <td><center>{{ proyecto.get_estado_display }}</center></td>
-                        <td><center>{{ proyecto.fecha_ini }}</center></td>
-                        <td><center>{{ proyecto.fecha_fin }}</center></td>
-                        <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
-                        <td><center><a href="/proyectos/modificar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
-                        <td><center><a href="/proyectos/cambiarEstado/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-retweet icon-white"></i></a></center>
-                        <td><center><a href="/equipos/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
-                        <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
-                        <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
-                        <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Proyectos</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Inicio</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Finalización</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Descripción</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Modificar</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Equipo</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Sprints</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>User Stories</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Flujos</a>
+                            </div>
+                        </th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    {% for proyecto in proyectos  %}
+                        {% if proyecto.estado == "FIN"  %}
+                            <tr>
+                                <td><center>{{ proyecto.nombre }}</center></td>
+                                <td><center>{{ proyecto.fecha_ini }}</center></td>
+                                <td><center>{{ proyecto.fecha_fin }}</center></td>
+                                <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/modificar/{{ proyecto.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
+                                <td><center><a href="/equipos/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
+                                <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
+                                <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                    <h2>Proyectos APROBADOS</h2>
+                <div class="results" >
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Proyectos</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Inicio</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Finalización</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Descripción</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Equipo</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Sprints</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>User Stories</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Flujos</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for proyecto in proyectos  %}
+                        {% if proyecto.estado == "APR"  %}
+                            <tr>
+                                <td><center>{{ proyecto.nombre }}</center></td>
+                                <td><center>{{ proyecto.fecha_ini }}</center></td>
+                                <td><center>{{ proyecto.fecha_fin }}</center></td>
+                                <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                                <td><center><a href="/equipos/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
+                                <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
+                                <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <h2>Proyectos ELIMINADOS</h2>
+                <div class="results" >
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                <a>Proyectos</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Inicio</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Fecha de Finalización</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Descripción</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Equipo</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Sprints</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>User Stories</a>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                <a>Flujos</a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for proyecto in proyectos  %}
+                        {% if proyecto.estado == "ELI"  %}
+                            <tr>
+                                <td><center>{{ proyecto.nombre }}</center></td>
+                                <td><center>{{ proyecto.fecha_ini }}</center></td>
+                                <td><center>{{ proyecto.fecha_fin }}</center></td>
+                                <td><center><a href="/proyectos/{{ proyecto.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
+                                <td><center><a href="/equipos/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-user icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
+                                <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
+                                <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
 

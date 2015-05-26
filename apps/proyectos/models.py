@@ -27,13 +27,12 @@ class Proyecto(models.Model):
     """
 
     nombre= models.CharField(max_length=50, verbose_name='Nombre',unique=True)
-    nombreCorto= models.CharField(max_length=20, verbose_name='Nombre',unique=True)
-    siglas= models.CharField(max_length=20)
+    nombreCorto= models.CharField(max_length=20, verbose_name='Nombre corto',unique=True)
     descripcion= models.TextField(verbose_name='Descripcion')
-    fecha_ini=models.DateField(verbose_name='Fecha de inicio',null=False)
-    fecha_fin=models.DateField(verbose_name='Fecha de Finalizacion',null=False)
+    fecha_ini=models.DateField(verbose_name='Fecha de inicio', null=True)
+    fecha_fin=models.DateField(verbose_name='Fecha de Finalizacion', null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    estado=models.CharField(max_length=3,choices= ESTADOS, default='PRO')
+    estado=models.CharField(max_length=3,choices= ESTADOS, default='NUE')
     #duracion_sprint = models.PositiveIntegerField(default=30)
     #equipo = models.ManyToManyField(User, through='MiembroEquipo')
 
