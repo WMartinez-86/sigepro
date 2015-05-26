@@ -47,33 +47,38 @@ Sprints
         </ul>
         <div id="content-main">
 
-            <h2>Sprint BackLog</h2>
+            <h2>SPRINT BACKLOG</h2>
             <div class="results" >
                 <table >
                     <thead>
                     <tr>
                         <th scope="col" class="sortable" >
                             <div class="text">
-                                <a>Nombre</a>
+                                Nombre
                             </div>
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Descripcion</a>
+                                Descripcion
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                Eliminar
                             </div>
                         </th>
                         {% if sprintActivo == 0  %}
+                            <th scope="col", colspan="3">
+                                <div class="text">
+
+                                </div>
+                            </th>
                             <th scope="col">
                                 <div class="text">
-                                    <a>Iniciar</a>
+                                    INICIAR
                                 </div>
                             </th>
                         {% endif %}
-                        <th scope="col">
-                            <div class="text">
-                                <a>Eliminar</a>
-                            </div>
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -82,10 +87,13 @@ Sprints
                             <tr>
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
-                                {% if sprintActivo == 0  %}
-                                    <td><center><a href="/sprints/iniciar/{{ dato.pk }}" class="btn btn-info"><i class=" icon-ok icon-white"></i></a></center></td>
-                                {% endif %}
                                 <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                                {% if sprintActivo == 0  %}
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td><center><a href="/sprints/iniciar/{{ dato.pk }}" class="btn btn-success"><i class=" icon-play icon-white"></i></a></center></td>
+                                {% endif %}
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -93,30 +101,35 @@ Sprints
 
                 </table>
 
-                <h2>Sprint Iniciados</h2>
+                <h2>Sprint INICIADOS</h2>
                 <table >
                     <thead>
                     <tr>
-                        <th scope="col" class="sortable" >
+                        <th scope="col" >
                             <div class="text">
-                                <a>Nombre</a>
+                                Nombre
                             </div>
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Descripcion</a>
+                                Descripcion
                             </div>
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Inicio</a>
+                                Inicio
                             </div>
                         </th>
-                        <th scope="col">
-                            <div class="text">
-                                <a>Finalizar</a>
-                            </div>
-                        </th>
+                        <th scope="col", colspan="3">
+                                <div class="text">
+
+                                </div>
+                            </th>
+                            <th scope="col">
+                                <div class="text">
+                                    FINALIZAR
+                                </div>
+                            </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -126,7 +139,10 @@ Sprints
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
                                 <td><center>{{ dato.inicio }}</center></td>
-                                <td><center><a href="/sprints/finalizar/{{ dato.pk }}" class="btn btn-info"><i class=" icon-stop icon-white"></i></a></center></td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td><center><a href="/sprints/finalizar/{{ dato.pk }}" class="btn btn-success"><i class=" icon-stop icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -134,28 +150,28 @@ Sprints
 
                 </table>
 
-                <h2>Sprints Finalizados</h2>
+                <h2>Sprints FINALIZADOS</h2>
                 <table >
                     <thead>
                     <tr>
                         <th scope="col" class="sortable" >
                             <div class="text">
-                                <a>Nombre</a>
+                                Nombre
                             </div>
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Descripcion</a>
+                                Descripcion
                             </div>
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Inicio</a>
+                                Inicio
                             </div>
                         </th>
                         <th scope="col">
                             <div class="text">
-                                <a>Fin</a>
+                                Fin
                             </div>
                         </th>
                     </tr>
