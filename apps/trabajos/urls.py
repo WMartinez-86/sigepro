@@ -19,6 +19,6 @@ urlpatterns = patterns('',
                        #url(r'^nota/(?P<pk>\d+)/$', views.NotaDetail.as_view(), name='nota_detail'),
                        #url(r'^userstory/(?P<pk>\d+)/notas/$', views.NotaList.as_view(), name="nota_list"),
                        #url(r'^userstory/(?P<pk>\d+)/files/$', views.FileList.as_view(), name="file_list"),
-                       url(r'^adjunto/(?P<id_trabajo>\d+)$', upload_listar, name='upload_listar'),
+                       url(r'^adjuntar/(?P<id_trabajo>\d+)$', upload_listar, name='upload_listar'),
 
 )

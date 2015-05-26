@@ -124,7 +124,7 @@ def upload_listar(request, id_trabajo):
         proyecto = Proyecto.objects.get(id = userStory.proyecto_id)
         if hayAdjunto.count() == 0: # si no hay adjuntos.. muestra el template para cargar
             formulario = NuevoAdjunto()
-            return render_to_response('trabajos/adjunto.html',{'id_trabajo': id_trabajo, 'formulario': formulario, 'proyecto': proyecto, 'flujo': flujo}, context_instance = RequestContext(request))
+            return render_to_response('trabajos/adjuntar.html',{'id_trabajo': id_trabajo, 'formulario': formulario, 'proyecto': proyecto, 'flujo': flujo}, context_instance = RequestContext(request))
         else: # muestra el adjunto
             adjunto = Adjunto.objects.get(trabajo_id = id_trabajo)
             return render_to_response('trabajos/ver_adjunto.html',{'id_trabajo': id_trabajo, 'proyecto': proyecto, 'flujo': flujo, 'adjunto': adjunto}, context_instance = RequestContext(request))
