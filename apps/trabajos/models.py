@@ -16,19 +16,16 @@ class Trabajo(models.Model):
     @cvar descripcion: descripcion breve del trabajo realizado
     """
 
-    TIPO_CAMBIO_ESTADO = 1
-    TIPO_NORMAL = 2
-
     TIPO_CHOICES = (
-    (TIPO_CAMBIO_ESTADO, ('Cambio de estado')),
-    (TIPO_NORMAL, ('Normal')),
+    (0, ('Normal')),
+    (1, ('Cambio de estado')),
     )
 
     descripcion = models.TextField(max_length=140)
     userStory = models.ForeignKey(UserStory)
-    tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=TIPO_NORMAL)
+    tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=0)
     hora = models.PositiveIntegerField(default=0)
-    fecha = models.DateField(auto_now=True, verbose_name='Fecha')
+    fecha = models.DateField(verbose_name='Fecha')
 
     def __str__(self):
         return self.descripcion

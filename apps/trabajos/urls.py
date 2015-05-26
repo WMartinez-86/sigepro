@@ -9,7 +9,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-                       url(r'^crear/$',crear_trabajo, name='crear_trabajo'),
+                       url(r'^crear/(?P<id_userStory>\d+)$',crear_trabajo, name='crear_trabajo'),
                        url(r'^userStories/(?P<id_userStory>\d+)$', listar_trabajos, name='listar_trabajos'),
                        #url(r'^detalle/(?P<id_userStory>\d+)$',detalle_userStory, name='detalle_userStory'),
                        #url(r'^modificar/(?P<id_userStory>\d+)$',editar_userStory, name='editar_userStory'),

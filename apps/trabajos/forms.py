@@ -9,8 +9,8 @@ from apps.trabajos.models import Trabajo, Adjunto
 class crearTrabajoForm(forms.ModelForm):
     class Meta:
         model= Trabajo
-        exclude = ()
-        #fields = ['descripcion','userstory','sprint','tipo_trabajo']
+        # exclude = ()
+        fields = ['fecha', 'descripcion', 'hora']
 
 # class EstadoTrabajoForm(forms.ModelForm):
 #     estado=forms.CharField(max_length=3,widget=forms.Select(choices= ESTADOS))

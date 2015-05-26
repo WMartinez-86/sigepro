@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User, Group
 from django.http import HttpResponseRedirect
 from base64 import b64encode
+from datetime import datetime
 
 # Create your views here.
 # @login_required
@@ -51,11 +52,11 @@ def listar_trabajos(request,id_userStory):
     # nivel = 3
     #id_proyecto=Flujo.objects.get().proyecto_id
     #proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
-    return render_to_response('trabajos/listar_trabajos.html', {'datos': trabajos},
+    return render_to_response('trabajos/listar_trabajos.html', {'datos': trabajos, 'id_userStory': id_userStory},
                                   context_instance=RequestContext(request))
 
 
-def crear_trabajo(request):
+def crear_trabajo(request, id_userStory):
     """
     Vista para crear un user story. Ademas se dan las opciones de agregar un
     archivo al item, y de completar todos los atributos de su tipo de item
@@ -70,19 +71,20 @@ def crear_trabajo(request):
         formulario = crearTrabajoForm(request.POST)
 
         if formulario.is_valid():
-            #today = datetime.now() #fecha actual
-            #dateFormat = today.strftime("%Y-%m-%d") # fecha con format
-            #obtener item con el cual relacionar
-            #item_nombre=request.POST.get('entradalista')
+            fecha=datetime.strptime(str(request.POST["fecha"]),'%d/%m/%Y')
+            fechaCorreo=str(request.POST["fecha"]),'%d/%m/%Y'
+            fecha=fecha.strftime('%Y-%m-%d')
+            fecha1=datetime.strptime(fecha,'%Y-%m-%d')
+            # obtener item con el cual relacionar
+            item_nombre=request.POST.get('entradalista')
 
-            newTrabajo=Trabajo(descripcion=request.POST['descripcion'], tipo_trabajo=request.POST['tipo_trabajo'],hora=request.POST['hora'], fecha=date, userstory_id=request.POST['userstory'],
-                               sprint_id=request.POST['sprint'])
+            newTrabajo=Trabajo(descripcion=request.POST['descripcion'],hora=request.POST['hora'], fecha=fecha1, userStory_id = id_userStory) #default tipo de trabajo es 0: normal
             newTrabajo.save()
 
             # enviar correo de notificacion al scrum master
             objdev = request.user
             desarrollador = User.get_full_name(objdev)
-            proyecto = newTrabajo.userstory.proyecto
+            proyecto = newTrabajo.userStory.proyecto
             id_proyecto = proyecto.id
             rolSM = Group.objects.filter(name = "Scrum Master")
             equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
@@ -90,16 +92,16 @@ def crear_trabajo(request):
             correo = SM.email
             send_mail("Asunto", "Mensaje del sistema. \nEl usuario " + str(desarrollador) + " ha creado el siguiente Trabajo\n" +
                       "\nDescrpcion: " + newTrabajo.descripcion +
-                      "\nUser Story: " + newTrabajo.userstory.nombre +
+                      "\nUser Story: " + newTrabajo.userStory.nombre +
                       "\nTipo de trabajo: " + newTrabajo.tipo_trabajo +
                       "\nHoras: " + newTrabajo.hora +
-                      "\nFecha: " + str(newTrabajo.fecha),
+                      "\nFecha: " + newTrabajo.fecha,
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
             #guardar archivo
 
                 #guardar atributos
-        return render_to_response('trabajos/creacion_correcta.html',{}, context_instance=RequestContext(request))
+        return render_to_response('trabajos/creacion_correcta.html',{'id_userStory': id_userStory}, context_instance=RequestContext(request))
     else:
 
         formulario = crearTrabajoForm()
