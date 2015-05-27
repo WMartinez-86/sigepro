@@ -3,11 +3,11 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User, Group
 from apps.proyectos.models import Proyecto
+from apps.proyectos.forms import ProyectoForm
 from django.views.generic import TemplateView, ListView
 from django.utils import timezone
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseRedirect
-from apps.proyectos.forms import ProyectoForm, CambiarEstadoForm
 from apps.equipos.models import MiembroEquipo
 
 from apps.flujos.models import Flujo
@@ -50,23 +50,23 @@ def registra_proyecto(request):
         formulario = ProyectoForm(request.POST)
 
         if formulario.is_valid():
-            fecha = datetime.strptime(str(request.POST["fecha_ini"]), '%d/%m/%Y')#convert string to datetime
-            fecha = fecha.strftime('%Y-%m-%d')# fecha con formato
-            fecha1 = datetime.strptime(fecha, '%Y-%m-%d')#convert string to datetime
+            # fecha = datetime.strptime(str(request.POST["fecha_ini"]), '%d/%m/%Y')#convert string to datetime
+            # fecha = fecha.strftime('%Y-%m-%d')# fecha con formato
+            # fecha1 = datetime.strptime(fecha, '%Y-%m-%d')#convert string to datetime
 
-            fechaf = datetime.strptime(str(request.POST["fecha_fin"]), '%d/%m/%Y')#convert string to datetime
-            fechaf = fechaf.strftime('%Y-%m-%d')# fecha con formato
-            fecha2 = datetime.strptime(fechaf, '%Y-%m-%d') #convert string to datetime
+            # fechaf = datetime.strptime(str(request.POST["fecha_fin"]), '%d/%m/%Y')#convert string to datetime
+            # fechaf = fechaf.strftime('%Y-%m-%d')# fecha con formato
+            # fecha2 = datetime.strptime(fechaf, '%Y-%m-%d') #convert string to datetime
 
-            fecha_actual = datetime.now() #fecha actual
-            fecha_actual = fecha_actual.strftime('%Y-%m-%d')#fecha con formato
-            if datetime.strptime(fecha_actual, '%Y-%m-%d') > fecha1:
-                return render_to_response('proyectos/registrar_proyectos.html', {'formulario': formulario, 'mensaje': 1},
-                                          context_instance=RequestContext(request))
-            elif fecha1 > fecha2:
-                return render_to_response('proyectos/registrar_proyectos.html', {'formulario': formulario, 'mensaje': 0},
-                                          context_instance=RequestContext(request))
-            else:
+            # fecha_actual = datetime.now() #fecha actual
+            # fecha_actual = fecha_actual.strftime('%Y-%m-%d')#fecha con formato
+            # if datetime.strptime(fecha_actual, '%Y-%m-%d') > fecha1:
+            #     return render_to_response('proyectos/registrar_proyectos.html', {'formulario': formulario, 'mensaje': 1},
+            #                               context_instance=RequestContext(request))
+            # elif fecha1 > fecha2:
+            #     return render_to_response('proyectos/registrar_proyectos.html', {'formulario': formulario, 'mensaje': 0},
+            #                               context_instance=RequestContext(request))
+            # else:
 
                 formulario.save()
                 return HttpResponseRedirect('/proyectos/register/success')
@@ -183,7 +183,83 @@ def proyecto_iniciar(request, id_proyecto):
 
         # listar proyectos
         proyectos = Proyecto.objects.all()
-        return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'rolSM': rolSM},
+        return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos},
                               context_instance=RequestContext(request))
 
 
+@login_required
+@permission_required('proyectos')
+def proyecto_finalizar(request, id_proyecto):
+    """
+    Vista para ver los detalles del proyecto del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
+    proyectos = Proyecto.objects.get(id=id_proyecto)
+    proyectos.estado = "FIN"
+    proyectos.fecha_fin = datetime.now()
+    proyectos.save()
+
+    # listar proyectos
+    proyectos = Proyecto.objects.all()
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos},
+                          context_instance=RequestContext(request))
+
+@login_required
+@permission_required('proyectos')
+def proyecto_aprobar(request, id_proyecto):
+    """
+    Vista para ver los detalles del proyecto del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
+    proyectos = Proyecto.objects.get(id=id_proyecto)
+    proyectos.estado = "APR"
+    proyectos.fecha_apr = datetime.now()
+    proyectos.save()
+
+    # listar proyectos
+    proyectos = Proyecto.objects.all()
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos},
+                          context_instance=RequestContext(request))
+
+@login_required
+@permission_required('proyectos')
+def proyecto_eliminar(request, id_proyecto):
+    """
+    Vista para ver los detalles del proyecto del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
+    proyectos = Proyecto.objects.get(id=id_proyecto)
+    proyectos.estado = "ELI"
+    proyectos.fecha_eli = datetime.now()
+    proyectos.save()
+
+    # listar proyectos
+    proyectos = Proyecto.objects.all()
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos},
+                          context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('proyectos')
+def proyecto_rechazar(request, id_proyecto):
+    """
+    Vista para ver los detalles del proyecto del sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
+    proyectos = Proyecto.objects.get(id=id_proyecto)
+    proyectos.estado = "PRO"
+    proyectos.fecha_fin = None
+    proyectos.save()
+
+    # listar proyectos
+    proyectos = Proyecto.objects.all()
+    return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos},
+                          context_instance=RequestContext(request))

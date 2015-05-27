@@ -104,6 +104,11 @@ Proyectos
                                 INICIAR
                             </div>
                         </th>
+                        <th scope="col">
+                            <div class="text">
+                                ELIMINAR
+                            </div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -121,6 +126,7 @@ Proyectos
                                 <td> </td>
                                 <td> </td>
                                 <td><center><a href="/proyectos/iniciar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-play icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/eliminar/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -173,6 +179,21 @@ Proyectos
                                 Flujos
                             </div>
                         </th>
+                        <th scope="col", colspan="3">
+                            <div class="text">
+
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                FINALIZAR
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                ELIMINAR
+                            </div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -187,6 +208,11 @@ Proyectos
                                 <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
                                 <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
                                 <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td><center><a href="/proyectos/finalizar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-stop icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/eliminar/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -244,6 +270,26 @@ Proyectos
                                 Flujos
                             </div>
                         </th>
+                        <th scope="col", colspan="3">
+                            <div class="text">
+
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                APROBAR
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                RECHAZAR
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                ELIMINAR
+                            </div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -259,6 +305,12 @@ Proyectos
                                 <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
                                 <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
                                 <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td><center><a href="/proyectos/aprobar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-thumbs-up icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/rechazar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-thumbs-down icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/eliminar/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}

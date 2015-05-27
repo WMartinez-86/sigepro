@@ -23,13 +23,4 @@ class ProyectoForm(ModelForm):
 
     class Meta:
         model = Proyecto
-        exclude = ['estado','roles']
-
-
-
-class CambiarEstadoForm(ModelForm):
-    estado = forms.CharField(max_length=3, widget=forms.Select(choices=ESTADOS))
-
-    class Meta:
-        model = Proyecto
-        exclude = ['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'observaciones', 'nombreCorto', 'siglas', 'duracion_sprint']
+        exclude = ['fecha_ini', 'fecha_fin', 'fecha_fin', 'fecha_apr', 'fecha_eli', 'fecha_creacion', 'estado']

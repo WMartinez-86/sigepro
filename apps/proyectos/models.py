@@ -31,6 +31,8 @@ class Proyecto(models.Model):
     descripcion= models.TextField(verbose_name='Descripcion')
     fecha_ini=models.DateField(verbose_name='Fecha de inicio', null=True)
     fecha_fin=models.DateField(verbose_name='Fecha de Finalizacion', null=True)
+    fecha_apr=models.DateField(verbose_name='Fecha de Aprobacion', null=True)
+    fecha_eli=models.DateField(verbose_name='Fecha de Eliminacion', null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     estado=models.CharField(max_length=3,choices= ESTADOS, default='NUE')
     #duracion_sprint = models.PositiveIntegerField(default=30)
