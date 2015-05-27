@@ -3,6 +3,7 @@ from apps.userStories.models import UserStory
 from apps.sprints.models import Sprint
 from django.utils.encoding import force_bytes
 from base64 import b64encode
+from django.core.urlresolvers import reverse_lazy
 # Create your models here.
 
 class Trabajo(models.Model):
@@ -27,8 +28,8 @@ class Trabajo(models.Model):
     hora = models.PositiveIntegerField(default=0)
     fecha = models.DateField(verbose_name='Fecha')
 
-    def __str__(self):
-        return self.descripcion
+    def __unicode__(self):
+        return unicode(self.descripcion)
 
 
 class Adjunto(models.Model):
@@ -42,6 +43,7 @@ class Adjunto(models.Model):
     nombre = models.CharField(max_length=100, null=True)
     descripcion = models.TextField()
     binario = models.BinaryField(null=True, blank=True)
+    content_type = models.CharField(null=True, editable=False, max_length=50)
     fechaCreacion = models.DateTimeField(auto_now_add=True)
     trabajo = models.ForeignKey(Trabajo)
 
@@ -49,3 +51,6 @@ class Adjunto(models.Model):
 
     def img64(self):
         return b64encode(force_bytes(self.binario))
+
+    def get_download_url(self):
+        return reverse_lazy('download_attachment', args=[self.pk])
