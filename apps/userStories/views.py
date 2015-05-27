@@ -120,7 +120,7 @@ def crear_userStory(request, id_proyecto):
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
 
-        return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
+        return render_to_response('userStories/creacion_correcta.html',{'id_proyecto': id_proyecto}, context_instance=RequestContext(request))
     else:
         formulario = crearUserStoryForm()
         hijo=False
