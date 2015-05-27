@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from apps.actividades.models import Actividad
-from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required, permission_required, PermissionDenied
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from apps.userStories.models import UserStory
 from apps.trabajos.models import Trabajo, Adjunto
@@ -12,7 +12,7 @@ from apps.proyectos.models import Proyecto
 from apps.flujos.models import Flujo
 from django.core.mail import send_mail
 from django.contrib.auth.models import User, Group
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from base64 import b64encode
 from datetime import datetime
 
@@ -113,25 +113,28 @@ def crear_trabajo(request, id_userStory):
 def upload_listar(request, id_trabajo):
     trabajo = Trabajo.objects.get(id = id_trabajo)
     if request.method == 'POST':
-        adjunto = Adjunto(nombre=request.POST['nombre'], descripcion=request.POST['descripcion'], binario=request.read(), trabajo_id=id_trabajo)
+        adjunto = Adjunto(nombre=request.POST['nombre'], descripcion=request.POST['descripcion'], binario=request.FILES['file'].read(),
+                          content_type = request.FILES['file'].content_type, trabajo_id=id_trabajo)
         adjunto.save()
         return render_to_response('trabajos/listar_trabajos.html', {'datos': trabajo},
                                   context_instance=RequestContext(request))
     else:
         hayAdjunto = Adjunto.objects.filter(trabajo_id = id_trabajo)
         userStory = UserStory.objects.get(id = trabajo.userStory_id)
-        flujo = Flujo.objects.get(id = userStory.flujo_id)
+        #flujo = Flujo.objects.get(id = userStory.flujo_id)
         proyecto = Proyecto.objects.get(id = userStory.proyecto_id)
         if hayAdjunto.count() == 0: # si no hay adjuntos.. muestra el template para cargar
             formulario = NuevoAdjunto()
-            return render_to_response('trabajos/adjuntar.html',{'id_trabajo': id_trabajo, 'formulario': formulario, 'proyecto': proyecto, 'flujo': flujo}, context_instance = RequestContext(request))
+            return render_to_response('trabajos/adjuntar.html',{'id_trabajo': id_trabajo, 'formulario': formulario, 'proyecto': proyecto},
+                                      context_instance = RequestContext(request))
         else: # muestra el adjunto
             adjunto = Adjunto.objects.get(trabajo_id = id_trabajo)
-            return render_to_response('trabajos/ver_adjunto.html',{'id_trabajo': id_trabajo, 'proyecto': proyecto, 'flujo': flujo, 'adjunto': adjunto}, context_instance = RequestContext(request))
+            return render_to_response('trabajos/ver_adjunto.html',{'id_trabajo': id_trabajo, 'proyecto': proyecto, 'adjunto': adjunto},
+                                      context_instance = RequestContext(request))
 
 
 
-def upload_handler(request, attachment, uploaded_file):
+def upload_handler(request, attachment, uploaded_file,id_trabajo):
         #attachment.user_story = self.user_story
         attachment.nombre = uploaded_file.name
 
@@ -139,9 +142,31 @@ def upload_handler(request, attachment, uploaded_file):
         attachment.content_type = uploaded_file.content_type
         attachment.binario = uploaded_file.read()
         attachment.save()
-        return render_to_response('trabajos/adjuntar.html',{},context_instance = RequestContext(request))
+        return render_to_response('trabajos/adjuntar.html',{'id_trabajo': id_trabajo},context_instance = RequestContext(request))
 
 # def form_valid(self, form):
 #         attachment = form.save(commit=False)
 #         self.upload_handler(attachment, self.request.FILES['file'])
 #         return HttpResponseRedirect(attachment.get_absolute_url())
+
+
+
+
+@login_required
+def download_attachment(request, pk):
+    """
+    Vista que permite la descarga de un archivo adjunto de la base de datos
+    :param request: request del cliente
+    :param pk: id del adjunto
+    :return: respuesta http con el archivo adjunto
+    """
+    attachment = get_object_or_404(Adjunto, pk=pk)
+    #if request.user.has_perm('project.view_project', attachment.user_story.proyecto):
+    response = HttpResponse(attachment.binario, content_type=attachment.content_type)
+    response['Content-Disposition'] = 'attachment; nombre=%s' % attachment.nombre
+    # if attachment.tipo == 'img':
+    #     response['Content-Disposition'] = 'filename=%s' % attachment.filename
+    # else:
+    #     response['Content-Disposition'] = 'attachment; filename=%s' % attachment.filename
+    return response
+    #raise PermissionDenied()
