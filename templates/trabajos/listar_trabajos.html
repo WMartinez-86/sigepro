@@ -85,12 +85,12 @@
         </tr>
         </thead>
         <tbody>
-        {% for Trabajo in datos  %}
+        {% for dato in datos  %}
             <tr>
-                <td><center>{{ Trabajo.descripcion }}</center></td>
-                <td><center>{{ Trabajo.fecha }}</center></td>
-                <td><center>{{ Trabajo.hora }}</center></td>
-                <td><center><a href="/trabajos/adjuntar/{{ Trabajo.id }}"  class="btn btn-success"><i class="icon-file icon-white"></i></a></center></td>
+                <td><center>{{ dato.descripcion }}</center></td>
+                <td><center>{{ dato.fecha }}</center></td>
+                <td><center>{{ dato.hora }}</center></td>
+                <td><center><a href="/trabajos/adjuntar/{{ dato.id }}"  class="btn btn-success"><i class="icon-file icon-white"></i></a></center></td>
 
             </tr>
         {% endfor %}

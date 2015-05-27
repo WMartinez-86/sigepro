@@ -28,8 +28,8 @@ class Trabajo(models.Model):
     hora = models.PositiveIntegerField(default=0)
     fecha = models.DateField(verbose_name='Fecha')
 
-    def __unicode__(self):
-        return unicode(self.descripcion)
+    def __str__(self):
+        return self.descripcion
 
 
 class Adjunto(models.Model):

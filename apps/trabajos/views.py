@@ -58,7 +58,7 @@ def listar_trabajos(request,id_userStory):
 
 def crear_trabajo(request, id_userStory):
     """
-    Vista para crear un user story. Ademas se dan las opciones de agregar un
+    Vista para crear un trabajo. Ademas se dan las opciones de agregar un
     archivo al item, y de completar todos los atributos de su tipo de item
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_tipoItem: clave foranea al tipoItem
@@ -93,9 +93,9 @@ def crear_trabajo(request, id_userStory):
             send_mail("Asunto", "Mensaje del sistema. \nEl usuario " + str(desarrollador) + " ha creado el siguiente Trabajo\n" +
                       "\nDescrpcion: " + newTrabajo.descripcion +
                       "\nUser Story: " + newTrabajo.userStory.nombre +
-                      "\nTipo de trabajo: " + newTrabajo.tipo_trabajo +
-                      "\nHoras: " + newTrabajo.hora +
-                      "\nFecha: " + newTrabajo.fecha,
+                      "\nTipo de trabajo: " + str(newTrabajo.tipo_trabajo) +
+                      "\nHoras: " + str(newTrabajo.hora) +
+                      "\nFecha: " + str(newTrabajo.fecha),
                       '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
 
             #guardar archivo
@@ -112,11 +112,13 @@ def crear_trabajo(request, id_userStory):
 
 def upload_listar(request, id_trabajo):
     trabajo = Trabajo.objects.get(id = id_trabajo)
+    us = trabajo.userStory.id
+    task = Trabajo.objects.filter(userStory_id = us)
     if request.method == 'POST':
         adjunto = Adjunto(nombre=request.POST['nombre'], descripcion=request.POST['descripcion'], binario=request.FILES['file'].read(),
                           content_type = request.FILES['file'].content_type, trabajo_id=id_trabajo)
         adjunto.save()
-        return render_to_response('trabajos/listar_trabajos.html', {'datos': trabajo},
+        return render_to_response('trabajos/listar_trabajos.html', {'datos':task, 'id_userStory': us},
                                   context_instance=RequestContext(request))
     else:
         hayAdjunto = Adjunto.objects.filter(trabajo_id = id_trabajo)
