@@ -22,6 +22,6 @@ class NuevoAdjunto(forms.ModelForm):
     class Meta:
         model= Adjunto
 #        fields=['nombre', 'descripcion']
-        exclude = ('id_trabajo', 'creacion')
+        exclude = ('trabajo', 'creacion')
 
 
