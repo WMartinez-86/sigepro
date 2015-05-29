@@ -10,6 +10,7 @@ from apps.proyectos.models import Proyecto
 from apps.flujos.models import Flujo
 from apps.equipos.models import MiembroEquipo
 from apps.equipos.forms import crearEquipoForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -30,7 +31,7 @@ def ver_equipo(request, id_proyecto):
     else:
         SMUser = None
     proyecto = get_object_or_404(Proyecto, pk=id_proyecto)
-    equipos = MiembroEquipo.objects.filter(proyecto_id = id_proyecto).distinct()
+    equipos = MiembroEquipo.objects.filter(~Q(rol = rolSM), proyecto_id = id_proyecto, )
 
 
     return render_to_response('equipos/ver_equipo.html',
