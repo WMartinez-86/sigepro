@@ -23,20 +23,24 @@ def ver_equipo(request, id_proyecto):
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/ver_equipo.html', {'proyectos':dato,'lider': lider, 'comite':comite, 'usuarios':usuarios}, context_instance=RequestContext(request))
     """
+    fuerzaTrabajo = 0
     rolSM = Group.objects.filter(name = "Scrum Master")
     haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = id_proyecto)
     if haySM.count() > 0: #si hay Scrum Master
         SM = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
         SMUser = User.objects.get(id = SM.usuario_id)
         cantHorasUS = SM.horasPorDia
+        fuerzaTrabajo = cantHorasUS
     else:
         SMUser = None
     proyecto = get_object_or_404(Proyecto, pk=id_proyecto)
     equipos = MiembroEquipo.objects.filter(~Q(rol = rolSM), proyecto_id = id_proyecto, )
+    for equipo in equipos:
+        fuerzaTrabajo = fuerzaTrabajo + equipo.horasPorDia
 
 
     return render_to_response('equipos/ver_equipo.html',
-                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser, 'cantHorasUS': cantHorasUS},
+                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser, 'cantHorasUS': cantHorasUS, 'fuerzaTrabajo': fuerzaTrabajo},
                           context_instance=RequestContext(request))
 
 
