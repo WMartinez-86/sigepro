@@ -90,6 +90,7 @@ class VersionUserStory(models.Model):
     proyecto = models.ForeignKey(Proyecto)
     flujo = models.ForeignKey(Flujo, null=True, blank=True)
     actividad = models.ForeignKey(Actividad, null=True, blank=True)
+    fecha_mod = models.DateField(verbose_name='Fecha de Modificacion')
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 
