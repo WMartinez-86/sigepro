@@ -46,6 +46,8 @@ class UserStory(models.Model):
     flujo = models.ForeignKey(Flujo, null=True, blank=True)
     actividad = models.ForeignKey(Actividad, null=True, blank=True)
     version = models.PositiveIntegerField(null=True, blank=True)
+    orden = models.PositiveIntegerField(null=True, blank=True)
+    fecha_mod = models.DateField(verbose_name='Fecha de Modificacion')
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
 
@@ -55,10 +57,9 @@ class UserStory(models.Model):
 
 
 
-
 class VersionUserStory(models.Model):
     """
-    Modelo que representa a la version de User Story
+    Modelo que representa a la version de un  User Story
     @cvar nombre: Cadena de caracteres
     @cvar descripcion: Un campo de texto
     @cvar costo: Entero positivo que representa el costo del item
@@ -90,6 +91,8 @@ class VersionUserStory(models.Model):
     proyecto = models.ForeignKey(Proyecto)
     flujo = models.ForeignKey(Flujo, null=True, blank=True)
     actividad = models.ForeignKey(Actividad, null=True, blank=True)
+    version = models.PositiveIntegerField(null=True, blank=True)
+    orden = models.PositiveIntegerField(null=True, blank=True)
     fecha_mod = models.DateField(verbose_name='Fecha de Modificacion')
     #trabajo = models.ForeignKey(Trabajo, null=True, blank=True)
 
