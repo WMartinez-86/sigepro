@@ -29,11 +29,14 @@ Equipo
                 <form method="post">{% csrf_token %}
                     <div class="form-row">
 
-                        <div><h3><strong>Equipo: </strong></h3></div>
+                        <div><p style="font-size:18px"><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }})</p></div>
+                        </br>
                         {% for equipo in equipos %}
+                            <p style="font-size:18px">{{ equipo.usuario.first_name }} {{ equipo.usuario.last_name }} ({{ equipo.usuario }}) - Cant. horas =  {{ equipo.horasPorDia }}</p>
                             {% for rol in equipo.rol.all %}
-                                <li><b> {{ rol }} </b> {{ equipo.usuario }} <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black"></i></a></li>
+                                <li><p style="font-size:16px"><b>  {{ rol }} </b>  <a href="/equipos/elimisnar/{{ equipo.id }}"><i class="icon-remove icon-black"></i></a></p></li>
                             {% endfor %}
+                        <br></br>
                         {% endfor %}
                     </div>
                 </form>

@@ -10,6 +10,7 @@ from apps.proyectos.models import Proyecto
 from apps.flujos.models import Flujo
 from apps.equipos.models import MiembroEquipo
 from apps.equipos.forms import crearEquipoForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -30,7 +31,7 @@ def ver_equipo(request, id_proyecto):
     else:
         SMUser = None
     proyecto = get_object_or_404(Proyecto, pk=id_proyecto)
-    equipos = MiembroEquipo.objects.filter(proyecto_id = id_proyecto)
+    equipos = MiembroEquipo.objects.filter(~Q(rol = rolSM), proyecto_id = id_proyecto, )
 
 
     return render_to_response('equipos/ver_equipo.html',
@@ -49,13 +50,23 @@ def agregar_miembro(request, id_proyecto):
         formulario = crearEquipoForm(request.POST)
 
         if formulario.is_valid():
-            #newEquipo=MiembroEquipo(usuario_id = request.POST['usuario'], proyecto_id= id_proyecto, rol_id = request.POST['id_rol'],
-            #                        horasPorDia=request.POST['horasPorDia'])
-            #newEquipo.save()
+
+            # newEquipo=MiembroEquipo(usuario_id = request.POST['usuario'], proyecto_id= id_proyecto, rol = request.POST['rol'],
+            #                         horasPorDia=request.POST['horasPorDia'])
+
+            # newEquipo=MiembroEquipo(usuario_id = request.POST['usuario'], proyecto_id= id_proyecto, rol = request.POST['rol'],
+            #                         horasPorDia=request.POST['horasPorDia'])
+
+
             formulario.save()
+            equipoNuevo = MiembroEquipo.objects.filter(proyecto_id = None)
+            for equipo in equipoNuevo:
+                miembroEquipo = MiembroEquipo.objects.get(id = equipo.id)
+                miembroEquipo.proyecto_id = id_proyecto
+                miembroEquipo.save()
         return render_to_response('equipos/creacion_correcta.html',{'id_proyecto': id_proyecto}, context_instance=RequestContext(request))
      else:
-        formulario = crearEquipoForm(initial={'proyecto': id_proyecto})
+        formulario = crearEquipoForm()
         #hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
         return render_to_response('equipos/agregar_miembro.html', { 'formulario': formulario, 'id_proyecto': id_proyecto},
