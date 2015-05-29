@@ -28,6 +28,7 @@ def ver_equipo(request, id_proyecto):
     if haySM.count() > 0: #si hay Scrum Master
         SM = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
         SMUser = User.objects.get(id = SM.usuario_id)
+        cantHorasUS = SM.horasPorDia
     else:
         SMUser = None
     proyecto = get_object_or_404(Proyecto, pk=id_proyecto)
@@ -35,7 +36,7 @@ def ver_equipo(request, id_proyecto):
 
 
     return render_to_response('equipos/ver_equipo.html',
-                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser},
+                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser, 'cantHorasUS': cantHorasUS},
                           context_instance=RequestContext(request))
 
 
