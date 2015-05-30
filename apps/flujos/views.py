@@ -67,12 +67,7 @@ def listar_flujos(request,id_proyecto):
     mensaje = 0 # sin errores
     flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    if proyecto.estado!='PRO':
-        proyectos = Proyecto.objects.all().exclude(estado='ELI')
-        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                              context_instance=RequestContext(request))
-    else:
-        return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto, 'mensaje': mensaje}, context_instance=RequestContext(request))
+    return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto, 'mensaje': mensaje}, context_instance=RequestContext(request))
 
 
 @login_required

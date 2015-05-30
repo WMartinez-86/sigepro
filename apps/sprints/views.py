@@ -10,6 +10,7 @@ from django.db.models import Q
 #from django.contrib import messages
 #from django.shortcuts import render
 from apps.proyectos.models import Proyecto
+from apps.userStories.models import UserStory
 from apps.sprints.forms import SprintForm, CrearSprintForm
 #from apps.roles.forms import GroupForm
 from datetime import datetime, timedelta
@@ -141,8 +142,41 @@ def finalizar_sprint(request, id_sprint):
     return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
 
 
+@login_required
+@permission_required('sprint')
+def listar_USSprintBacklog(request, id_sprint):
+    """
+    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_sprint: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    sprint = get_object_or_404(Sprint, pk=id_sprint)
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    userStoriesBacklog = UserStory.objects.filter(sprint_id = None, proyecto_id = proyecto.id)
+    userStoriesAsignados = UserStory.objects.filter(sprint_id = id_sprint, proyecto_id = proyecto.id)
 
 
-def graficar (request,id_sprint):
-    return render_to_response('sprints/burndown_chart.html', {},
-                              context_instance=RequestContext(request))
+    return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('sprint')
+def asignar_userStorySprint(request, id_userStory,  id_sprint):
+    """
+    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_sprint: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    userStory = UserStory.objects.get(id = id_userStory)
+    userStory.sprint_id = id_sprint
+    userStory.save()
+
+    sprint = get_object_or_404(Sprint, pk=id_sprint)
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    userStoriesBacklog = UserStory.objects.filter(sprint_id = None, proyecto_id = proyecto.id)
+    userStoriesAsignados = UserStory.objects.filter(sprint_id = id_sprint, proyecto_id = proyecto.id)
+
+
+    return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))

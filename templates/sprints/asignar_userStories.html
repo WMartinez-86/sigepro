@@ -1,0 +1,126 @@
+{% extends 'base2.html' %}
+{% block title %}
+sprints
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es-PY" >
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css" />
+
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="dashboard">
+
+<!-- Container -->
+<div id="container">
+    <!-- Content -->
+    <div id="content" class="change-list" style="width: 1000px">
+        <div class="breadcrumbs">
+            <a href="/proyectos/">Proyecto {{ proyecto.nombre }}</a>>>
+            <a href="/sprints/proyecto/{{proyecto.id}}">sprint {{ sprint.nombre }}</a>>
+            "Eleccion de Usuarios"
+        </div>
+        <h1>US para el sprint {{ sprint.nombre }}</h1>
+
+        <div id="content-main">
+
+            <div class="results" >
+                <!--                <ul class="errorlist">
+                                    {% if  mensaje == 100 %}
+                                        <li>Info: User Story asignado correctamente</li>
+                                    {% elif mensaje == 1 %}
+                                        <li>info: User Story desasignado correctamente</li>
+                                    {% endif %}
+                                </ul>-->
+                {% if sprint.estado == 0  %}
+                    <h2>US sin asignar</h2>
+                    <table >
+                        <thead>
+                        <tr>
+                            <th scope="col" class="sortable" >
+                                <div class="text">
+                                    Nombre
+                                </div>
+                            </th>
+                            <th scope="col">
+                                <div class="text">
+                                    Asignar
+                                </div>
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for userStory in userStoriesBacklog  %}
+                        <tr>
+                            <td><center>{{ userStory.nombre }}</center></td>
+                            {% if sprint.estado == 0  %}
+
+                            <td><center><a href="/sprints/asignar/{{ userStory.pk }}/{{ sprint.id }}" class="btn btn-success"><i class="icon-plus icon-white"></i></a></center></td>
+
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                {% endif %}
+
+                <h2>Product Backlog</h2>
+                <table >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                Nombre
+                            </div>
+                        </th>
+                        {% if sprint.estado == 0  %}
+                            <th scope="col">
+                                <div class="text">
+                                    Desasignar
+                                </div>
+                            </th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for userStory in userStoriesAsignados  %}
+                    <tr>
+                        <td><center>{{ userStory.nombre }}</center></td>
+                        {% if sprint.estado == 0  %}
+
+                        <td><center><a href="/sprints/desasignar/{{ userStory.pk }}/{{ sprint.id }}" class="btn btn-danger"><i class=" icon-minus icon-white"></i></a></center></td>
+
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+
+
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+{% endblock %}

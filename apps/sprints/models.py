@@ -22,6 +22,7 @@ class Sprint(models.Model):
     estado = models.IntegerField(choices=ESTADOS, verbose_name='Estado', default=0)
     orden = models.SmallIntegerField(verbose_name='Orden')
     proyecto = models.ForeignKey(Proyecto, null=False)
+    capacidad = models.IntegerField(verbose_name='Capacidad', default=0)
 
     class Meta:
         default_permissions = ()

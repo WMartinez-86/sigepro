@@ -24,6 +24,7 @@ def ver_equipo(request, id_proyecto):
     @return: render_to_response('proyectos/ver_equipo.html', {'proyectos':dato,'lider': lider, 'comite':comite, 'usuarios':usuarios}, context_instance=RequestContext(request))
     """
     fuerzaTrabajo = 0
+    cantHorasUS = 0
     rolSM = Group.objects.filter(name = "Scrum Master")
     haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = id_proyecto)
     if haySM.count() > 0: #si hay Scrum Master
