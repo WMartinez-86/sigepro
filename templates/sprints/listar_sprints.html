@@ -47,7 +47,7 @@ Sprints
         </ul>
         <div id="content-main">
 
-            <h2>Sprints EJECUTADOS</h2>
+            <h2>Sprints FUTUROS</h2>
             <div class="results" >
                 <table >
                     <thead>
@@ -65,6 +65,11 @@ Sprints
                         <th scope="col">
                             <div class="text">
                                 Capacidad
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
+                                Horas U.S.
                             </div>
                         </th>
                         <th scope="col">
@@ -99,6 +104,7 @@ Sprints
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
                                 <td><center>{{ dato.capacidad }}</center></td>
+                                <td><center>{{ dato.horasUS }}</center></td>
                                 <td><center><a href="/sprints/backlog/{{ dato.pk }}" class="btn btn-warning"><i class=" icon-user icon-white"></i></a></center></td>
                                 <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
                                 {% if sprintActivo == 0  %}
@@ -135,6 +141,11 @@ Sprints
                         </th>
                         <th scope="col">
                             <div class="text">
+                                Horas U.S.
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="text">
                                 Sprint Backlog
                             </div>
                         </th>
@@ -162,6 +173,7 @@ Sprints
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
                                 <td><center>{{ dato.capacidad }}</center></td>
+                                <td><center>{{ dato.horasUS }}</center></td>
                                 <td><center><a href="/sprints/backlog/{{ dato.pk }}" class="btn btn-warning"><i class=" icon-user icon-white"></i></a></center></td>
                                 <td><center>{{ dato.inicio }}</center></td>
                                 <td> </td>
@@ -218,6 +230,7 @@ Sprints
                                 <td><center>{{ dato.nombre }}</center></td>
                                 <td><center>{{ dato.descripcion }}</center></td>
                                 <td><center>{{ dato.capacidad }}</center></td>
+                                <td><center>{{ dato.horasUS }}</center></td>
                                 <td><center><a href="/sprints/backlog/{{ dato.pk }}" class="btn btn-warning"><i class=" icon-user icon-white"></i></a></center></td>
                                 <td><center>{{ dato.inicio }}</center></td>
                                 <td><center>{{ dato.fin }}</center></td>

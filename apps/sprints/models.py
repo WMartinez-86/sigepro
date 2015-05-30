@@ -10,7 +10,7 @@ class Sprint(models.Model):
 
     ESTADOS = (
 
-    (0,'BackLog'),
+    (0,'Futuros'),
     (1,'En Ejecucion'),
     (2,'Finalizado'),
     )
@@ -23,6 +23,7 @@ class Sprint(models.Model):
     orden = models.SmallIntegerField(verbose_name='Orden')
     proyecto = models.ForeignKey(Proyecto, null=False)
     capacidad = models.IntegerField(verbose_name='Capacidad', default=0)
+    horasUS = models.IntegerField(verbose_name='Horas User Story', default=0)
 
     class Meta:
         default_permissions = ()

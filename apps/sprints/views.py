@@ -10,10 +10,13 @@ from django.db.models import Q
 #from django.contrib import messages
 #from django.shortcuts import render
 from apps.proyectos.models import Proyecto
+from apps.equipos.models import MiembroEquipo
 from apps.userStories.models import UserStory
+from apps.sprints.forms import AsignarFlujoDesarrollador
 from apps.sprints.forms import SprintForm, CrearSprintForm
 #from apps.roles.forms import GroupForm
 from datetime import datetime, timedelta
+from django.contrib.auth.models import User, Group
 
 # Create your views here.
 
@@ -169,8 +172,49 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
     """
+    if request.method == 'POST':
+        userStory = UserStory.objects.get(id = id_userStory)
+        userStory.sprint_id = id_sprint
+        userStory.flujo_id = request.POST["flujo"]
+        userStory.desarrollador_id = request.POST["desarrollador"]
+        userStory.save()
+
+        sprint = get_object_or_404(Sprint, pk=id_sprint)
+        proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+        userStoriesBacklog = UserStory.objects.filter(sprint_id = None, proyecto_id = proyecto.id)
+        userStoriesAsignados = UserStory.objects.filter(sprint_id = id_sprint, proyecto_id = proyecto.id)
+
+
+        equipo = MiembroEquipo.objects.filter(proyecto_id = proyecto.id, usuario_id = userStory.desarrollador)
+        horasPorDia = 0
+        for equipi in equipo:
+            horasPorDia = equipi.horasPorDia
+            print(horasPorDia)
+
+        # anhadir la capacidad al sprint
+        #anhadir horasUS .. tiempo estimado
+        sprint.horasUS = sprint.horasUS + userStory.tiempo_estimado
+        sprint.capacidad = sprint.capacidad + horasPorDia
+        sprint.save()
+
+        return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
+
+    else:
+        formulario = AsignarFlujoDesarrollador()
+        return render_to_response('sprints/asignar_FlujoDesarrollador.html', { 'formulario': AsignarFlujoDesarrollador}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('sprint')
+def desasignar_userStorySprint(request, id_userStory,  id_sprint):
+    """
+    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_sprint: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
     userStory = UserStory.objects.get(id = id_userStory)
-    userStory.sprint_id = id_sprint
+    userStory.sprint_id = None
     userStory.save()
 
     sprint = get_object_or_404(Sprint, pk=id_sprint)
@@ -178,5 +222,17 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
     userStoriesBacklog = UserStory.objects.filter(sprint_id = None, proyecto_id = proyecto.id)
     userStoriesAsignados = UserStory.objects.filter(sprint_id = id_sprint, proyecto_id = proyecto.id)
 
+    equipo = MiembroEquipo.objects.filter(proyecto_id = proyecto.id, usuario_id = userStory.desarrollador)
+    horasPorDia = 0
+    for equipi in equipo:
+        horasPorDia = equipi.horasPorDia
+        print(horasPorDia)
+
+    # anhadir la capacidad al sprint
+    #anhadir horasUS .. tiempo estimado
+    sprint.horasUS = sprint.horasUS - userStory.tiempo_estimado
+    sprint.capacidad = sprint.capacidad - horasPorDia
+    sprint.save()
 
     return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
+
