@@ -180,3 +180,9 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
 
 
     return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
+
+
+
+def graficar(request, id_sprint):
+    return render_to_response('sprints/burndown_chart.html', {},
+                              context_instance=RequestContext(request))
