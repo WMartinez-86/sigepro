@@ -164,6 +164,11 @@ Sprints
                                     FINALIZAR
                                 </div>
                             </th>
+                             <th scope="col">
+                                <div class="text">
+                                    Burndown Chart
+                                </div>
+                            </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -180,6 +185,7 @@ Sprints
                                 <td> </td>
                                 <td> </td>
                                 <td><center><a href="/sprints/finalizar/{{ dato.pk }}" class="btn btn-success"><i class=" icon-stop icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/graficar/{{ dato.pk }}" class="btn btn-success"><i class=" icon-picture icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
