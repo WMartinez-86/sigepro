@@ -5,7 +5,7 @@ from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
 from views import listar_sprints, registrar_sprint, eliminar_sprint, buscar_sprints, iniciar_sprint, finalizar_sprint, listar_USSprintBacklog#, detalle_sprint, asignar_usuario
-from views import asignar_userStorySprint, desasignar_userStorySprint
+from views import asignar_userStorySprint, desasignar_userStorySprint, graficar
 
 urlpatterns = patterns('',
         #Administracion de Sprints

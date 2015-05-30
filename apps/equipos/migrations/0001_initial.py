@@ -18,9 +18,9 @@ class Migration(migrations.Migration):
             name='MiembroEquipo',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('fuerza_trabajo', models.IntegerField(default=0)),
-                ('proyecto', models.ForeignKey(to='proyectos.Proyecto')),
-                ('roles', models.ManyToManyField(to='auth.Group')),
+                ('horasPorDia', models.PositiveIntegerField(default=0)),
+                ('proyecto', models.ForeignKey(to='proyectos.Proyecto', null=True)),
+                ('rol', models.ManyToManyField(to='auth.Group')),
                 ('usuario', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={

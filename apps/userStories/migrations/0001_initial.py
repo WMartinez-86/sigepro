@@ -8,11 +8,11 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flujos', '0003_remove_flujo_finicio'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('proyectos', '0007_auto_20150528_1536'),
         ('actividades', '0001_initial'),
-        ('sprints', '0003_auto_20150523_0715'),
+        ('flujos', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('sprints', '0001_initial'),
+        ('proyectos', '0001_initial'),
     ]
 
     operations = [
@@ -31,12 +31,12 @@ class Migration(migrations.Migration):
                 ('estadoScrum', models.IntegerField(default=0, choices=[(0, b'Nuevo'), (1, b'Iniciado'), (2, b'Suspendido'), (3, b'Eliminado')])),
                 ('version', models.PositiveIntegerField(null=True, blank=True)),
                 ('orden', models.PositiveIntegerField(null=True, blank=True)),
-                ('fecha_mod', models.DateField(verbose_name=b'Fecha de Modificacion')),
+                ('fecha_mod', models.DateField(null=True, verbose_name=b'Fecha de Modificacion')),
                 ('actividad', models.ForeignKey(blank=True, to='actividades.Actividad', null=True)),
-                ('desarrollador', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('desarrollador', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
                 ('flujo', models.ForeignKey(blank=True, to='flujos.Flujo', null=True)),
                 ('proyecto', models.ForeignKey(to='proyectos.Proyecto')),
-                ('sprint', models.ForeignKey(to='sprints.Sprint')),
+                ('sprint', models.ForeignKey(to='sprints.Sprint', null=True)),
             ],
             options={
             },

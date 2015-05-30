@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('proyectos', '0004_remove_proyecto_duracion_sprint'),
+        ('proyectos', '0001_initial'),
     ]
 
     operations = [
