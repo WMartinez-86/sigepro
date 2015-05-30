@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>apps.flujos.models</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="apps-module.html">Package&nbsp;apps</a> ::
+        <a href="apps.flujos-module.html">Package&nbsp;flujos</a> ::
+        Module&nbsp;models
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="apps.flujos.models-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="apps.flujos.models-module.html">Module apps.flujos.models</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module apps.flujos.models=apps.flujos.models-module.html,Module apps.inicio.models=apps.inicio.models-module.html,Module apps.proyectos.models=apps.proyectos.models-module.html,Module apps.roles.models=apps.roles.models-module.html,Module apps.sprints.models=apps.sprints.models-module.html,Module apps.userStories.models=apps.userStories.models-module.html,Module apps.usuarios.models=apps.usuarios.models-module.html"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-0', 'models', 'link-0');">models</a></tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-1', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">Group</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Package apps=apps-module.html"><a title="apps" class="py-name" href="#" onclick="return doclink('link-2', 'apps', 'link-2');">apps</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package apps.proyectos=apps.proyectos-module.html"><a title="apps.proyectos" class="py-name" href="#" onclick="return doclink('link-3', 'proyectos', 'link-3');">proyectos</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-4', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class apps.proyectos.models.Proyecto=apps.proyectos.models.Proyecto-class.html"><a title="apps.proyectos.models.Proyecto" class="py-name" href="#" onclick="return doclink('link-5', 'Proyecto', 'link-5');">Proyecto</a></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># Create your models here.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt id="link-6" class="py-name" targets="Variable apps.flujos.models.ESTADOS=apps.flujos.models-module.html#ESTADOS,Variable apps.proyectos.forms.ESTADOS=apps.proyectos.forms-module.html#ESTADOS,Variable apps.proyectos.models.ESTADOS=apps.proyectos.models-module.html#ESTADOS,Variable apps.userStories.forms.ESTADOS=apps.userStories.forms-module.html#ESTADOS,Variable apps.userStories.models.ESTADOS=apps.userStories.models-module.html#ESTADOS"><a title="apps.flujos.models.ESTADOS
+apps.proyectos.forms.ESTADOS
+apps.proyectos.models.ESTADOS
+apps.userStories.forms.ESTADOS
+apps.userStories.models.ESTADOS" class="py-name" href="#" onclick="return doclink('link-6', 'ESTADOS', 'link-6');">ESTADOS</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'PEN'</tt><tt class="py-op">,</tt><tt class="py-string">'Pendiente'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'EJE'</tt><tt class="py-op">,</tt><tt class="py-string">'En Ejecucion'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'FIN'</tt><tt class="py-op">,</tt><tt class="py-string">'Finalizado'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># usar get_estado_display()</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="Flujo"></a><div id="Flujo-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="Flujo-toggle" onclick="return toggle('Flujo');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="apps.flujos.models.Flujo-class.html">Flujo</a><tt class="py-op">(</tt><tt class="py-base-class">models</tt><tt class="py-op">.</tt><tt class="py-base-class">Model</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Flujo-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Flujo-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">    Modelo que representa a un Flujo con sus atributos</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar nombre: Cadena de caracteres</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar descripcion: Un campo de texto</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar posicion: Entero corto que indica su posicion relativa de la fase entre 1 y la cantidad de fases que posee el proyecto</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar maxItems: Entero corto que representa la cantidad de items</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar fInicio: Fecha que indica el inicio</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar fFin: Fecha que indica el posible finalizacion</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar estado: Enum de los tipos de estados por los que puede pasar una fase: Pendiente, Desarrollo, Completa y Comprometida</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar fCreacion: Fecha que indica el instante en que se crea el flujo</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar roles: relacion muchos a muchos con la tabla de Grupos</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    @cvar proyecto: clave foranea a proyecto</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt id="link-7" class="py-name" targets="Variable apps.flujos.models.Flujo.nombre=apps.flujos.models.Flujo-class.html#nombre,Variable apps.proyectos.models.Proyecto.nombre=apps.proyectos.models.Proyecto-class.html#nombre,Variable apps.roles.models.Rol.nombre=apps.roles.models.Rol-class.html#nombre,Variable apps.sprints.models.Sprint.nombre=apps.sprints.models.Sprint-class.html#nombre,Variable apps.userStories.models.Archivo.nombre=apps.userStories.models.Archivo-class.html#nombre,Variable apps.userStories.models.UserStory.nombre=apps.userStories.models.UserStory-class.html#nombre"><a title="apps.flujos.models.Flujo.nombre
+apps.proyectos.models.Proyecto.nombre
+apps.roles.models.Rol.nombre
+apps.sprints.models.Sprint.nombre
+apps.userStories.models.Archivo.nombre
+apps.userStories.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-7', 'nombre', 'link-7');">nombre</a></tt> <tt class="py-op">=</tt> <tt id="link-8" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-8', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">100</tt><tt class="py-op">,</tt> <tt id="link-9" class="py-name" targets="Variable apps.sprints.models.Sprint.Meta.verbose_name=apps.sprints.models.Sprint.Meta-class.html#verbose_name"><a title="apps.sprints.models.Sprint.Meta.verbose_name" class="py-name" href="#" onclick="return doclink('link-9', 'verbose_name', 'link-9');">verbose_name</a></tt><tt class="py-op">=</tt><tt class="py-string">'Nombre'</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt id="link-10" class="py-name" targets="Variable apps.flujos.models.Flujo.descripcion=apps.flujos.models.Flujo-class.html#descripcion,Variable apps.proyectos.models.Proyecto.descripcion=apps.proyectos.models.Proyecto-class.html#descripcion,Variable apps.sprints.models.Sprint.descripcion=apps.sprints.models.Sprint-class.html#descripcion,Variable apps.userStories.models.UserStory.descripcion=apps.userStories.models.UserStory-class.html#descripcion"><a title="apps.flujos.models.Flujo.descripcion
+apps.proyectos.models.Proyecto.descripcion
+apps.sprints.models.Sprint.descripcion
+apps.userStories.models.UserStory.descripcion" class="py-name" href="#" onclick="return doclink('link-10', 'descripcion', 'link-10');">descripcion</a></tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-11', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">TextField</tt><tt class="py-op">(</tt><tt id="link-12" class="py-name"><a title="apps.sprints.models.Sprint.Meta.verbose_name" class="py-name" href="#" onclick="return doclink('link-12', 'verbose_name', 'link-9');">verbose_name</a></tt><tt class="py-op">=</tt><tt class="py-string">'Descripcion'</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-comment">#maxItems = models.SmallIntegerField(verbose_name='Cantidad max de Items')</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt id="link-13" class="py-name" targets="Variable apps.flujos.models.Flujo.fInicio=apps.flujos.models.Flujo-class.html#fInicio"><a title="apps.flujos.models.Flujo.fInicio" class="py-name" href="#" onclick="return doclink('link-13', 'fInicio', 'link-13');">fInicio</a></tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-14', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">DateField</tt><tt class="py-op">(</tt><tt id="link-15" class="py-name"><a title="apps.sprints.models.Sprint.Meta.verbose_name" class="py-name" href="#" onclick="return doclink('link-15', 'verbose_name', 'link-9');">verbose_name</a></tt><tt class="py-op">=</tt><tt class="py-string">'Fecha de Inicio, formato  DD/MM/AAAA'</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">   <tt class="py-comment"># fFin = models.DateField(verbose_name='Fecha de Finalizacion')</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt id="link-16" class="py-name" targets="Variable apps.flujos.models.Flujo.orden=apps.flujos.models.Flujo-class.html#orden,Variable apps.sprints.models.Sprint.orden=apps.sprints.models.Sprint-class.html#orden"><a title="apps.flujos.models.Flujo.orden
+apps.sprints.models.Sprint.orden" class="py-name" href="#" onclick="return doclink('link-16', 'orden', 'link-16');">orden</a></tt> <tt class="py-op">=</tt> <tt id="link-17" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-17', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">SmallIntegerField</tt><tt class="py-op">(</tt><tt id="link-18" class="py-name"><a title="apps.sprints.models.Sprint.Meta.verbose_name" class="py-name" href="#" onclick="return doclink('link-18', 'verbose_name', 'link-9');">verbose_name</a></tt><tt class="py-op">=</tt><tt class="py-string">'Orden'</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt id="link-19" class="py-name" targets="Variable apps.flujos.models.Flujo.estado=apps.flujos.models.Flujo-class.html#estado,Variable apps.proyectos.forms.CambiarEstadoForm.estado=apps.proyectos.forms.CambiarEstadoForm-class.html#estado,Variable apps.proyectos.models.Proyecto.estado=apps.proyectos.models.Proyecto-class.html#estado,Variable apps.userStories.forms.EstadoUserStoryForm.estado=apps.userStories.forms.EstadoUserStoryForm-class.html#estado,Variable apps.userStories.models.UserStory.estado=apps.userStories.models.UserStory-class.html#estado"><a title="apps.flujos.models.Flujo.estado
+apps.proyectos.forms.CambiarEstadoForm.estado
+apps.proyectos.models.Proyecto.estado
+apps.userStories.forms.EstadoUserStoryForm.estado
+apps.userStories.models.UserStory.estado" class="py-name" href="#" onclick="return doclink('link-19', 'estado', 'link-19');">estado</a></tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-20', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-name">choices</tt><tt class="py-op">=</tt><tt id="link-21" class="py-name"><a title="apps.flujos.models.ESTADOS
+apps.proyectos.forms.ESTADOS
+apps.proyectos.models.ESTADOS
+apps.userStories.forms.ESTADOS
+apps.userStories.models.ESTADOS" class="py-name" href="#" onclick="return doclink('link-21', 'ESTADOS', 'link-6');">ESTADOS</a></tt><tt class="py-op">,</tt> <tt id="link-22" class="py-name"><a title="apps.sprints.models.Sprint.Meta.verbose_name" class="py-name" href="#" onclick="return doclink('link-22', 'verbose_name', 'link-9');">verbose_name</a></tt><tt class="py-op">=</tt><tt class="py-string">'Estado'</tt><tt class="py-op">)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt id="link-23" class="py-name" targets="Variable apps.flujos.models.Flujo.fCreacion=apps.flujos.models.Flujo-class.html#fCreacion"><a title="apps.flujos.models.Flujo.fCreacion" class="py-name" href="#" onclick="return doclink('link-23', 'fCreacion', 'link-23');">fCreacion</a></tt> <tt class="py-op">=</tt> <tt id="link-24" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-24', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">DateField</tt><tt class="py-op">(</tt><tt id="link-25" class="py-name"><a title="apps.sprints.models.Sprint.Meta.verbose_name" class="py-name" href="#" onclick="return doclink('link-25', 'verbose_name', 'link-9');">verbose_name</a></tt><tt class="py-op">=</tt><tt class="py-string">'Fecha de Creacion'</tt><tt class="py-op">,</tt> <tt class="py-name">auto_now</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-comment">#    fModificacion = models.DateField(verbose_name='Fecha de Modificacion')</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt id="link-26" class="py-name" targets="Variable apps.flujos.forms.RolesForm.roles=apps.flujos.forms.RolesForm-class.html#roles,Variable apps.flujos.models.Flujo.roles=apps.flujos.models.Flujo-class.html#roles,Package apps.roles=apps.roles-module.html,Variable apps.sprints.forms.RolesForm.roles=apps.sprints.forms.RolesForm-class.html#roles"><a title="apps.flujos.forms.RolesForm.roles
+apps.flujos.models.Flujo.roles
+apps.roles
+apps.sprints.forms.RolesForm.roles" class="py-name" href="#" onclick="return doclink('link-26', 'roles', 'link-26');">roles</a></tt> <tt class="py-op">=</tt> <tt id="link-27" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-27', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ManyToManyField</tt><tt class="py-op">(</tt><tt class="py-name">Group</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt class="py-comment">#proyecto = models.ForeignKey(Proyecto)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat May  2 04:58:13 2015
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

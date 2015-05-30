@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>apps.roles.views</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="apps-module.html">Package&nbsp;apps</a> ::
+        <a href="apps.roles-module.html">Package&nbsp;roles</a> ::
+        Module&nbsp;views
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="apps.roles.views-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="apps.roles.views-module.html">Module apps.roles.views</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt class="py-name">decorators</tt> <tt class="py-keyword">import</tt> <tt class="py-name">login_required</tt><tt class="py-op">,</tt> <tt class="py-name">permission_required</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">shortcuts</tt> <tt class="py-keyword">import</tt> <tt class="py-name">render</tt><tt class="py-op">,</tt> <tt class="py-name">get_object_or_404</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module apps.flujos.models=apps.flujos.models-module.html,Module apps.inicio.models=apps.inicio.models-module.html,Module apps.proyectos.models=apps.proyectos.models-module.html,Module apps.roles.models=apps.roles.models-module.html,Module apps.sprints.models=apps.sprints.models-module.html,Module apps.userStories.models=apps.userStories.models-module.html,Module apps.usuarios.models=apps.usuarios.models-module.html"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-0', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">Group</tt><tt class="py-op">,</tt> <tt class="py-name">Permission</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">http</tt> <tt class="py-keyword">import</tt> <tt class="py-name">HttpResponse</tt><tt class="py-op">,</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">,</tt> <tt class="py-name">request</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">template</tt> <tt class="py-keyword">import</tt> <tt class="py-name">RequestContext</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module apps.flujos.views=apps.flujos.views-module.html,Module apps.inicio.views=apps.inicio.views-module.html,Module apps.proyectos.views=apps.proyectos.views-module.html,Module apps.roles.views=apps.roles.views-module.html,Module apps.sprints.views=apps.sprints.views-module.html,Module apps.userStories.views=apps.userStories.views-module.html,Module apps.usuarios.views=apps.usuarios.views-module.html"><a title="apps.flujos.views
+apps.inicio.views
+apps.proyectos.views
+apps.roles.views
+apps.sprints.views
+apps.userStories.views
+apps.usuarios.views" class="py-name" href="#" onclick="return doclink('link-1', 'views', 'link-1');">views</a></tt><tt class="py-op">.</tt><tt class="py-name">generic</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TemplateView</tt><tt class="py-op">,</tt> <tt class="py-name">ListView</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module apps.flujos.forms=apps.flujos.forms-module.html,Module apps.inicio.forms=apps.inicio.forms-module.html,Module apps.proyectos.forms=apps.proyectos.forms-module.html,Module apps.roles.forms=apps.roles.forms-module.html,Module apps.sprints.forms=apps.sprints.forms-module.html,Module apps.userStories.forms=apps.userStories.forms-module.html"><a title="apps.flujos.forms
+apps.inicio.forms
+apps.proyectos.forms
+apps.roles.forms
+apps.sprints.forms
+apps.userStories.forms" class="py-name" href="#" onclick="return doclink('link-2', 'forms', 'link-2');">forms</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class apps.roles.forms.GroupForm=apps.roles.forms.GroupForm-class.html"><a title="apps.roles.forms.GroupForm" class="py-name" href="#" onclick="return doclink('link-3', 'GroupForm', 'link-3');">GroupForm</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">shortcuts</tt> <tt class="py-keyword">import</tt> <tt class="py-name">render_to_response</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="apps.flujos.models
+apps.inicio.models
+apps.proyectos.models
+apps.roles.models
+apps.sprints.models
+apps.userStories.models
+apps.usuarios.models" class="py-name" href="#" onclick="return doclink('link-4', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">Q</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable apps.flujos.views.__text__=apps.flujos.views-module.html#__text__,Variable apps.proyectos.views.__text__=apps.proyectos.views-module.html#__text__,Variable apps.roles.views.__text__=apps.roles.views-module.html#__text__"><a title="apps.flujos.views.__text__
+apps.proyectos.views.__text__
+apps.roles.views.__text__" class="py-name" href="#" onclick="return doclink('link-5', '__text__', 'link-5');">__text__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'Este modulo contiene funciones que permiten el control de roles'</tt> </tt>
+<a name="crear_rol"></a><div id="crear_rol-def"><a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">login_required</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">permission_required</tt><tt class="py-op">(</tt><tt class="py-string">'group'</tt><tt class="py-op">)</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt> <a class="py-toggle" href="#" id="crear_rol-toggle" onclick="return toggle('crear_rol');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="apps.roles.views-module.html#crear_rol">crear_rol</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="crear_rol-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="crear_rol-expanded"><a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">    vista para crear un rol, que consta de un nombre y una lista de permisos</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">    @return: return HttpResponseRedirect('/roles/register/success/') o render_to_response('roles/crear_rol.html', { 'group_form': group_form}, context_instance=RequestContext(request))</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">method</tt> <tt class="py-op">==</tt> <tt class="py-string">'POST'</tt><tt class="py-op">:</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">        <tt class="py-comment"># formulario enviado</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">        <tt class="py-name">group_form</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name"><a title="apps.roles.forms.GroupForm" class="py-name" href="#" onclick="return doclink('link-6', 'GroupForm', 'link-3');">GroupForm</a></tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">POST</tt><tt class="py-op">)</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">group_form</tt><tt class="py-op">.</tt><tt class="py-name">is_valid</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">            <tt class="py-comment"># formulario validado correctamente</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">            <tt class="py-name">group_form</tt><tt class="py-op">.</tt><tt class="py-name">save</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-string">'/roles/register/success/'</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">        <tt class="py-comment"># formulario inicial</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">        <tt class="py-name">group_form</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name"><a title="apps.roles.forms.GroupForm" class="py-name" href="#" onclick="return doclink('link-7', 'GroupForm', 'link-3');">GroupForm</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">render_to_response</tt><tt class="py-op">(</tt><tt class="py-string">'roles/crear_rol.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt> <tt class="py-string">'group_form'</tt><tt class="py-op">:</tt> <tt class="py-name">group_form</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">context_instance</tt><tt class="py-op">=</tt><tt class="py-name">RequestContext</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="lista_roles"></a><div id="lista_roles-def"><a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">login_required</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">permission_required</tt><tt class="py-op">(</tt><tt class="py-string">'group'</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt> <a class="py-toggle" href="#" id="lista_roles-toggle" onclick="return toggle('lista_roles');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="apps.roles.views-module.html#lista_roles">lista_roles</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="lista_roles-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="lista_roles-expanded"><a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">    vista para listar los roles existentes en el sistema</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">    @return: render_to_response('roles/listar_roles.html', {'datos': grupos}, context_instance=RequestContext(request))</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">    <tt class="py-name">grupos</tt> <tt class="py-op">=</tt> <tt class="py-name">Group</tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">render_to_response</tt><tt class="py-op">(</tt><tt class="py-string">'roles/listar_roles.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'datos'</tt><tt class="py-op">:</tt> <tt class="py-name">grupos</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">context_instance</tt><tt class="py-op">=</tt><tt class="py-name">RequestContext</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="detalle_rol"></a><div id="detalle_rol-def"><a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-comment"># class lista_roles(ListView):</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-comment">#     template_name = 'roles/listar_roles.html'</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-comment">#     model = Rol</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">login_required</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-comment">#@permission_required('group')</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt> <a class="py-toggle" href="#" id="detalle_rol-toggle" onclick="return toggle('detalle_rol');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="apps.roles.views-module.html#detalle_rol">detalle_rol</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">id_rol</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="detalle_rol-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="detalle_rol-expanded"><a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">    vista para ver los detalles del rol &lt;id_rol&gt; del sistema</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">    @param id_rol: referencia a los roles</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">    @return: render_to_response('roles/detalle_rol.html', {'rol': dato, 'permisos': permisos}, context_instance=RequestContext(request))</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">    <tt class="py-name">dato</tt> <tt class="py-op">=</tt> <tt class="py-name">get_object_or_404</tt><tt class="py-op">(</tt><tt class="py-name">Group</tt><tt class="py-op">,</tt> <tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-name">id_rol</tt><tt class="py-op">)</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">    <tt class="py-name">permisos</tt> <tt class="py-op">=</tt> <tt class="py-name">Permission</tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt><tt class="py-name">group__id</tt><tt class="py-op">=</tt><tt class="py-name">id_rol</tt><tt class="py-op">)</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">render_to_response</tt><tt class="py-op">(</tt><tt class="py-string">'roles/detalle_rol.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'rol'</tt><tt class="py-op">:</tt> <tt class="py-name">dato</tt><tt class="py-op">,</tt> <tt class="py-string">'permisos'</tt><tt class="py-op">:</tt> <tt class="py-name">permisos</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">context_instance</tt><tt class="py-op">=</tt><tt class="py-name">RequestContext</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"> </tt>
+<a name="eliminar_rol"></a><div id="eliminar_rol-def"><a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">login_required</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-comment">#@permission_required('group')</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt> <a class="py-toggle" href="#" id="eliminar_rol-toggle" onclick="return toggle('eliminar_rol');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="apps.roles.views-module.html#eliminar_rol">eliminar_rol</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">id_rol</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="eliminar_rol-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="eliminar_rol-expanded"><a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring">    vista para eliminar el rol &lt;id_rol&gt;. Se comprueba que dicho rol no tenga usuarios asociadas.</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring">    @param id_rol: referencia a los roles</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt class="py-docstring">    @return: render_to_response('roles/listar_roles.html', {'datos': grupos}, context_instance=RequestContext(request))</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">    <tt class="py-name">dato</tt> <tt class="py-op">=</tt> <tt class="py-name">get_object_or_404</tt><tt class="py-op">(</tt><tt class="py-name">Group</tt><tt class="py-op">,</tt> <tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-name">id_rol</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">    <tt class="py-name">grupos</tt> <tt class="py-op">=</tt> <tt class="py-name">Group</tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">    <tt class="py-name">dato</tt><tt class="py-op">.</tt><tt class="py-name">delete</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">render_to_response</tt><tt class="py-op">(</tt><tt class="py-string">'roles/listar_roles.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'datos'</tt><tt class="py-op">:</tt> <tt class="py-name">grupos</tt><tt class="py-op">,</tt><tt class="py-string">'mensaje'</tt><tt class="py-op">:</tt><tt class="py-number">1</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">context_instance</tt><tt class="py-op">=</tt><tt class="py-name">RequestContext</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="RegisterSuccessView"></a><div id="RegisterSuccessView-def"><a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt> <a class="py-toggle" href="#" id="RegisterSuccessView-toggle" onclick="return toggle('RegisterSuccessView');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="apps.roles.views.RegisterSuccessView-class.html">RegisterSuccessView</a><tt class="py-op">(</tt><tt class="py-base-class">TemplateView</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RegisterSuccessView-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RegisterSuccessView-expanded"><a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Variable apps.proyectos.views.lista_proyectos.template_name=apps.proyectos.views.lista_proyectos-class.html#template_name,Variable apps.roles.views.RegisterSuccessView.template_name=apps.roles.views.RegisterSuccessView-class.html#template_name,Variable apps.usuarios.views.Registrarse.template_name=apps.usuarios.views.Registrarse-class.html#template_name"><a title="apps.proyectos.views.lista_proyectos.template_name
+apps.roles.views.RegisterSuccessView.template_name
+apps.usuarios.views.Registrarse.template_name" class="py-name" href="#" onclick="return doclink('link-8', 'template_name', 'link-8');">template_name</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'roles/creacion_correcta.html'</tt> </tt>
+</div><a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"> </tt>
+<a name="editar_rol"></a><div id="editar_rol-def"><a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">login_required</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">permission_required</tt><tt class="py-op">(</tt><tt class="py-string">'group'</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt> <a class="py-toggle" href="#" id="editar_rol-toggle" onclick="return toggle('editar_rol');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="apps.roles.views-module.html#editar_rol">editar_rol</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt><tt class="py-param">id_rol</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="editar_rol-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="editar_rol-expanded"><a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-docstring">    vista para cambiar el nombre del rol o su lista de permisos</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring">    @param id_rol: referencia a los roles</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">    @return: HttpResponseRedirect('/roles/register/success/') o render_to_response('roles/editar_rol.html', { 'rol': rol_form, 'dato':rol}, context_instance=RequestContext(request))</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">    <tt class="py-name">rol</tt><tt class="py-op">=</tt> <tt class="py-name">Group</tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt id="link-9" class="py-name" targets="Variable apps.roles.models.Rol.id=apps.roles.models.Rol-class.html#id"><a title="apps.roles.models.Rol.id" class="py-name" href="#" onclick="return doclink('link-9', 'id', 'link-9');">id</a></tt><tt class="py-op">=</tt><tt class="py-name">id_rol</tt><tt class="py-op">)</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">method</tt> <tt class="py-op">==</tt> <tt class="py-string">'POST'</tt><tt class="py-op">:</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-comment"># formulario enviado</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-name">rol_form</tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="apps.roles.forms.GroupForm" class="py-name" href="#" onclick="return doclink('link-10', 'GroupForm', 'link-3');">GroupForm</a></tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">POST</tt><tt class="py-op">,</tt> <tt class="py-name">instance</tt><tt class="py-op">=</tt><tt class="py-name">rol</tt><tt class="py-op">)</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">rol_form</tt><tt class="py-op">.</tt><tt class="py-name">is_valid</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">            <tt class="py-comment"># formulario validado correctamente</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">            <tt class="py-name">rol_form</tt><tt class="py-op">.</tt><tt class="py-name">save</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-string">'/roles/register/success/'</tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-comment"># formulario inicial</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-name">rol_form</tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name"><a title="apps.roles.forms.GroupForm" class="py-name" href="#" onclick="return doclink('link-11', 'GroupForm', 'link-3');">GroupForm</a></tt><tt class="py-op">(</tt><tt class="py-name">instance</tt><tt class="py-op">=</tt><tt class="py-name">rol</tt><tt class="py-op">)</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">render_to_response</tt><tt class="py-op">(</tt><tt class="py-string">'roles/editar_rol.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt> <tt class="py-string">'rol'</tt><tt class="py-op">:</tt> <tt class="py-name">rol_form</tt><tt class="py-op">,</tt> <tt class="py-string">'dato'</tt><tt class="py-op">:</tt><tt class="py-name">rol</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">context_instance</tt><tt class="py-op">=</tt><tt class="py-name">RequestContext</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"> </tt>
+<a name="buscarRol"></a><div id="buscarRol-def"><a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">login_required</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">permission_required</tt><tt class="py-op">(</tt><tt class="py-string">'group'</tt><tt class="py-op">)</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt> <a class="py-toggle" href="#" id="buscarRol-toggle" onclick="return toggle('buscarRol');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="apps.roles.views-module.html#buscarRol">buscarRol</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="buscarRol-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="buscarRol-expanded"><a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">    vista para buscar un rol entre todos los registrados en el sistema</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-docstring">    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-docstring">    @return: return render_to_response('roles/listar_roles.html', {'datos': results}, context_instance=RequestContext(request))</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">    <tt class="py-name">query</tt> <tt class="py-op">=</tt> <tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">GET</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'q'</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">query</tt><tt class="py-op">:</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">        <tt class="py-name">qset</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">            <tt class="py-name">Q</tt><tt class="py-op">(</tt><tt class="py-name">name__contains</tt><tt class="py-op">=</tt><tt class="py-name">query</tt><tt class="py-op">)</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">        <tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-name">results</tt> <tt class="py-op">=</tt> <tt class="py-name">Group</tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt><tt class="py-name">qset</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">distinct</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-name">results</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">render_to_response</tt><tt class="py-op">(</tt><tt class="py-string">'roles/listar_roles.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'datos'</tt><tt class="py-op">:</tt> <tt class="py-name">results</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">context_instance</tt><tt class="py-op">=</tt><tt class="py-name">RequestContext</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat May  2 04:58:13 2015
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

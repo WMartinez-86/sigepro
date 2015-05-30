@@ -139,3 +139,10 @@ def finalizar_sprint(request, id_sprint):
     haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
 
     return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
+
+
+
+
+def graficar (request,id_sprint):
+    return render_to_response('sprints/burndown_chart.html', {},
+                              context_instance=RequestContext(request))
