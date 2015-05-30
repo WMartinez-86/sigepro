@@ -13,7 +13,6 @@ class SprintForm(ModelForm):
         exclude = ()
 
 class CrearSprintForm(ModelForm):
-
     class Meta:
         model = Sprint
         fields = ('nombre', 'descripcion')

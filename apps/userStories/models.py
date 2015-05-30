@@ -44,7 +44,7 @@ class UserStory(models.Model):
     estadoScrum = models.IntegerField(choices=estados_scrum, default=0)
     proyecto = models.ForeignKey(Proyecto)
     desarrollador = models.ForeignKey(User)
-    sprint = models.ForeignKey(Sprint)
+    sprint = models.ForeignKey(Sprint, null= True)
     flujo = models.ForeignKey(Flujo, null=True, blank=True)
     actividad = models.ForeignKey(Actividad, null=True, blank=True)
     version = models.PositiveIntegerField(null=True, blank=True)

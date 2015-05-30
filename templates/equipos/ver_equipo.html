@@ -29,7 +29,9 @@ Equipo
                 <form method="post">{% csrf_token %}
                     <div class="form-row">
 
+
                         <div><p style="font-size:18px"><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }}) - Cant. horas =  {{ cantHorasUS }}</p></div>
+
                         </br>
                         </br>
                         {% for equipo in equipos %}
