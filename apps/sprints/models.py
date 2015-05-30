@@ -17,6 +17,8 @@ class Sprint(models.Model):
 
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField(verbose_name='Descripcion')
+    inicio_propuesto = models.DateField(verbose_name='Fecha de Inicio Propuesto, formato  DD/MM/AAAA')
+    fin_propuesto = models.DateField(verbose_name='Fecha de Fin Propuesto, formato  DD/MM/AAAA')
     inicio = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA', null=True)
     fin = models.DateField(verbose_name='Fecha de Inicio, formato  DD/MM/AAAA', null=True)
     estado = models.IntegerField(choices=ESTADOS, verbose_name='Estado', default=0)

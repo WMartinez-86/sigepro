@@ -17,6 +17,7 @@ from apps.sprints.forms import SprintForm, CrearSprintForm
 #from apps.roles.forms import GroupForm
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User, Group
+from django.utils.timezone import utc
 
 
 # Create your views here.
@@ -52,7 +53,15 @@ def registrar_sprint(request, id_proyecto):
         proyecto = Proyecto.objects.get(id=id_proyecto)
         formulario = CrearSprintForm(request.POST)
         if formulario.is_valid():
-            newSprint = Sprint(nombre = request.POST["nombre"], proyecto_id = id_proyecto, descripcion = request.POST["descripcion"])
+            inicio_propuesto=datetime.strptime(str(request.POST["inicio_propuesto"]),'%d/%m/%Y')
+            inicio_propuesto=inicio_propuesto.strftime('%Y-%m-%d')
+            fecha1=datetime.strptime(inicio_propuesto,'%Y-%m-%d')
+
+            fin_propuesto=datetime.strptime(str(request.POST["fin_propuesto"]),'%d/%m/%Y')
+            fin_propuesto=fin_propuesto.strftime('%Y-%m-%d')
+            fecha2=datetime.strptime(fin_propuesto,'%Y-%m-%d')
+
+            newSprint = Sprint(nombre = request.POST["nombre"], proyecto_id = id_proyecto, descripcion = request.POST["descripcion"], inicio_propuesto = fecha1, fin_propuesto = fecha2)
 
             orden = Sprint.objects.filter(proyecto_id=id_proyecto)
             cantidad = orden.count()
@@ -194,8 +203,10 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
 
         # anhadir la capacidad al sprint
         #anhadir horasUS .. tiempo estimado
+        timediff = sprint.fin_propuesto - sprint.inicio_propuesto
+
         sprint.horasUS = sprint.horasUS + userStory.tiempo_estimado
-        sprint.capacidad = sprint.capacidad + horasPorDia
+        sprint.capacidad = sprint.capacidad + (horasPorDia * timediff.days)
         sprint.save()
 
         return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
@@ -231,8 +242,10 @@ def desasignar_userStorySprint(request, id_userStory,  id_sprint):
 
     # anhadir la capacidad al sprint
     #anhadir horasUS .. tiempo estimado
+    timediff = sprint.fin_propuesto - sprint.inicio_propuesto
+
     sprint.horasUS = sprint.horasUS - userStory.tiempo_estimado
-    sprint.capacidad = sprint.capacidad - horasPorDia
+    sprint.capacidad = sprint.capacidad - (horasPorDia * timediff.days)
     sprint.save()
 
     return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))

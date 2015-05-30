@@ -17,7 +17,7 @@ class SprintForm(ModelForm):
 class CrearSprintForm(ModelForm):
     class Meta:
         model = Sprint
-        fields = ('nombre', 'descripcion')
+        fields = ('nombre', 'descripcion', 'inicio_propuesto', 'fin_propuesto')
 
 class AsignarFlujoDesarrollador(ModelForm):
     class Meta:
