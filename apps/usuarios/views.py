@@ -13,6 +13,9 @@ from django.contrib.auth.models import User
 from apps.inicio.models import Perfiles
 from apps.inicio.forms import UserForm
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import DetailView
+from django.views.generic import ListView
+from django.views import generic
 
 
 class Usuario(ModelForm):
@@ -24,13 +27,13 @@ class Usuario(ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
-class Perfil(ModelForm):
-    """
-    Modelo que agrega el rol de Scrum Master
-    """
-    class Meta:
-        model = Perfiles
-        fields = ('telefono', 'direccion')
+# class Perfil(ModelForm):
+#     """
+#     Modelo que agrega el rol de Scrum Master
+#     """
+#     class Meta:
+#         model = Perfiles
+#         fields = ('telefono', 'direccion')
 
 @login_required
 def list_usuario(request, template_name = 'usuarios/admin.html'):
@@ -74,12 +77,12 @@ def edit_user(request, pk, template_name = 'usuarios/user/edit.html'):
     user= get_object_or_404(Perfiles, usuario=usuario)
     print(get_object_or_404(Perfiles, usuario=usuario))
     form = Usuario(request.POST or False, instance= usuario)
-    perfil = Perfil(request.POST or False, instance=user)
-    if form.is_valid() and perfil.is_valid():
-        form.save()
-        perfil.save()
-        return redirect('/usuarios/')
-    return render(request, template_name, {'form':form, 'perfil':perfil})
+    #perfil = Perfil(request.POST or False, instance=user)
+    # if form.is_valid() and perfil.is_valid():
+    #     form.save()
+    #     perfil.save()
+        #return redirect('/usuarios/')
+    return render(request, template_name, {'form':form})
 
 
 
@@ -154,65 +157,112 @@ def search(request):
     else:
         return redirect('/usuario/')
 
-class Registrarse(FormView):
+# class Registrarse(FormView):
+#     """
+#     Recibe un @ctype  {FormView} y asigna un template para la operacion
+#     @c param FormView
+#     """
+#     template_name = 'inicio/registrarse.html'
+#     form_class = UserForm
+#     success_url = reverse_lazy('registrarse')
+#
+#     def form_valid(self, form):
+#         """
+#         Formulario que valida los datos de usuario y perfil. Luego limpia los datos para comprobacion
+#         @param self: referencia al objeto
+#         @param form: Formulario de validacion del usuario
+#         """
+#         user = form.save()
+#         perfil = Perfiles()
+#         perfil.usuario = user
+#         user.first_name = form.cleaned_data['first_name']
+#         user.last_name = form.cleaned_data['last_name']
+#         user.email = form.cleaned_data['email']
+#         perfil.telefono = form.cleaned_data['telefono']
+#         perfil.direccion = form.cleaned_data['direccion']
+#         perfil.lider = False
+#         user.is_active = False
+#         user.is_staff = False
+#         user.save()
+#         perfil.save()
+#         return super(Registrarse,self).form_valid(form)
+
+
+class Registrarse(generic.CreateView):
     """
     Recibe un @ctype  {FormView} y asigna un template para la operacion
     @c param FormView
     """
-    template_name = 'inicio/registrarse.html'
-    form_class = UserForm
-    success_url = reverse_lazy('registrarse')
-
-    def form_valid(self, form):
-        """
-        Formulario que valida los datos de usuario y perfil. Luego limpia los datos para comprobacion
-        @param self: referencia al objeto
-        @param form: Formulario de validacion del usuario
-        """
-        user = form.save()
-        perfil = Perfiles()
-        perfil.usuario = user
-        user.first_name = form.cleaned_data['first_name']
-        user.last_name = form.cleaned_data['last_name']
-        user.email = form.cleaned_data['email']
-        perfil.telefono = form.cleaned_data['telefono']
-        perfil.direccion = form.cleaned_data['direccion']
-        perfil.lider = False
-        user.is_active = False
-        user.is_staff = False
-        user.save()
-        perfil.save()
-        return super(Registrarse,self).form_valid(form)
-
-
-class Registrarse(FormView):
-    """
-    Recibe un @ctype  {FormView} y asigna un template para la operacion
-    @c param FormView
-    """
+    model = User
     template_name = 'usuarios/registrarse.html'
     form_class = UserForm
     success_url = reverse_lazy('registrarse')
 
+    def get_success_url(self):
+        """
+        Retorna una los usuarios excluyendo el AnonymousUser
+
+        :return: url del UserDetail
+        """
+        #return reverse('usuarios/user/admin.html', kwargs={'pk': self.object.id})
+        return reverse_lazy('usuario')
+
     def form_valid(self, form):
         """
         Formulario que valida los datos de usuario y perfil. Luego limpia los datos para comprobacion
         @param self: referencia al objeto
         @param form: Formulario de validacion del usuario
         """
-        user = form.save()
-        perfil = Perfiles()
-        perfil.usuario = user
-        user.name = form.cleaned_data['name']
-        user.password = form.cleaned_data['password']
-        user.first_name = form.cleaned_data['first_name']
-        user.last_name = form.cleaned_data['last_name']
-        user.email = form.cleaned_data['email']
-        perfil.telefono = form.cleaned_data['telefono']
-        perfil.direccion = form.cleaned_data['direccion']
-        perfil.lider = False
-        user.is_active = False
-        user.is_staff = False
-        user.save()
-        perfil.save()
-        return super(Registrarse,self).form_valid(form)
+        # user = form.save()
+        # perfil = Perfiles()
+        # perfil.usuario = user
+        # user.name = form.cleaned_data['name']
+        # user.password = form.cleaned_data['password']
+        # user.first_name = form.cleaned_data['first_name']
+        # user.last_name = form.cleaned_data['last_name']
+        # user.email = form.cleaned_data['email']
+        # perfil.telefono = form.cleaned_data['telefono']
+        # perfil.direccion = form.cleaned_data['direccion']
+        # perfil.lider = False
+        # user.is_active = False
+        # user.is_staff = False
+        # user.save()
+        # perfil.save()
+        super(Registrarse, self).form_valid(form)
+
+        return HttpResponseRedirect(self.get_success_url())
+
+
+
+# class AddUser(FormView):
+#     """
+#     Agregar un Usuario al Sistema
+#     """
+#     model = User
+#     form_class = UserCreateForm
+#     template_name = 'usuarios/registrarse.html'
+#     permission_required = 'auth.add_user'
+#
+#     def get_success_url(self):
+#         """
+#         Retorna una los usuarios excluyendo el AnonymousUser
+#
+#         :return: url del UserDetail
+#         """
+#         return reverse('usuarios/user/admin.html', kwargs={'pk': self.object.id})
+#
+#     def form_valid(self, form):
+#         """
+#         Verificar validez del formulario
+#
+#         :param form: formulario completado
+#         :return: Url de Evento Correcto
+#         """
+#         super(AddUser, self).form_valid(form)
+#
+#         escogidas = self.request.POST.getlist('general_perms')
+#         #for permname in escogidas:
+#             #perm = Permission.objects.get(codename=permname)
+#             #self.object.user_permissions.add(perm)
+#
+#         return HttpResponseRedirect(self.get_success_url())
