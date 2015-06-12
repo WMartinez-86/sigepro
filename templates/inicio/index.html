@@ -34,7 +34,7 @@ inicio
             <div class="span8 registrar">
                 {% if user.is_authenticated %}
                 <center><font size="3", color="FFFFFF">Bienvenido {{user.username|capfirst}}</font>
-                <a href="/usuarios/cerrar/">Salir</a></center>
+                    <a href="/usuarios/cerrar/">Salir</a></center>
                 {% else %}
                 <legend align="center">Entrar</legend>
                 <form class="form-horizontal alinear" method="POST">{% csrf_token %}

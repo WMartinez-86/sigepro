@@ -7,6 +7,7 @@ from apps.sprints.models import Sprint
 from apps.flujos.models import Flujo
 from apps.userStories.models import UserStory
 from django.contrib.auth.models import Group, User
+from django.forms import BaseFormSet
 
 
 class SprintForm(ModelForm):
@@ -20,6 +21,11 @@ class CrearSprintForm(ModelForm):
         fields = ('nombre', 'descripcion', 'inicio_propuesto', 'fin_propuesto')
 
 class AsignarFlujoDesarrollador(ModelForm):
+    def __init__(self, filter, *args, **kwargs):
+		super(AsignarFlujoDesarrollador, self).__init__(*args, **kwargs)
+		self.fields['flujo'].query_set = Flujo.objects.filter(proyecto_id = filter)
+
+
     class Meta:
     #desarrollador = forms.ModelChoiceField(queryset=User.objects.filter(Miembro))
     #flujo = forms.ModelChoiceField(queryset=Flujo.objects.filter(id= 1))

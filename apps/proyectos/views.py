@@ -102,14 +102,9 @@ def editar_proyecto(request, id_proyecto):
         # formulario enviado
         proyecto_form = ProyectoForm(request.POST, instance=proyecto)
         if proyecto_form.is_valid():
-            if proyecto_form.cleaned_data['fecha_ini'] > proyecto_form.cleaned_data['fecha_fin']:
-                messages.add_message(request, settings.DELETE_MESSAGE,
-                                     "Fecha de inicio debe ser menor a la fecha de finalizacion")
-            else:
-
-                # formulario validado correctamente
-                proyecto_form.save()
-                return HttpResponseRedirect('/proyectos/register/success/')
+            # formulario validado correctamente
+            proyecto_form.save()
+            return HttpResponseRedirect('/proyectos/register/success/')
     else:
         # formulario inicial
         proyecto_form = ProyectoForm(instance=proyecto)

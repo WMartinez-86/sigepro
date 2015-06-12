@@ -18,6 +18,8 @@ from apps.sprints.forms import SprintForm, CrearSprintForm
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User, Group
 from django.utils.timezone import utc
+from apps.flujos.models import Flujo
+from django.forms import formset_factory
 
 
 # Create your views here.
@@ -182,6 +184,9 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
     """
+    sprint = get_object_or_404(Sprint, pk=id_sprint)
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+
     if request.method == 'POST':
         userStory = UserStory.objects.get(id = id_userStory)
         userStory.sprint_id = id_sprint
@@ -189,8 +194,7 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
         userStory.desarrollador_id = request.POST["desarrollador"]
         userStory.save()
 
-        sprint = get_object_or_404(Sprint, pk=id_sprint)
-        proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+
         userStoriesBacklog = UserStory.objects.filter(sprint_id = None, proyecto_id = proyecto.id)
         userStoriesAsignados = UserStory.objects.filter(sprint_id = id_sprint, proyecto_id = proyecto.id)
 
@@ -209,11 +213,11 @@ def asignar_userStorySprint(request, id_userStory,  id_sprint):
         sprint.capacidad = sprint.capacidad + (horasPorDia * timediff.days)
         sprint.save()
 
-        return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
+        return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint, 'proyecto':proyecto}, context_instance=RequestContext(request))
 
     else:
-        formulario = AsignarFlujoDesarrollador()
-        return render_to_response('sprints/asignar_FlujoDesarrollador.html', { 'formulario': AsignarFlujoDesarrollador}, context_instance=RequestContext(request))
+        formulario = AsignarFlujoDesarrollador(proyecto.id)
+        return render_to_response('sprints/asignar_FlujoDesarrollador.html', { 'formulario': formulario, 'proyecto':proyecto}, context_instance=RequestContext(request))
 
 
 @login_required
