@@ -1,6 +1,6 @@
 {% extends 'base2.html' %}
 {% block title %}
-Proyecto_Existosa
+Burndown Chart
 {% endblock %}
 {% block content %}
 <!DOCTYPE html>
@@ -9,16 +9,18 @@ Proyecto_Existosa
 
     <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
 
-    <script type="text/javascript">window.__admin_media_prefix__ = "/static/usuario/";</script>
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
 
     <meta name="robots" content="NONE,NOARCHIVE" />
+
+    <body style="background:#FFFAFA">
 </head>
 
 
 <body class="">
 
 <!-- Container -->
-<div ng-app="charts" ng-controller="ChartCtrl as vm" ng-init=vm.getId({{id}})>
+<div ng-app="charts" ng-controller="ChartCtrl as vm" ng-init=vm.getId({{list}},{{listLab}})>
 
 
        <canvas id="line" class="chart chart-line" data="data"
@@ -29,12 +31,9 @@ Proyecto_Existosa
     </div>
     <script>
         angular.module("charts", ["chart.js"]).controller("ChartCtrl", function ($scope) {
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [60, 50, 40, 30, 20, 10, 0],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
+  $scope.labels = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  $scope.series = ['Horas de trabajo ideal', 'Horas trabajadas'];
+  $scope.data = [{{list}}];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };
