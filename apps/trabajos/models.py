@@ -25,7 +25,7 @@ class Trabajo(models.Model):
     descripcion = models.TextField(max_length=140)
     userStory = models.ForeignKey(UserStory)
     tipo_trabajo = models.SmallIntegerField(choices=TIPO_CHOICES, default=0)
-    hora = models.PositiveIntegerField(default=0)
+    hora = models.PositiveIntegerField(default=0, verbose_name='Horas')
     fecha = models.DateField(verbose_name='Fecha')
 
     def __str__(self):

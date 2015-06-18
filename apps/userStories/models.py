@@ -39,6 +39,7 @@ class UserStory(models.Model):
     valor_negocio = models.PositiveIntegerField(verbose_name='Valor de Negocio')
     valor_tecnico = models.PositiveIntegerField(verbose_name='Valor Tecnico')
     tiempo_estimado = models.PositiveIntegerField(verbose_name='Tiempo Estimado')
+    tiempo_registrado = models.PositiveIntegerField(verbose_name='Tiempo Registrado', default=0)
     ultimo_cambio = models.DateTimeField(auto_now=True, verbose_name='Ultimo Cambio')
     estadoKanban = models.IntegerField(choices=estados_kanban, default=0)
     estadoScrum = models.IntegerField(choices=estados_scrum, default=0)

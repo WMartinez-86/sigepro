@@ -48,11 +48,13 @@ def listar_trabajos(request,id_userStory):
     #flujo=Flujo.objects.filter(id=id_flujo)
     #if es_miembro(request.user.id,flujo,''):
     trabajos=Trabajo.objects.filter(userStory_id = id_userStory)
+    userStory = UserStory.objects.get(id = id_userStory)
+    proyecto = Proyecto.objects.get(id = userStory.proyecto_id)
     #if puede_add_userStories(flujo):
     # nivel = 3
     #id_proyecto=Flujo.objects.get().proyecto_id
     #proyecto=Proyecto.objects.get(pk=UserStory.proyecto)
-    return render_to_response('trabajos/listar_trabajos.html', {'datos': trabajos, 'id_userStory': id_userStory},
+    return render_to_response('trabajos/listar_trabajos.html', {'datos': trabajos, 'id_userStory': id_userStory, 'proyecto': proyecto},
                                   context_instance=RequestContext(request))
 
 
@@ -64,7 +66,8 @@ def crear_trabajo(request, id_userStory):
     @param id_tipoItem: clave foranea al tipoItem
     @ return render_to_response('items/...) o render_to_response('403.html')
     """
-
+    userStory = UserStory.objects.get(id = id_userStory)
+    proyecto = Proyecto.objects.get(id = userStory.proyecto_id)
     if request.method=='POST':
         #formset = ItemFormSet(request.POST)
         #userStory_id = UserStory.objects.get(id=id_userStory)
@@ -72,14 +75,19 @@ def crear_trabajo(request, id_userStory):
 
         if formulario.is_valid():
             fecha=datetime.strptime(str(request.POST["fecha"]),'%d/%m/%Y')
-            fechaCorreo=str(request.POST["fecha"]),'%d/%m/%Y'
+            # fechaCorreo=str(request.POST["fecha"]),'%d/%m/%Y'
             fecha=fecha.strftime('%Y-%m-%d')
             fecha1=datetime.strptime(fecha,'%Y-%m-%d')
             # obtener item con el cual relacionar
-            item_nombre=request.POST.get('entradalista')
+            # item_nombre=request.POST.get('entradalista')
 
             newTrabajo=Trabajo(descripcion=request.POST['descripcion'],hora=request.POST['hora'], fecha=fecha1, userStory_id = id_userStory) #default tipo de trabajo es 0: normal
             newTrabajo.save()
+
+            #recalcular el tiempo registrado del user story
+            userStory = UserStory.objects.get(id = id_userStory)
+            userStory.tiempo_registrado = userStory.tiempo_registrado + int(newTrabajo.hora)
+            userStory.save()
 
             # enviar correo de notificacion al scrum master
             objdev = request.user
@@ -107,7 +115,7 @@ def crear_trabajo(request, id_userStory):
         formulario = crearTrabajoForm()
         hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)
-        return render_to_response('trabajos/crear_trabajos.html', { 'formulario': formulario}, context_instance=RequestContext(request))
+        return render_to_response('trabajos/crear_trabajos.html', { 'formulario': formulario, 'proyecto': proyecto}, context_instance=RequestContext(request))
 
 
 def upload_listar(request, id_trabajo):

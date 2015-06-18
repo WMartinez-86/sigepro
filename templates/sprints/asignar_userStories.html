@@ -53,6 +53,11 @@ sprints
                             </th>
                             <th scope="col">
                                 <div class="text">
+                                    Detalles
+                                </div>
+                            </th>
+                            <th scope="col">
+                                <div class="text">
                                     Asignar
                                 </div>
                             </th>
@@ -63,6 +68,7 @@ sprints
                         {% for userStory in userStoriesBacklog  %}
                         <tr>
                             <td><center>{{ userStory.nombre }}</center></td>
+                            <td><center><a href="/userStories/detalle/{{ userStory.id }}"  class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                             {% if sprint.estado == 0  %}
 
                             <td><center><a href="/sprints/asignar/{{ userStory.pk }}/{{ sprint.id }}" class="btn btn-success"><i class="icon-plus icon-white"></i></a></center></td>
@@ -84,6 +90,11 @@ sprints
                                 Nombre
                             </div>
                         </th>
+                        <th scope="col" class="sortable" >
+                            <div class="text">
+                                Detalles
+                            </div>
+                        </th>
                         {% if sprint.estado == 0  %}
                             <th scope="col">
                                 <div class="text">
@@ -97,6 +108,7 @@ sprints
                     {% for userStory in userStoriesAsignados  %}
                     <tr>
                         <td><center>{{ userStory.nombre }}</center></td>
+                        <td><center><a href="/userStories/detalle/{{ userStory.id }}"  class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                         {% if sprint.estado == 0  %}
 
                         <td><center><a href="/sprints/desasignar/{{ userStory.pk }}/{{ sprint.id }}" class="btn btn-danger"><i class=" icon-minus icon-white"></i></a></center></td>
