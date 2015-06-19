@@ -1,28 +1,28 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Trabajos
+Trabajos
 {% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="es-PY" >
 <head>
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css" />
 
-<script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
-<script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
-<script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
-<script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
-<script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
-<meta name="robots" content="NONE,NOARCHIVE" />
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
 </head>
 
-  <div class="breadcrumbs">
+<div class="breadcrumbs">
 
-        <a href="/userStories/{{ id_userStory }}">Administracion de User Stories</a> >>
+    <a href="/userStories/{{ id_userStory }}">Administracion de User Stories</a> >>
 
-        "Administracion de Trabajos"
-    </div>
+    "Administracion de Trabajos"
+</div>
 
 
 <body class="dashboard">
@@ -31,84 +31,84 @@
 <div id="container">
     <!-- Content -->
 
-        <h1>Administracion de Trabajos </h1>
+    <h1>Administracion de Trabajos </h1>
 
-<ul class="object-tools">
-    <li>
+    <ul class="object-tools">
+        <li>
 
-        <a href="/trabajos/crear/{{ id_userStory }}" class="addlink">Nuevo Trabajo</a>
+            <a href="/trabajos/crear/{{ id_userStory }}" class="addlink">Nuevo Trabajo</a>
 
-    </li>
-</ul>
-<div id="content-main">
+        </li>
+    </ul>
+    <div id="content-main">
 
 
 
 
         <div class="results" >
-         <ul class="errorlist">
-            {% if  mensaje == 0 %}
-            <li>Error: No se puede eliminar un item que tenga hijos</li>
+            <ul class="errorlist">
+                {% if  mensaje == 0 %}
+                <li>Error: No se puede eliminar un item que tenga hijos</li>
                 {% elif mensaje == 2 %}
                 <li>Error:  No se puede eliminar un item cuyo estado no sea pendiente.</li>
-            {% endif %}
-        </ul>
-        <ul class="infolist">
-            {% if mensaje == 1 %}
-            <li>Item eliminado correctamente</li>
-            {% endif %}
-        </ul>
-        <table >
-        <thead>
-        <tr>
-            <th scope="col" class="sortable" >
-                <div class="text">
-                    <a>Descripcion</a>
-                </div>
-            </th>
-             <th scope="col">
-                <div class="text">
-                    <a>Fecha</a>
-                </div>
-            </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Hora</a>
-                </div>
-            </th>
-            <th scope="col">
-                <div class="text">
-                    <a>Adjunto</a>
-                </div>
-            </th>
+                {% endif %}
+            </ul>
+            <ul class="infolist">
+                {% if mensaje == 1 %}
+                <li>Item eliminado correctamente</li>
+                {% endif %}
+            </ul>
+            <table >
+                <thead>
+                <tr>
+                    <th scope="col" class="sortable" >
+                        <div class="text">
+                            <a>Descripcion</a>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="text">
+                            <a>Fecha</a>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="text">
+                            <a>Hora</a>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="text">
+                            <a>Adjunto</a>
+                        </div>
+                    </th>
 
-        </tr>
-        </thead>
-        <tbody>
-        {% for dato in datos  %}
-            <tr>
-                <td><center>{{ dato.descripcion }}</center></td>
-                <td><center>{{ dato.fecha }}</center></td>
-                <td><center>{{ dato.hora }}</center></td>
-                <td><center><a href="/trabajos/adjuntar/{{ dato.id }}"  class="btn btn-success"><i class="icon-file icon-white"></i></a></center></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dato in datos  %}
+                <tr>
+                    <td><center>{{ dato.descripcion }}</center></td>
+                    <td><center>{{ dato.fecha }}</center></td>
+                    <td><center>{{ dato.hora }}</center></td>
+                    <td><center><a href="/trabajos/adjuntar/{{ dato.id }}"  class="btn btn-success"><i class="icon-file icon-white"></i></a></center></td>
 
-            </tr>
-        {% endfor %}
-        </tbody>
+                </tr>
+                {% endfor %}
+                </tbody>
 
-        </table>
+            </table>
         </div>
 
 
-</div>
-
-
-
-        <br class="clear" />
     </div>
-    <!-- END Content -->
 
-    <div id="footer"></div>
+
+
+    <br class="clear" />
+</div>
+<!-- END Content -->
+
+<div id="footer"></div>
 </div>
 <!-- END Container -->
 

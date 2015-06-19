@@ -13,7 +13,7 @@ from apps.proyectos.models import Proyecto
 from apps.equipos.models import MiembroEquipo
 from apps.userStories.models import UserStory
 from apps.sprints.forms import AsignarFlujoDesarrollador
-from apps.sprints.forms import SprintForm, CrearSprintForm
+from apps.sprints.forms import ReasignarSprint, CrearSprintForm
 #from apps.roles.forms import GroupForm
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User, Group
@@ -149,13 +149,23 @@ def finalizar_sprint(request, id_sprint):
     sprint = Sprint.objects.get(id = id_sprint)
     sprint.estado = 2
     sprint.fin = datetime.now()
-    sprint.save()
+    # sprint.save()
 
-    sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
     proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
-    haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+    USNoTerminados = UserStory.objects.filter(sprint_id = id_sprint).exclude(estadoKanban = 4)
+    if USNoTerminados.count() > 0:
+        #borrar el id a este sprint de todos los user stories que lo tengas y no esten finalizados
+        # for userS in USNoTerminados:
+        #     userS.sprint_id = None
+        #     userS.save()
 
-    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
+        return render_to_response('sprints/sprintF_USNoTerminados.html', {'USNoTerminados': USNoTerminados, 'proyecto' : proyecto, 'sprint': sprint}, context_instance=RequestContext(request))
+    else:
+        sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
+
+        haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+
+        return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -178,7 +188,7 @@ def listar_USSprintBacklog(request, id_sprint):
 
 @login_required
 @permission_required('sprint')
-def asignar_userStorySprint(request, id_userStory,  id_sprint):
+def asignar_userStorySprint(request, id_userStory, id_sprint):
     """
     Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
@@ -256,13 +266,84 @@ def desasignar_userStorySprint(request, id_userStory,  id_sprint):
     return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint,'proyecto':proyecto}, context_instance=RequestContext(request))
 
 
+@login_required
+@permission_required('sprint')
+def reasignar_userStorySprint(request, id_userStory):
+    """
+    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_sprint: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    userStory = UserStory.objects.get(id = id_userStory)
+    sprintViejo = get_object_or_404(Sprint, pk=userStory.sprint_id)
+    proyecto = Proyecto.objects.get(id=sprintViejo.proyecto_id)
+
+    if request.method == 'POST':
+
+        userStory.sprint_id = request.POST["sprint"]
+        userStory.save()
+
+
+        equipo = MiembroEquipo.objects.filter(proyecto_id = proyecto.id, usuario_id = userStory.desarrollador)
+        horasPorDia = 0
+        for equipi in equipo:
+            horasPorDia = equipi.horasPorDia
+
+        # anhadir la capacidad al sprint
+        #anhadir horasUS .. tiempo estimado
+        sprint = Sprint.objects.get(id = userStory.sprint_id)
+        timediff = sprint.fin_propuesto - sprint.inicio_propuesto
+
+        sprint.horasUS = sprint.horasUS + userStory.tiempo_estimado - userStory.tiempo_registrado
+        sprint.capacidad = sprint.capacidad + (horasPorDia * timediff.days)
+        sprint.save()
+
+        USNoTerminados = UserStory.objects.filter(sprint_id = sprintViejo.id).exclude(estadoKanban = 4)
+        if USNoTerminados.count() > 0:
+            return render_to_response('sprints/sprintF_USNoTerminados.html', {'USNoTerminados': USNoTerminados, 'proyecto' : proyecto, 'sprint': sprint}, context_instance=RequestContext(request))
+        else:
+            sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
+
+            haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+
+            return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
+
+
+    else:
+        formulario = ReasignarSprint(proyecto.id)
+        return render_to_response('sprints/reasignar_Sprint.html', { 'formulario': formulario, 'proyecto':proyecto}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('sprint')
+def US_no_reasignar(request, id_sprint):
+    """
+    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_sprint: referencia a la flujo dentro de la base de datos
+    @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    """
+    USNoTerminados = UserStory.objects.filter(sprint_id = id_sprint).exclude(estadoKanban = 4)
+    if USNoTerminados.count() > 0:
+        #borrar el id a este sprint de todos los user stories que lo tengas y no esten finalizados
+        for userS in USNoTerminados:
+            userS.sprint_id = None
+            userS.save()
+
+    sprint = Sprint.objects.get(id = id_sprint)
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
+    haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
+
 
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
         yield start_date + timedelta(n)
 
 
-
+@login_required
+@permission_required('sprint')
 def graficar(request, id_sprint):
     sprint = Sprint.objects.get(id = id_sprint)
     hs_total = sprint.capacidad
@@ -301,7 +382,13 @@ def graficar(request, id_sprint):
     return render_to_response('sprints/burndown_chart.html', {'list':list, 'listLab':listLab, 'listTaskHs':listTaskHs},
                               context_instance=RequestContext(request))
 
-
+@login_required
+@permission_required('sprint')
+def sprintF_USNoTerminados(request, id_sprint):
+    sprint = Sprint.objects.get(id = id_sprint)
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    USNoTerminados = UserStory.objects.filter(sprint_id = id_sprint).exclude(estadoKanban = 4)
+    return render_to_response('sprints/sprintF_USNoTerminados.html', {'USNoTerminados': USNoTerminados, 'proyecto' : proyecto, 'sprint': sprint}, context_instance=RequestContext(request))
 
 
 # def get_sprint_burndown(request, id_sprint):

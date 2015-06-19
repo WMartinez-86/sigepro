@@ -25,13 +25,24 @@ class AsignarFlujoDesarrollador(ModelForm):
 		super(AsignarFlujoDesarrollador, self).__init__(*args, **kwargs)
 		self.fields['flujo'].query_set = Flujo.objects.filter(proyecto_id = filter)
 
-
     class Meta:
     #desarrollador = forms.ModelChoiceField(queryset=User.objects.filter(Miembro))
     #flujo = forms.ModelChoiceField(queryset=Flujo.objects.filter(id= 1))
     #def __init__(self, id_, *args, **kwargs):
         model = UserStory
         fields = ('flujo', 'desarrollador')
+
+class ReasignarSprint(ModelForm):
+    def __init__(self, filter, *args, **kwargs):
+		super(ReasignarSprint, self).__init__(*args, **kwargs)
+		self.fields['sprint'].query_set = Sprint.objects.filter(proyecto_id = filter, estado = 0)
+
+    class Meta:
+    #desarrollador = forms.ModelChoiceField(queryset=User.objects.filter(Miembro))
+    #flujo = forms.ModelChoiceField(queryset=Flujo.objects.filter(id= 1))
+    #def __init__(self, id_, *args, **kwargs):
+        model = UserStory
+        fields = ('sprint',)
 
 
 class RolesForm(forms.Form):

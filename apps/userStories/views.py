@@ -246,8 +246,9 @@ def detalle_userStory(request,id_userStory):
     #atributos=AtributoItem.objects.filter(id_item=id_item)
     #archivos=Archivo.objects.filter(id_item=id_item)
     dato = get_object_or_404(UserStory, pk=id_userStory)
+    proyecto = Proyecto.objects.get(id = dato.proyecto_id)
 
-    return render_to_response('userStories/detalle_userStory.html', {'datos': dato}, context_instance=RequestContext(request))
+    return render_to_response('userStories/detalle_userStory.html', {'datos': dato, 'proyecto': proyecto}, context_instance=RequestContext(request))
 
     #return render_to_response('403.html')
 

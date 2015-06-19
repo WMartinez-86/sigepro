@@ -38,7 +38,7 @@ class UserStory(models.Model):
     prioridad = models.IntegerField(choices=((i, i) for i in range(1, 10)), default=1)
     valor_negocio = models.PositiveIntegerField(verbose_name='Valor de Negocio')
     valor_tecnico = models.PositiveIntegerField(verbose_name='Valor Tecnico')
-    tiempo_estimado = models.PositiveIntegerField(verbose_name='Tiempo Estimado')
+    tiempo_estimado = models.PositiveIntegerField(verbose_name='Tiempo Estimado en Horas')
     tiempo_registrado = models.PositiveIntegerField(verbose_name='Tiempo Registrado', default=0)
     ultimo_cambio = models.DateTimeField(auto_now=True, verbose_name='Ultimo Cambio')
     estadoKanban = models.IntegerField(choices=estados_kanban, default=0)

@@ -1,51 +1,44 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Detalle User Story
+Detalle User Story
 {% endblock %}
 {% block content %}
-    <head>
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
 
 </head>
-    <div class="breadcrumbs">
+<div class="breadcrumbs">
 
-        <a href="/userStories/">Administracion de User Stories</a> >
+    <a href="/userStories/{{ proyecto.id }}">Administracion de User Stories</a> >
     " Detalle User Story"
-    </div>
+</div>
 
-                <div id="content">
-                <h1>Detalles de {{datos.nombre|title}}</h1>
-       <fieldset class="module aligned wide">
-<form method="post">{% csrf_token %}
-    <div class="form-row">
-             <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
-            <div><strong>Descripción: </strong>{{ datos.descripcion }}</div>
-            <div><strong>Estado del Kanban: </strong>{{ datos.estadoKanban }}</div>
-            <div><strong>Estado del Scrum: </strong>{{ datos.estadoScrum }}</div>
-            <div><strong>Prioridad: </strong>{{ datos.prioridad }}</div>
-            <div><strong>Proyecto: </strong>{{ datos.proyecto }}</div>
-            <div><strong>Desarrollador: </strong>{{ datos.desarrollador }}</div>
-            <div><strong>Sprint: </strong>{{ datos.sprint }}</div>
-            <div><strong>Flujo: </strong>{{ datos.flujo }}</div>
-            <div><strong>Actividad: </strong>{{ datos.actividad }}</div>
+<div id="content">
+    <h1>Detalles de {{datos.nombre|title}}</h1>
+    <fieldset class="module aligned wide">
+        <form method="post">{% csrf_token %}
+            <div class="form-row">
+                <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
+                <div><strong>Descripción: </strong>{{ datos.descripcion }}</div>
+                <div><strong>Horas Estimadas: </strong>{{ datos.tiempo_estimado }}</div>
+                <div><strong>Prioridad: </strong>{{ datos.prioridad }}</div>
+                <div><strong>Proyecto: </strong>{{ datos.proyecto }}</div>
+                <div><strong>Desarrollador: </strong>{{ datos.desarrollador }}</div>
+                <div><strong>Sprint: </strong>{{ datos.sprint }}</div>
+                <div><strong>Flujo: </strong>{{ datos.flujo }}</div>
+                <div><strong>Fecha de modificacion: </strong>{{ datos.fecha_mod }}</div>
+                <div>
 
-            <div><strong>Fecha de creacion: </strong>{{ datos.fecha_creacion }}</div>
-            <div><strong>Fecha de modificacion: </strong>{{ datos.ulimo_cambio }}</div>
-            <div>
-
+                </div>
+                <div>
 
 
 
+                </div>
             </div>
-              <div>
-
-
-
-              </div>
-        </div>
-</form>
-            </fieldset>
-                    </div>
+        </form>
+    </fieldset>
+</div>
 
 {% endblock %}
