@@ -283,6 +283,7 @@ def graficar(request, id_sprint):
 
     hoy = timezone.now().date()
     dayLimite = hoy - sprint.inicio
+    capSpring = sprint.capacidad
     for dia in range(dayLimite.days):
         usList = UserStory.objects.filter(sprint_id = id_sprint)
         for us in usList:
@@ -291,8 +292,8 @@ def graficar(request, id_sprint):
             for tsk in taskList:
                 if diagrap == tsk.fecha:
                     taskHs =  taskHs + tsk.hora
-            taskHs = sprint.capacidad - taskHs
-            listTaskHs.append(taskHs)
+            capSpring = capSpring - taskHs
+            listTaskHs.append(capSpring)
             diagrap = diagrap + timedelta(days=1)
     print listTaskHs
 
