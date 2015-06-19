@@ -22,6 +22,7 @@ from apps.flujos.models import Flujo
 from django.forms import formset_factory
 from django.utils import timezone
 from apps.trabajos.models import Trabajo
+from apps.actividades.models import Actividad
 
 # Create your views here.
 
@@ -203,6 +204,8 @@ def asignar_userStorySprint(request, id_userStory, id_sprint):
         userStory.sprint_id = id_sprint
         userStory.flujo_id = request.POST["flujo"]
         userStory.desarrollador_id = request.POST["desarrollador"]
+        actividad1 = Actividad.objects.get(flujo_id = userStory.flujo_id, orden = 1)
+        userStory.actividad_id = actividad1.id
         userStory.save()
 
 
@@ -242,6 +245,7 @@ def desasignar_userStorySprint(request, id_userStory,  id_sprint):
     """
     userStory = UserStory.objects.get(id = id_userStory)
     userStory.sprint_id = None
+    userStory.actividad_id = None
     userStory.save()
 
     sprint = get_object_or_404(Sprint, pk=id_sprint)

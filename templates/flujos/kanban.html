@@ -61,139 +61,148 @@ Kanban
 
     <table class="table rounded" border="1">
         <tbody>
-            <tr id="task_pool_header_container">
-                <!--<th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>-->
-                {% for Actividad in actividades  %}
-                    <th class="task_pool_header  dotted_separator", colspan="3"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">{{ Actividad.nombre }}</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
-                {% endfor %}
-                <th class="task_pool_header"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Terminado</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
-            </tr>
-            <tr id="states">
-                <!--<th class="task_pool_header  dotted_separator"></th>-->
-                {% for Actividad in actividades  %}
-                    <th class="task_pool_header  dotted_separator">To Do</th>
-                    <th class="task_pool_header  dotted_separator">Doing</th>
-                    <th class="task_pool_header  dotted_separator">Done</th>
-                {% endfor %}
-                <th class="task_pool_header  dotted_separator"><span class="title_text">{{ Actividad.nombre }}</span></th>
-            </tr>
-            <tr id="task_pool_container">
-                <!--<td class="task_pool dotted_separator ui-sortable"><div></div></td>-->
-                {% for Actividad in actividades  %}
-                    <td class="task_pool dotted_separator ui-sortable"><div></div>
+        <tr id="task_pool_header_container">
+            <!--<th class="task_pool_header  dotted_separator"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Backlog</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>-->
+            {% for Actividad in actividades  %}
+            <th class="task_pool_header  dotted_separator", colspan="3"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">{{ Actividad.nombre }}</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+            {% endfor %}
+            <th class="task_pool_header"><div class="header_name click"><img class="title_bullet" src="/estaticos/usuario/img/bullet.png"><span class="title_text">Terminado</span></div><div wip="0" class="WIP">WIP: Ilimitado</div></th>
+        </tr>
+        <tr id="states">
+            <!--<th class="task_pool_header  dotted_separator"></th>-->
+            {% for Actividad in actividades  %}
+            <th class="task_pool_header  dotted_separator">To Do</th>
+            <th class="task_pool_header  dotted_separator">Doing</th>
+            <th class="task_pool_header  dotted_separator">Done</th>
+            {% endfor %}
+            <th class="task_pool_header  dotted_separator"><span class="title_text">{{ Actividad.nombre }}</span></th>
+        </tr>
+        <tr id="task_pool_container">
+            <!--<td class="task_pool dotted_separator ui-sortable"><div></div></td>-->
+            {% for Actividad in actividades  %}
+            <td class="task_pool dotted_separator ui-sortable"><div></div>
 
-                        {% for UserStory in userStories  %}
-                            {% if UserStory.actividad.nombre = Actividad.nombre  %}
-                                {% if UserStory.estadoKanban = 0  %}
-                                    <div style="display: block;" class="big_container">
-                                        <div id="box_itm0" class="box_itm rounded">
-                                            <div class="big_container">
-                                                <div id="name0" class="name">{{ UserStory.nombre }}</div>
-                                                <div class="dotted_hr"></div>
-                                                <div id="resp0" class="name">{{ UserStory.desarrollador }}</div>
-                                                <progress max="100" id="progress_bar0" class="pbar" value="0"></progress>
-                                                <div class="small">
-                                                    <div style="display: none;" n="3" class="itm_box_option">
-                                                        <input style="background-color: rgb(247, 148, 29); color: black;" id="color_0" n="3" class="color colorete mColorPicker" data-text="hidden" data-colorlink="box_itm3" value="rgb(247, 148, 29)" type="hidden">
-                                                        <span style="display: inline-block; cursor: pointer; border: 1px solid black; float: left; width: 10px; height: 10px; background-color: rgb(247, 148, 29); color: black;" class="mColorPickerTrigger color colorete mColorPicker" id="mcp_color_0">&nbsp;</span>
-                                                    </div>
-                                                    <div style="display: none;" n="3" class="option close itm_box_option">
-                                                        <button class="btn btn-danger btn-mini">
-                                                            <i class="icon-white icon-remove"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div style="display: none;" n="3" class="option edit itm_box_option">
-                                                        <button class="btn btn-info btn-mini">
-                                                            <i class="icon-white icon-pencil"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="clear"></div>
-                                                <div> </div></div></div>
-                                        <div id="box_itm0_shadow" class="shadow"></div>
-                                        <div> </div>
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-
-                    </td>
-
-                    <td class="task_pool dotted_separator ui-sortable"><div></div>
-                        {% for UserStory in userStories  %}
-                            {% if UserStory.actividad.nombre = Actividad.nombre  %}
-                                {% if UserStory.estadoKanban = 1  %}
-                                    <div style="display: block;" class="big_container">
-                                        <div id="box_itm1" class="box_itm rounded">
-                                            <div class="big_container">
-                                                <div id="name1" class="name">{{ UserStory.nombre }}</div>
-                                                <div class="dotted_hr"></div>
-                                                <div id="resp1" class="name">{{ UserStory.desarrollador }}</div>
-                                                <progress max="100" id="progress_bar1" class="pbar" value="0"></progress>
-                                                <div class="small">
-                                                    <div style="display: none;" n="3" class="itm_box_option">
-                                                        <input style="background-color: rgb(247, 148, 29); color: black;" id="color_1" n="3" class="color colorete mColorPicker" data-text="hidden" data-colorlink="box_itm3" value="rgb(247, 148, 29)" type="hidden">
-                                                        <span style="display: inline-block; cursor: pointer; border: 1px solid black; float: left; width: 10px; height: 10px; background-color: rgb(247, 148, 29); color: black;" class="mColorPickerTrigger color colorete mColorPicker" id="mcp_color_1">&nbsp;</span>
-                                                    </div>
-                                                    <div style="display: none;" n="3" class="option close itm_box_option">
-                                                        <button class="btn btn-danger btn-mini">
-                                                            <i class="icon-white icon-remove"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div style="display: none;" n="3" class="option edit itm_box_option">
-                                                        <button class="btn btn-info btn-mini">
-                                                            <i class="icon-white icon-pencil"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="clear"></div>
-                                                <div> </div></div></div>
-                                        <div id="box_itm1_shadow" class="shadow"></div>
-                                        <div> </div>
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td class="task_pool dotted_separator ui-s{ortable"><div></div>
-                        {% for UserStory in userStories  %}
-                            {% if UserStory.actividad.nombre = Actividad.nombre  %}
-                                {% if UserStory.estadoKanban = 1  %}
-                                    <div style="display: block;" class="big_container">
-                                        <div id="box_itm2" class="box_itm rounded">
-                                            <div class="big_container">
-                                                <div id="name2" class="name">{{ UserStory.nombre }}</div>
-                                                <div class="dotted_hr"></div>
-                                                <div id="resp2" class="name">{{ UserStory.desarrollador }}</div>
-                                                <progress max="100" id="progress_bar2" class="pbar" value="0"></progress>
-                                                <div class="small">
-                                                    <div style="display: none;" n="3" class="itm_box_option">
-                                                        <input style="background-color: rgb(247, 148, 29); color: black;" id="color_2" n="3" class="color colorete mColorPicker" data-text="hidden" data-colorlink="box_itm3" value="rgb(247, 148, 29)" type="hidden">
-                                                        <span style="display: inline-block; cursor: pointer; border: 1px solid black; float: left; width: 10px; height: 10px; background-color: rgb(247, 148, 29); color: black;" class="mColorPickerTrigger color colorete mColorPicker" id="mcp_color_2">&nbsp;</span>
-                                                    </div>
-                                                    <div style="display: none;" n="3" class="option close itm_box_option">
-                                                        <button class="btn btn-danger btn-mini">
-                                                            <i class="icon-white icon-remove"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div style="display: none;" n="3" class="option edit itm_box_option">
-                                                        <button class="btn btn-info btn-mini">
-                                                            <i class="icon-white icon-pencil"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="clear"></div>
-                                                <div> </div></div></div>
-                                        <div id="box_itm2_shadow" class="shadow"></div>
-                                        <div> </div>
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
+                {% for UserStory in userStories  %}
+                {% if UserStory.actividad.nombre = Actividad.nombre  %}
+                {% if UserStory.estadoKanban = 0  %}
+                <div style="display: block;" class="big_container">
+                    <div id="box_itm0" class="box_itm rounded">
+                        <div class="big_container">
+                            <div id="name0" class="name">{{ UserStory.nombre }}</div>
+                            <div class="dotted_hr"></div>
+                            <div id="resp0" class="name">{{ UserStory.desarrollador }}</div>
+                            <progress max="100" id="progress_bar0" class="pbar" value="0"></progress>
+                            <div class="small">
+                                <div style="display: none;" n="3" class="itm_box_option">
+                                    <input style="background-color: rgb(247, 148, 29); color: black;" id="color_0" n="3" class="color colorete mColorPicker" data-text="hidden" data-colorlink="box_itm3" value="rgb(247, 148, 29)" type="hidden">
+                                    <span style="display: inline-block; cursor: pointer; border: 1px solid black; float: left; width: 10px; height: 10px; background-color: rgb(247, 148, 29); color: black;" class="mColorPickerTrigger color colorete mColorPicker" id="mcp_color_0">&nbsp;</span>
+                                </div>
+                                <div style="display: none;" n="3" class="option close itm_box_option">
+                                    <button class="btn btn-danger btn-mini">
+                                        <i class="icon-white icon-remove"></i>
+                                    </button>
+                                </div>
+                                <div style="display: none;" n="3" class="option edit itm_box_option">
+                                    <button class="btn btn-info btn-mini">
+                                        <i class="icon-white icon-pencil"></i>
+                                    </button>
+                                </div>
+                                <form action="/flujo/moverUS/{{ UserStory.id }}">
+                                    <input type="submit" value="Siguiente">
+                                </form>
+                            </div>
+                            <div class="clear"></div>
+                            <div> </div></div></div>
+                    <div id="box_itm0_shadow" class="shadow"></div>
+                    <div> </div>
+                </div>
+                {% endif %}
+                {% endif %}
                 {% endfor %}
-                <td class="task_pool ui-sortable"><div></div></td>
-            </tr>
+
+            </td>
+
+            <td class="task_pool dotted_separator ui-sortable"><div></div>
+                {% for UserStory in userStories  %}
+                {% if UserStory.actividad.nombre = Actividad.nombre  %}
+                {% if UserStory.estadoKanban = 2  %}
+                <div style="display: block;" class="big_container">
+                    <div id="box_itm1" class="box_itm rounded">
+                        <div class="big_container">
+                            <div id="name1" class="name">{{ UserStory.nombre }}</div>
+                            <div class="dotted_hr"></div>
+                            <div id="resp1" class="name">{{ UserStory.desarrollador }}</div>
+                            <progress max="100" id="progress_bar1" class="pbar" value="0"></progress>
+                            <div class="small">
+                                <div style="display: none;" n="3" class="itm_box_option">
+                                    <input style="background-color: rgb(247, 148, 29); color: black;" id="color_1" n="3" class="color colorete mColorPicker" data-text="hidden" data-colorlink="box_itm3" value="rgb(247, 148, 29)" type="hidden">
+                                    <span style="display: inline-block; cursor: pointer; border: 1px solid black; float: left; width: 10px; height: 10px; background-color: rgb(247, 148, 29); color: black;" class="mColorPickerTrigger color colorete mColorPicker" id="mcp_color_1">&nbsp;</span>
+                                </div>
+                                <div style="display: none;" n="3" class="option close itm_box_option">
+                                    <button class="btn btn-danger btn-mini">
+                                        <i class="icon-white icon-remove"></i>
+                                    </button>
+                                </div>
+                                <div style="display: none;" n="3" class="option edit itm_box_option">
+                                    <button class="btn btn-info btn-mini">
+                                        <i class="icon-white icon-pencil"></i>
+                                    </button>
+                                    <form action="/flujo/moverUS/{{ UserStory.id }}">
+                                        <input type="submit" value="Siguiente">
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div> </div></div></div>
+                    <div id="box_itm1_shadow" class="shadow"></div>
+                    <div> </div>
+                </div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </td>
+            <td class="task_pool dotted_separator ui-s{ortable"><div></div>
+                {% for UserStory in userStories  %}
+                {% if UserStory.actividad.nombre = Actividad.nombre  %}
+                {% if UserStory.estadoKanban = 1  %}
+                <div style="display: block;" class="big_container">
+                    <div id="box_itm2" class="box_itm rounded">
+                        <div class="big_container">
+                            <div id="name2" class="name">{{ UserStory.nombre }}</div>
+                            <div class="dotted_hr"></div>
+                            <div id="resp2" class="name">{{ UserStory.desarrollador }}</div>
+                            <progress max="100" id="progress_bar2" class="pbar" value="0"></progress>
+                            <div class="small">
+                                <div style="display: none;" n="3" class="itm_box_option">
+                                    <input style="background-color: rgb(247, 148, 29); color: black;" id="color_2" n="3" class="color colorete mColorPicker" data-text="hidden" data-colorlink="box_itm3" value="rgb(247, 148, 29)" type="hidden">
+                                    <span style="display: inline-block; cursor: pointer; border: 1px solid black; float: left; width: 10px; height: 10px; background-color: rgb(247, 148, 29); color: black;" class="mColorPickerTrigger color colorete mColorPicker" id="mcp_color_2">&nbsp;</span>
+                                </div>
+                                <div style="display: none;" n="3" class="option close itm_box_option">
+                                    <button class="btn btn-danger btn-mini">
+                                        <i class="icon-white icon-remove"></i>
+                                    </button>
+                                </div>
+                                <div style="display: none;" n="3" class="option edit itm_box_option">
+                                    <button class="btn btn-info btn-mini">
+                                        <i class="icon-white icon-pencil"></i>
+                                    </button>
+                                </div>
+                                <form action="/flujo/moverUS/{{ UserStory.id }}">
+                                    <input type="submit" value="Siguiente">
+                                </form>
+                            </div>
+                            <div class="clear"></div>
+                            <div> </div></div></div>
+                    <div id="box_itm2_shadow" class="shadow"></div>
+                    <div> </div>
+                </div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+            <td class="task_pool ui-sortable"><div></div></td>
+        </tr>
 
         </tbody>
     </table>
