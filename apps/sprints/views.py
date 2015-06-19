@@ -257,28 +257,47 @@ def desasignar_userStorySprint(request, id_userStory,  id_sprint):
 
 
 
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+
+
+
 def graficar(request, id_sprint):
     sprint = Sprint.objects.get(id = id_sprint)
     hs_total = sprint.capacidad
     dias = sprint.fin_propuesto - sprint.inicio_propuesto
     hs_dia = hs_total / dias.days
-
-    print hs_total
-    print hs_dia
     list = []
     for ind in range(dias.days):
         hs_total = hs_total - hs_dia
         list.append(hs_total)
     diasLab = 0
     listLab = []
-    print list
-
     for ind in range(dias.days):
         diasLab = diasLab + 1
         listLab.append(diasLab)
+    #today = timezone.now()
+    listTaskHs = []
+    diagrap = sprint.inicio
 
-    print listLab
-    return render_to_response('sprints/burndown_chart.html', {'list':list, 'listLab':listLab},
+    hoy = timezone.now().date()
+    dayLimite = hoy - sprint.inicio
+    for dia in range(dayLimite.days):
+        usList = UserStory.objects.filter(sprint_id = id_sprint)
+        for us in usList:
+            taskList = Trabajo.objects.filter(userStory_id = us.id)
+            taskHs = 0
+            for tsk in taskList:
+                if diagrap == tsk.fecha:
+                    taskHs =  taskHs + tsk.hora
+            taskHs = sprint.capacidad - taskHs
+            listTaskHs.append(taskHs)
+            diagrap = diagrap + timedelta(days=1)
+    print listTaskHs
+
+
+    return render_to_response('sprints/burndown_chart.html', {'list':list, 'listLab':listLab, 'listTaskHs':listTaskHs},
                               context_instance=RequestContext(request))
 
 
@@ -303,7 +322,7 @@ def graficar(request, id_sprint):
 #     us_restante = us_total = sprint.userstory_set.count()  # User Stories del sprint
 #     lus_restante = [us_total]  # Lista de user stories que faltan
 #     lus_completado = [0]  # Lista de user stories que se terminaron
-#     # TODO: si todavia no termino el sprint, se muestra hasta hoy o hasta el fin de sprint?
+#     #  si todavia no termino el sprint, se muestra hasta hoy o hasta el fin de sprint?
 #     today = timezone.now().date()
 #
 #     fin = today if today < sprint.fin else sprint.fin
@@ -313,7 +332,7 @@ def graficar(request, id_sprint):
 #         #completados = notas.filter(estado=3).count()  # User Stories terminados en el dia
 #         #hwork = notas.aggregate(sum=Sum('horas_a_registrar'))['sum']  # Total de horas registradas en el dia
 #         #hwork = hwork if hwork else 0  # Por si aggregate devuelve None
-#         # TODO: controlar si se registran mas horas de lo estimado
+#         # controlar si se registran mas horas de lo estimado
 #         #db_hwork.append(hwork)
 #         #h_restante -= hwork if h_restante >= hwork else 0  # Si se terminan las horas antes del fin
 #         h_total -= m
