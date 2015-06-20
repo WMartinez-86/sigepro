@@ -351,40 +351,90 @@ def daterange(start_date, end_date):
 def graficar(request, id_sprint):
     sprint = Sprint.objects.get(id = id_sprint)
     hs_total = sprint.capacidad
-    dias = sprint.fin_propuesto - sprint.inicio_propuesto
-    hs_dia = hs_total / dias.days
-    list = []
-    for ind in range(dias.days):
-        hs_total = hs_total - hs_dia
-        list.append(hs_total)
-    diasLab = 0
-    listLab = []
-    for ind in range(dias.days):
-        diasLab = diasLab + 1
-        listLab.append(diasLab)
+    diasIdeales = sprint.fin_propuesto - sprint.inicio_propuesto
+    hs_dia = hs_total / diasIdeales.days
+    listHsIdeal = []
+
     #today = timezone.now()
     listTaskHs = []
     diagrap = sprint.inicio
-
+    #print diagrap
+    #print listLab
     hoy = timezone.now().date()
-    dayLimite = hoy - sprint.inicio
-    capSpring = sprint.capacidad
-    for dia in range(dayLimite.days):
-        usList = UserStory.objects.filter(sprint_id = id_sprint)
-        for us in usList:
-            taskList = Trabajo.objects.filter(userStory_id = us.id)
-            taskHs = 0
-            for tsk in taskList:
-                if diagrap == tsk.fecha:
-                    taskHs =  taskHs + tsk.hora
-            capSpring = capSpring - taskHs
-            listTaskHs.append(capSpring)
-            diagrap = diagrap + timedelta(days=1)
-    print listTaskHs
+    if hoy <= sprint.fin_propuesto:
 
+        for ind in range(diasIdeales.days):
+            hs_total = hs_total - hs_dia
+            listHsIdeal.append(hs_total)
+        diasLab = 0
+        listLab = []
+        diasCompleto = sprint.fin_propuesto - sprint.inicio_propuesto
+        for ind in range(diasCompleto.days):
+            diasLab = diasLab + 1
+            #condias = 'Dia ' +  str(diasLab)
+            listLab.append(diasLab)
+        dayLimite = hoy - sprint.inicio
+        capSpring = sprint.capacidad
+        for dia in range(dayLimite.days):
+            usList = UserStory.objects.filter(sprint_id = id_sprint)
+            for us in usList:
+                taskList = Trabajo.objects.filter(userStory_id = us.id)
+                taskHs = 0
+                notrab = 0
+                for tsk in taskList:
+                    if diagrap == tsk.fecha:
+                        taskHs =  taskHs + tsk.hora
+                        notrab = notrab + 1
+                capSpring = capSpring - taskHs
+                listTaskHs.append(capSpring)
+                diagrap = diagrap + timedelta(days=1)
+            #print listTaskHs
 
-    return render_to_response('sprints/burndown_chart.html', {'list':list, 'listLab':listLab, 'listTaskHs':listTaskHs},
-                              context_instance=RequestContext(request))
+    elif hoy > sprint.fin:
+        #print "emtro aca en el elif"
+        #print sprint.id
+        #print id_sprint
+        for ind in range(diasIdeales.days):
+            hs_total = hs_total - hs_dia
+            listHsIdeal.append(hs_total)
+        diasLab = 0
+        listLab = []
+        diasCompleto = sprint.fin - sprint.inicio_propuesto
+        for ind in range(diasCompleto.days):
+            diasLab = diasLab + 1
+            #condias = 'Dia ' +  str(diasLab)
+            listLab.append(diasLab)
+        dayLimite = sprint.fin - sprint.inicio
+        #print dayLimite
+        capSpring = sprint.capacidad
+        for dia in range(dayLimite.days):
+            usList = UserStory.objects.filter(sprint_id = id_sprint)
+            #print usList
+            for us in usList:
+                #print us.id
+                taskList = Trabajo.objects.filter(userStory_id = us.id)
+                taskHs = 0
+                notrab = 0
+                for tsk in taskList:
+
+                    if diagrap == tsk.fecha:
+                        print diagrap
+                        taskHs =  taskHs + tsk.hora
+                        notrab = notrab + 1
+                capSpring = capSpring - taskHs
+                if capSpring < 0:
+                    capSpring = 0
+                    listTaskHs.append(capSpring)
+                    diagrap = diagrap + timedelta(days=1)
+                elif capSpring != 0:
+                    listTaskHs.append(capSpring)
+                    diagrap = diagrap + timedelta(days=1)
+        print listTaskHs
+        print listHsIdeal
+
+    return render_to_response('sprints/burndown_chart.html', {'listHsIdeal':listHsIdeal, 'listLab':listLab, 'listTaskHs':listTaskHs},
+                          context_instance=RequestContext(request))
+
 
 @login_required
 @permission_required('sprint')

@@ -261,6 +261,11 @@ Sprints
                                 Fin Propuesto
                             </div>
                         </th>
+                         <th scope="col">
+                            <div class="text">
+                                Burndown Chart
+                            </div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -275,6 +280,7 @@ Sprints
                                 <td><center>{{ dato.fin }}</center></td>
                                 <td><center>{{ dato.inicio_propuesto }}</center></td>
                                 <td><center>{{ dato.fin_propuesto }}</center></td>
+                                <td><center><a href="/sprints/graficar/{{ dato.pk }}" class="btn btn-success"><i class=" icon-picture icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
