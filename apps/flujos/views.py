@@ -37,7 +37,7 @@ def registrar_flujo(request, id_proyecto):
         formulario = CrearFlujoForm(request.POST)
         if formulario.is_valid():
             newFlujo = Flujo(nombre = request.POST["nombre"],descripcion = request.POST["descripcion"],
-                               estado = "PRO", proyecto_id = id_proyecto)
+                             estado = "PRO", proyecto_id = id_proyecto)
             orden=Flujo.objects.filter(proyecto_id=id_proyecto)
             proyecto=Proyecto.objects.get(id=id_proyecto)
             cantidad = orden.count()
@@ -85,7 +85,7 @@ def editar_flujo(request,id_flujo):
     if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                              context_instance=RequestContext(request))
+                                  context_instance=RequestContext(request))
     if request.method == 'POST':
         # formulario enviado
         mensaje =100
@@ -103,32 +103,32 @@ def editar_flujo(request,id_flujo):
                 orden=Flujo.objects.filter(proyecto_id=proyecto.id)
                 cantidad = orden.count()
                 if cantidad>1 and flujo.orden != cantidad and flujo.orden >1: #comprobaciones de fechas
-                       anterior = Flujo.objects.get(orden=(flujo.orden)-1, proyecto_id=id_proyecto)
-                       siguiente = Flujo.objects.get(orden=(flujo.orden)+1, proyecto_id=id_proyecto)
-                       if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
-                            mensaje=1
+                    anterior = Flujo.objects.get(orden=(flujo.orden)-1, proyecto_id=id_proyecto)
+                    siguiente = Flujo.objects.get(orden=(flujo.orden)+1, proyecto_id=id_proyecto)
+                    if fecha1<datetime.strptime(str(anterior.fInicio),'%Y-%m-%d'):
+                        mensaje=1
+                        return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                  context_instance=RequestContext(request))
+                    else:
+                        if fecha1>datetime.strptime(str(siguiente.fInicio),'%Y-%m-%d'):
+                            mensaje=2
                             return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
                                                       context_instance=RequestContext(request))
-                       else:
-                           if fecha1>datetime.strptime(str(siguiente.fInicio),'%Y-%m-%d'):
-                               mensaje=2
-                               return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
-                                                         context_instance=RequestContext(request))
-                           else:
-                                if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
-                                    mensaje=3
-                                    return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
-                                                              context_instance=RequestContext(request))
-                                else:
-                                    flujo_form.save()
-                                    return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
+                        else:
+                            if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
+                                mensaje=3
+                                return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
+                                                          context_instance=RequestContext(request))
+                            else:
+                                flujo_form.save()
+                                return render_to_response('flujos/creacion_correcta.html',{'id_proyecto':id_proyecto}, context_instance=RequestContext(request))
                 elif cantidad>1 and flujo.orden != cantidad and flujo.orden==1:
-                   siguiente = Flujo.objects.get(orden=(flujo.orden)+1, proyecto_id=id_proyecto)
-                   if fecha1>datetime.strptime(str(siguiente.fInicio),'%Y-%m-%d'):
+                    siguiente = Flujo.objects.get(orden=(flujo.orden)+1, proyecto_id=id_proyecto)
+                    if fecha1>datetime.strptime(str(siguiente.fInicio),'%Y-%m-%d'):
                         mensaje=2
                         return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
                                                   context_instance=RequestContext(request))
-                   else:
+                    else:
                         if datetime.strptime(str(proyecto.fecha_ini),'%Y-%m-%d')>=fecha1 or datetime.strptime(str(proyecto.fecha_fin),'%Y-%m-%d')<=fecha1:
                             mensaje=3
                             return render_to_response('flujos/editar_flujo.html', { 'form': flujo_form,'mensaje':mensaje, 'flujo': flujo, 'proyecto':proyecto},
@@ -329,7 +329,7 @@ def desasignar_usuario(request,id_flujo):
     if proyecto.estado!='PRO':
         proyectos = Proyecto.objects.all().exclude(estado='ELI')
         return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                              context_instance=RequestContext(request))
+                                  context_instance=RequestContext(request))
     roles=Group.objects.filter(flujo__id=id_flujo)
     usuarios=[]
     for rol in roles:
@@ -337,6 +337,78 @@ def desasignar_usuario(request,id_flujo):
         for pp in p:
             usuarios.append(pp) #lista todos los usuarios con rol en el flujo
     return render_to_response('flujos/desasignar_usuarios.html', {'datos': usuarios,'flujo':flujo,'proyecto':proyecto,'roles':roles}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('flujo')
+def moverUS_siguiente(request, id_userStory):
+    """
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+    userStory = UserStory.objects.get(id=id_userStory)
+    flujo = Flujo.objects.get(id = userStory.flujo_id)
+    actividad = Actividad.objects.get(id = userStory.actividad_id)
+    actividades = Actividad.objects.filter(flujo_id=flujo.id)
+    cantActividades = actividades.count()
+
+    print(userStory.estadoKanban)
+    print(actividad.orden)
+    print(cantActividades)
+
+    if userStory.estadoKanban==3: # si su estado es pendiente de aprobacion va a aprobado
+        userStory.estadoKanban = 4
+        userStory.save()
+    else:
+        if actividad.orden == cantActividades: #si es la ultima actividad
+            if userStory.estadoKanban == 2: # si es done pasar a pendiente de aprobacion
+                userStory.estadoKanban = 3
+                userStory.save()
+            else: #sino es done pasa al siguiente estado doing o done
+                userStory.estadoKanban = userStory.estadoKanban + 1
+                userStory.save()
+        else: #no es la ultima actividad
+            if userStory.estadoKanban == 2: # cambio de actividad
+                actSiguiente = Actividad.objects.get(flujo_id=flujo.id, orden = actividad.orden + 1)
+                print(actSiguiente)
+                userStory.estadoKanban = 0
+                userStory.actividad_id = actSiguiente.id
+                userStory.save()
+            else:
+                userStory.estadoKanban = userStory.estadoKanban + 1
+                userStory.save()
+
+    #vuelve a actualizar la pagina
+    userStories = UserStory.objects.filter(flujo=flujo.id)
+    actividades = Actividad.objects.filter(flujo_id=flujo.id)
+    cantActividades = actividades.count()
+    return render_to_response('flujos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))
+
+
+@login_required
+@permission_required('flujo')
+def moverUS_desaprobrar(request, id_userStory):
+    """
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+    userStory = UserStory.objects.get(id=id_userStory)
+    flujo = Flujo.objects.get(id = userStory.flujo_id)
+    actividades = Actividad.objects.filter(flujo_id=flujo.id)
+    cantActividades = actividades.count()
+
+    ultActividad = Actividad.objects.get(flujo_id=flujo.id, orden=cantActividades)
+    userStory.estadoKanban = 1
+    userStory.actividad_id = ultActividad.id
+    userStory.save()
+
+    #vuelve a actualizar la pagina
+    userStories = UserStory.objects.filter(flujo=flujo.id)
+    actividades = Actividad.objects.filter(flujo_id=flujo.id)
+    cantActividades = actividades.count()
+    return render_to_response('flujos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))
+
 
 @login_required
 @permission_required('proyectos')
@@ -355,3 +427,5 @@ def estadoKanban(request, id_flujo):
     print "cantactividades"
     print cantActividades
     return render_to_response('flujos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))
+
+
