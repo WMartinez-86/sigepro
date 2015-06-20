@@ -4,7 +4,7 @@ __author__ = 'juanma'
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
-from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos,estadoKanban, moverUS_siguiente, moverUS_desaprobrar
+from views import listar_flujos, registrar_flujo, detalle_flujo, buscar_flujos,estadoKanban, moverUS_siguiente, moverUS_desaprobrar, moverUS_desaprobrarAct
 from views import editar_flujo,flujos_todas, eliminar_flujo, asignar_userStory, asignar_userStoryFlujo, desasignar_userStoryFlujo, desasignar_usuario
 
 urlpatterns = patterns('',
@@ -27,6 +27,7 @@ urlpatterns = patterns('',
         url(r'^desasignar/(?P<id_userStory>\d+)/(?P<id_flujo>\d+)$', desasignar_userStoryFlujo, name='desasignar_user_StoryFlujo'),
         url(r'^moverUS/(?P<id_userStory>\d+)$', moverUS_siguiente, name='mover US siguiente'),
         url(r'^rechazarUS/(?P<id_userStory>\d+)$', moverUS_desaprobrar, name='mover US siguiente'),
+        url(r'^rechazarUS_actividad/(?P<id_userStory>\d+)$', moverUS_desaprobrarAct, name='mover US siguiente'),
         #url(r'^asociar/(?P<id_rol>\d+)-(?P<id_usuario>\d+)-(?P<id_flujo>\d+)$', asociar,name='asociar'),
         #url(r'^desasignar/(?P<id_flujo>\d+)$', desasignar_usuario, name='des'),
         #url(r'^desasignar/(?P<id_usuario>\d+)/(?P<id_flujo>\d+)$', desasociar,name='desasociar'),
