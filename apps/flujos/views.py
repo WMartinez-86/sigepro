@@ -409,6 +409,26 @@ def moverUS_desaprobrar(request, id_userStory):
     cantActividades = actividades.count()
     return render_to_response('flujos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))
 
+@login_required
+@permission_required('flujo')
+def moverUS_desaprobrarAct(request, id_userStory):
+    """
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
+    """
+
+    userStory = UserStory.objects.get(id=id_userStory)
+    flujo = Flujo.objects.get(id = userStory.flujo_id)
+    userStory.estadoKanban = 1
+    userStory.save()
+
+    #vuelve a actualizar la pagina
+    userStories = UserStory.objects.filter(flujo=flujo.id)
+    actividades = Actividad.objects.filter(flujo_id=flujo.id)
+    cantActividades = actividades.count()
+    return render_to_response('flujos/kanban.html', {'userStories': userStories, 'actividades': actividades, 'cantActividades': cantActividades}, context_instance=RequestContext(request))
+
 
 @login_required
 @permission_required('proyectos')
