@@ -147,10 +147,11 @@ def finalizar_sprint(request, id_sprint):
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
     """
+    print "entro"
     sprint = Sprint.objects.get(id = id_sprint)
     sprint.estado = 2
     sprint.fin = datetime.now()
-    # sprint.save()
+    sprint.save()
 
     proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
     USNoTerminados = UserStory.objects.filter(sprint_id = id_sprint).exclude(estadoKanban = 4)
