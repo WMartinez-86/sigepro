@@ -1,0 +1,60 @@
+{% extends 'base2.html' %}
+{% block title %}
+Reportes
+{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+
+<html lang="es-PY" >
+<head>
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/changelists.css"/>
+
+    <script type="text/javascript">window.__admin_media_prefix__ = "/estaticos/usuario/";</script>
+    <script type="text/javascript" src="/estaticos/usuario/js/core.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/estaticos/usuario/js/actions.js"></script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="dashboard">
+
+<!-- Container -->
+<div  id="content" class="change-list" style="width: 1000px">
+    <!-- Content -->
+    <div class="change-list">
+
+        <h1>Generacion de Reportes</h1>
+
+
+
+
+        <div id="content-main">
+
+
+                <table >
+
+
+
+                    <a href="/proyectos/generar/{{ proyecto.pk }}">generar pdf uno</a>
+
+
+        </div>
+
+
+
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+{% endblock %}
+

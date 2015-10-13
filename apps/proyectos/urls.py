@@ -4,7 +4,8 @@ from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
 from views import lista_proyectos, registra_proyecto, RegisterSuccessView, editar_proyecto, buscar_proyecto, detalle_proyecto
-from views import proyecto_iniciar, proyecto_finalizar, proyecto_aprobar, proyecto_eliminar, proyecto_rechazar
+from views import proyecto_iniciar, proyecto_finalizar, proyecto_aprobar, proyecto_eliminar, proyecto_rechazar, listar_reportes
+
 from apps.equipos.views import ver_equipo
 
 urlpatterns = patterns('',
@@ -24,5 +25,6 @@ urlpatterns = patterns('',
         url(r'^aprobar/(?P<id_proyecto>\d+)$', proyecto_aprobar, name='proyecto_iniciar'),
         url(r'^eliminar/(?P<id_proyecto>\d+)$', proyecto_eliminar, name='proyecto_iniciar'),
         url(r'^rechazar/(?P<id_proyecto>\d+)$', proyecto_rechazar, name='proyecto_iniciar'),
+        url(r'^listar_reportes/(?P<id_proyecto>\d+)$',listar_reportes , name='listar_pdf'),
         )
 print urlpatterns
