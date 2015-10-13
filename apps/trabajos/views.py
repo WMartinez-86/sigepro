@@ -64,7 +64,7 @@ def crear_trabajo(request, id_userStory):
     archivo al item, y de completar todos los atributos de su tipo de item
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_tipoItem: clave foranea al tipoItem
-    @ return render_to_response('items/...) o render_to_response('403.html')
+    @ return render_to_response('items/...) o render_to_response('403.html')ksjdhfjkshdfkjhsdfjkg
     """
     userStory = UserStory.objects.get(id = id_userStory)
     proyecto = Proyecto.objects.get(id = userStory.proyecto_id)
