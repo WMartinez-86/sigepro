@@ -21,8 +21,12 @@ inicio
 </head>
 <body>
 {% if user.is_authenticated %}
-<center><font size="3", color="FFFFFF">Bienvenido {{user.username|capfirst}}</font>
-    <a href="/usuarios/cerrar/">Salir</a></center>
+    <!--<left><font size="3", color="FFFFFF">Bienvenido {{user.username|capfirst}}</font>
+    <a href="/usuarios/cerrar/">Salir</a></left>-->
+    <div height="300">
+
+    </div>
+
 {% else %}
 <section class="container">
     <div class="login">
@@ -33,7 +37,7 @@ inicio
             <p class="remember_me">
                 <label>
                     <input type="checkbox" name="remember_me" id="remember_me">
-                    Recordarme.
+                    Recordarme
                 </label>
             </p>
             <p class="submit"><input type="submit" name="commit" value="Login">{% csrf_token %}</p>
@@ -51,12 +55,13 @@ inicio
 </html>
 
 
-<div class="row-fluid">
+<div class="row-fluid" id="footer">
     <div class="span12">
         <hr class="medio">
         <div class="row-fluid s1 medio2">
             <br>
             <h4  align="center"><font color="#151515", size="6"><strong>Sistema de Gestion de Proyectos</strong></font></h4>
+            <br>
             <br>
         </div>
     </div>
