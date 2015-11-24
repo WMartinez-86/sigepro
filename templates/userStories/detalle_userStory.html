@@ -27,15 +27,18 @@ Detalle User Story
                 <div><strong>Prioridad: </strong>{{ datos.prioridad }}</div>
                 <div><strong>Proyecto: </strong>{{ datos.proyecto }}</div>
                 <div><strong>Desarrollador: </strong>{{ datos.desarrollador }}</div>
-                <div><strong>Sprint: </strong>{{ datos.sprint }}</div>
+                {% if datos.sprint == none %}
+                    <div><strong>Sprint: </strong>No asignado</div>
+                {% else %}
+                    <div><strong>Sprint: </strong>{{ datos.sprint }}</div>
+                {% endif %}
+
                 <div><strong>Flujo: </strong>{{ datos.flujo }}</div>
                 <div><strong>Fecha de modificacion: </strong>{{ datos.fecha_mod }}</div>
                 <div>
 
                 </div>
                 <div>
-
-
 
                 </div>
             </div>

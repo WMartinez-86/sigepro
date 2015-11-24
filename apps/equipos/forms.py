@@ -13,3 +13,7 @@ class crearEquipoForm(forms.ModelForm):
         def __init__(self, filter, *args, **kwargs):
 		super(crearEquipoForm, self).__init__(*args, **kwargs)
 		self.fields['User'].query_set = User.objects.filter(filter)
+        try:
+            agdhgd
+        except Exception, error:
+            print error

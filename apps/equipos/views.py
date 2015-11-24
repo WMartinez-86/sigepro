@@ -72,6 +72,7 @@ def agregar_miembro(request, id_proyecto):
                 miembroEquipo.save()
         return render_to_response('equipos/creacion_correcta.html',{'id_proyecto': id_proyecto}, context_instance=RequestContext(request))
      else:
+        proyecto = Proyecto.objects.get(pk = id_proyecto)
         formulario = crearEquipoForm()
         #hijo=False
         #proyecto=Proyecto.objects.filter(id=flujo.proyecto_id)

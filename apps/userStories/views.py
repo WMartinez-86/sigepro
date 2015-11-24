@@ -117,7 +117,7 @@ def crear_userStory(request, id_proyecto):
                       "\nUltimo cambio: " + str(newUserStory.ultimo_cambio) +
                       "\nEstado del Kanban: " + str(newUserStory.estadoKanban) +
                       "\nEstado del Scrum: " + str(newUserStory.estadoScrum),
-                      '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
+                      '"SIGEPRO" <sigepro.is2@gmail.com>',[correo])
 
 
         return render_to_response('userStories/creacion_correcta.html',{'id_proyecto': id_proyecto}, context_instance=RequestContext(request))
@@ -214,7 +214,7 @@ def editar_userStory(request,id_userStory):
                       "\nUltimo cambio: " + str(userStory_nuevo.ultimo_cambio) +
                       "\nEstado del Kanban: " + str(userStory_nuevo.estadoKanban) +
                       "\nEstado del Scrum: " + str(userStory_nuevo.estadoScrum),
-                      '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
+                      '"SIGEPRO" <sigepro.is2@gmail.com>',[correo])
 
             return render_to_response('userStories/creacion_correcta.html',{}, context_instance=RequestContext(request))
 

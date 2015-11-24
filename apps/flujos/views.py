@@ -19,6 +19,8 @@ from apps.roles.forms import GroupForm
 from datetime import datetime
 from apps.userStories.models import UserStory
 from apps.actividades.models import Actividad
+from django.views.generic.edit import DeleteView
+from django.core.urlresolvers import reverse_lazy
 
 
 @login_required
@@ -195,9 +197,13 @@ def detalle_flujo(request, id_flujo):
     return render_to_response('flujos/detalle_flujo.html', {'datos': dato,'proyecto':proyecto}, context_instance=RequestContext(request))
 
 
+def eliminar_flujo(DeleteView,id_flujo):
+    model = Flujo
+    success_url = reverse_lazy('eliminar_flujo_final')
+
 @login_required
 @permission_required('flujo')
-def eliminar_flujo(request,id_flujo):
+def eliminar_flujo_final(request,id_flujo):
     """
     Vista para eliminar un flujo de un proyecto. Busca la flujo por su id_flujo y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP

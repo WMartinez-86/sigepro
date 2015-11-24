@@ -104,7 +104,7 @@ def crear_trabajo(request, id_userStory):
                       "\nTipo de trabajo: " + str(newTrabajo.tipo_trabajo) +
                       "\nHoras: " + str(newTrabajo.hora) +
                       "\nFecha: " + str(newTrabajo.fecha),
-                      '"SIGEPRO" <sigepro-is2@gmail.com>',[correo])
+                      '"SIGEPRO" <sigepro.is2@gmail.com>',[correo])
 
             #guardar archivo
 
