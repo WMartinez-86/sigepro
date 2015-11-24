@@ -21,6 +21,9 @@ from reportlab.platypus import Table
 from apps.sprints.views import graficar
 from django.contrib.auth.models import User
 from io import BytesIO
+from reportlab.graphics.charts.lineplots import LinePlot
+
+from reportlab.graphics.widgets.markers import makeMarker
 
 from apps.flujos.models import Flujo
 from django.contrib import messages
@@ -334,7 +337,7 @@ def reporte_horas_trabajos(request, id_proyecto):
                             )
     clientes = []
     styles = getSampleStyleSheet()
-    header = Paragraph("Listado de Clientes", styles['Heading1'])
+    header = Paragraph("Cantidad de horas de trabajo", styles['Heading1'])
     clientes.append(header)
     headings = ('Nombre del proyecto', 'Horas de trabajo')
 
@@ -352,13 +355,6 @@ def reporte_horas_trabajos(request, id_proyecto):
     horas_task.append([project.nombre, horas_rest])
 
 
-
-    #equipo = MiembroEquipo.objects.get(proyecto_id = id_proyecto)
-
-
-    # allclientes = [(p.username, p.email) for p in User.objects.all()]
-    #print allclientes
-
     t = Table([headings] + horas_task)
     t.setStyle(TableStyle(
         [
@@ -374,3 +370,183 @@ def reporte_horas_trabajos(request, id_proyecto):
     return response
 
 
+
+
+def reporte_trabajos_dev(request, id_proyecto):
+    #print "Genero el PDF"
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "clientes.pdf"  # llamado clientes
+    # esta linea es por si deseas descargar directo el pdf a tu computadora
+    #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=letter,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Cantidad de trabajo por desarrolladores", styles['Heading1'])
+    clientes.append(header)
+    headings = ('Nombre del desarrollador', 'Horas de trabajo')
+
+    project = Proyecto.objects.get(id=id_proyecto)
+    #print project
+    stories = UserStory.objects.filter(proyecto_id = id_proyecto)
+    #print stories
+    vec_task = []
+    for us in stories:
+        cant_task = 0
+        trabajos = Trabajo.objects.filter(userStory_id = us.id)
+        for task in trabajos:
+            cant_task = cant_task + 1
+        dev = User.objects.get(id = us.desarrollador_id)
+        vec_task.append([dev.username, cant_task])
+
+
+    t = Table([headings] + vec_task)
+    t.setStyle(TableStyle(
+        [
+            ('GRID', (0, 0), (3, -1), 1, colors.dodgerblue),
+            ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
+        ]
+    ))
+    clientes.append(t)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+
+
+
+
+
+
+def reporte_trabajos_rest(request, id_proyecto):
+    #print "Genero el PDF"
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "clientes.pdf"  # llamado clientes
+    # esta linea es por si deseas descargar directo el pdf a tu computadora
+    #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=letter,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Lista de trabajos para completar el proyecto", styles['Heading1'])
+    clientes.append(header)
+    headings = ('Prioridad', 'Detalle del trabajo')
+
+    project = Proyecto.objects.get(id=id_proyecto)
+    #print project
+    stories = UserStory.objects.filter(proyecto_id = id_proyecto).order_by('prioridad').reverse()
+    #print stories
+    vec_task = []
+    for us in stories:
+        trabajos = Trabajo.objects.filter(userStory_id = us.id)
+        for task in trabajos:
+            vec_task.append([us.prioridad, task.descripcion])
+
+
+    t = Table([headings] + vec_task)
+    t.setStyle(TableStyle(
+        [
+            ('GRID', (0, 0), (3, -1), 1, colors.dodgerblue),
+            ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
+        ]
+    ))
+    clientes.append(t)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+
+
+
+
+
+def reporte_grafica(request, id_proyecto):
+    #print "Genero el PDF"
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "clientes.pdf"  # llamado clientes
+    # esta linea es por si deseas descargar directo el pdf a tu computadora
+    #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=letter,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Grafica del Sprint", styles['Heading1'])
+    clientes.append(header)
+
+
+    from reportlab.graphics.charts.lineplots import LinePlot
+    from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
+
+    d = Drawing(400, 200)
+    data = [
+        ((1,1), (2,2), (2.5,1), (3,3), (4,6)),
+        ((1,2), (2,3), (2.5,2), (3.5,5), (4,3))
+    ]
+    lp = LinePlot()
+    lp.x = 50
+    lp.y = 50
+    lp.height = 125
+    lp.width = 300
+    lp.data = data
+    lp.joinedLines = 1
+    lp.fillColor = colors.ghostwhite
+    lp.lines[0].symbol = makeMarker('FilledCircle')
+    lp.lines[1].symbol = makeMarker('Circle')
+    lp.lineLabelFormat = '%2.0f'
+    lp.strokeColor = colors.black
+    lp.xValueAxis.valueMin = 0
+    lp.xValueAxis.valueMax = 5
+    lp.xValueAxis.valueSteps = [1, 2, 2.5, 3, 4, 5]
+    lp.xValueAxis.labelTextFormat = '%2.1f'
+    lp.yValueAxis.valueMin = 0
+    lp.yValueAxis.valueMax = 7
+    lp.yValueAxis.valueSteps = [1, 2, 3, 5, 6]
+
+
+    #Veamos como se inserta las leyendas. En este caso usaremos el LineLegend,
+    #que son leyendas en linea.
+    from reportlab.graphics.charts.legends import LineLegend
+
+    legend = LineLegend()
+    legend.fontSize = 8
+    legend.alignment = 'right'
+    legend.x = 0
+    legend.y = 0
+    legend.columnMaximum = 2
+    legend.fontName  = 'Helvetica'
+
+    #Definimos nuestras etiquetas  y usamos los colores del propio grafico.
+    etiquetas  = ['Opcion 01', 'Opcion 02']
+    legend.colorNamePairs  = [(lp.lines[i].strokeColor, etiquetas[i])
+                              for i in xrange(len(lp.data))]
+
+    d.add(lp)
+    d.add(legend)
+    #story.append(d)
+
+
+    clientes.append(d)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
