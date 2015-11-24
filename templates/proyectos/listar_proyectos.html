@@ -194,6 +194,11 @@ Proyectos
                                 ELIMINAR
                             </div>
                         </th>
+                        <th scope="col">
+                            <div class="text">
+                                Reportes
+                            </div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -213,6 +218,7 @@ Proyectos
                                 <td> </td>
                                 <td><center><a href="/proyectos/finalizar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-stop icon-white"></i></a></center></td>
                                 <td><center><a href="/proyectos/eliminar/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/listar_reportes/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-info icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
