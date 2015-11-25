@@ -18,6 +18,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
+from reportlab.platypus import Spacer
 from apps.sprints.views import graficar
 from django.contrib.auth.models import User
 from io import BytesIO
@@ -490,6 +491,7 @@ def reporte_grafica(request, id_proyecto):
     clientes = []
     styles = getSampleStyleSheet()
     header = Paragraph("Grafica del Sprint", styles['Heading1'])
+    cabecera = styles['Heading1']
     clientes.append(header)
 
 
@@ -502,22 +504,34 @@ def reporte_grafica(request, id_proyecto):
         (13, 5, 20, 22, 37, 45, 19, 4),
         (14, 6, 21, 23, 38, 46, 20, 5)
     ]
+
+
+    sprints = Sprint.objects.filter(proyecto_id = id_proyecto).order_by('estado')
+    vec_sp = []
+    vec_name = []
+    today = timezone.now().date()
+    for sp in sprints:
+        diasIdeales = sp.fin_propuesto - sp.inicio_propuesto
+        diasReales = today - sp.inicio
+        vec_sp.append([diasIdeales.days, diasReales.days])
+        vec_name.append(sp.nombre)
+
+
     bc = VerticalBarChart()
     bc.x = 50
-    bc.y = 50
-    bc.height = 125
-    bc.width = 300
-    bc.data = data
+    bc.y = 0
+    bc.height = 200
+    bc.width = 400
+    bc.data = vec_sp
     bc.strokeColor = colors.black
     bc.valueAxis.valueMin = 0
-    bc.valueAxis.valueMax = 50
+    bc.valueAxis.valueMax = diasReales.days + 20
     bc.valueAxis.valueStep = 10  #paso de distancia entre punto y punto
     bc.categoryAxis.labels.boxAnchor = 'ne'
     bc.categoryAxis.labels.dx = 8
     bc.categoryAxis.labels.dy = -2
     bc.categoryAxis.labels.angle = 30
-    bc.categoryAxis.categoryNames = ['Ene-14','Feb-14','Mar-14',
-                                     'Abr-14','May-14','Jun-14','Jul-14','Ago-14']
+    bc.categoryAxis.categoryNames = vec_name
     bc.groupSpacing = 10
     bc.barSpacing = 2
     #bc.categoryAxis.style = 'stacked'  # Una variacion del grafico
@@ -525,6 +539,21 @@ def reporte_grafica(request, id_proyecto):
     pprint.pprint(bc.getProperties())
     #story.append(d)
 
+    from reportlab.graphics.charts.legends import LineLegend
+    lp = LinePlot()
+    legend = LineLegend()
+
+
+    #Definimos nuestras etiquetas  y usamos los colores del propio grafico.
+    etiquetas  = ['Opcion 01', 'Opcion 02']
+    legend.x = 0
+    legend.y = 0
+    lp.lines[1].strokeColor = colors.green
+    legend.colorNamePairs  = [(lp.lines[0].strokeColor, 'Dias Ideales'), (lp.lines[1].strokeColor, 'Dias Reales')]
+
+    #d.add(lp)
+    d.add(legend)
+    #story.append(d)
 
     clientes.append(d)
     doc.build(clientes)
