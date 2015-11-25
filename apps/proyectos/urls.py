@@ -5,7 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 from views import lista_proyectos, registra_proyecto, RegisterSuccessView, editar_proyecto, buscar_proyecto, detalle_proyecto
 from views import proyecto_iniciar, proyecto_finalizar, proyecto_aprobar, proyecto_eliminar, proyecto_rechazar, listar_reportes, generar_pdf
-from views import reporte_horas_trabajos, reporte_trabajos_dev, reporte_trabajos_rest, reporte_grafica
+from views import reporte_horas_trabajos, reporte_trabajos_dev, reporte_trabajos_rest, reporte_grafica, reporte_product_backlog
+from views import reporte_sprint_backlog
 
 from apps.equipos.views import ver_equipo
 
@@ -31,5 +32,7 @@ urlpatterns = patterns('',
         url(r'^listar_reportes/generar2/(?P<id_proyecto>\d+)$', reporte_trabajos_dev , name='pdf'),
         url(r'^listar_reportes/generar3/(?P<id_proyecto>\d+)$', reporte_trabajos_rest , name='pdf'),
         url(r'^listar_reportes/generar4/(?P<id_proyecto>\d+)$', reporte_grafica , name='pdf'),
+        url(r'^listar_reportes/generar5/(?P<id_proyecto>\d+)$', reporte_product_backlog , name='pdf'),
+        url(r'^listar_reportes/generar6/(?P<id_proyecto>\d+)$', reporte_sprint_backlog , name='pdf'),
         )
 print urlpatterns

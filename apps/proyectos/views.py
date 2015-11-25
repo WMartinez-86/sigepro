@@ -32,6 +32,7 @@ from django.db.models import Q
 
 from apps.userStories.models import UserStory
 from apps.trabajos.models import Trabajo
+from apps.sprints.models import Sprint
 
 __text__ = 'Este modulo contiene funciones que permiten el control de proyectos'
 # Create your views here.
@@ -324,7 +325,7 @@ def generar_pdf(request, id_proyecto):
 def reporte_horas_trabajos(request, id_proyecto):
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
-    pdf_name = "clientes.pdf"  # llamado clientes
+    pdf_name = "reporte1.pdf"  # llamado clientes
     # esta linea es por si deseas descargar directo el pdf a tu computadora
     #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
     buff = BytesIO()
@@ -375,7 +376,7 @@ def reporte_horas_trabajos(request, id_proyecto):
 def reporte_trabajos_dev(request, id_proyecto):
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
-    pdf_name = "clientes.pdf"  # llamado clientes
+    pdf_name = "reporte2.pdf"  # llamado clientes
     # esta linea es por si deseas descargar directo el pdf a tu computadora
     #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
     buff = BytesIO()
@@ -424,11 +425,10 @@ def reporte_trabajos_dev(request, id_proyecto):
 
 
 
-
 def reporte_trabajos_rest(request, id_proyecto):
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
-    pdf_name = "clientes.pdf"  # llamado clientes
+    pdf_name = "reporte3.pdf"  # llamado clientes
     # esta linea es por si deseas descargar directo el pdf a tu computadora
     #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
     buff = BytesIO()
@@ -473,11 +473,10 @@ def reporte_trabajos_rest(request, id_proyecto):
 
 
 
-
 def reporte_grafica(request, id_proyecto):
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
-    pdf_name = "clientes.pdf"  # llamado clientes
+    pdf_name = "reporte4.pdf"  # llamado clientes
     # esta linea es por si deseas descargar directo el pdf a tu computadora
     #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
     buff = BytesIO()
@@ -494,54 +493,36 @@ def reporte_grafica(request, id_proyecto):
     clientes.append(header)
 
 
-    from reportlab.graphics.charts.lineplots import LinePlot
+    from reportlab.graphics.charts.barcharts import VerticalBarChart
     from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
+    import pprint
 
     d = Drawing(400, 200)
     data = [
-        ((1,1), (2,2), (2.5,1), (3,3), (4,6)),
-        ((1,2), (2,3), (2.5,2), (3.5,5), (4,3))
+        (13, 5, 20, 22, 37, 45, 19, 4),
+        (14, 6, 21, 23, 38, 46, 20, 5)
     ]
-    lp = LinePlot()
-    lp.x = 50
-    lp.y = 50
-    lp.height = 125
-    lp.width = 300
-    lp.data = data
-    lp.joinedLines = 1
-    lp.fillColor = colors.ghostwhite
-    lp.lines[0].symbol = makeMarker('FilledCircle')
-    lp.lines[1].symbol = makeMarker('Circle')
-    lp.lineLabelFormat = '%2.0f'
-    lp.strokeColor = colors.black
-    lp.xValueAxis.valueMin = 0
-    lp.xValueAxis.valueMax = 5
-    lp.xValueAxis.valueSteps = [1, 2, 2.5, 3, 4, 5]
-    lp.xValueAxis.labelTextFormat = '%2.1f'
-    lp.yValueAxis.valueMin = 0
-    lp.yValueAxis.valueMax = 7
-    lp.yValueAxis.valueSteps = [1, 2, 3, 5, 6]
-
-
-    #Veamos como se inserta las leyendas. En este caso usaremos el LineLegend,
-    #que son leyendas en linea.
-    from reportlab.graphics.charts.legends import LineLegend
-
-    legend = LineLegend()
-    legend.fontSize = 8
-    legend.alignment = 'right'
-    legend.x = 0
-    legend.y = 0
-    legend.columnMaximum = 2
-    legend.fontName  = 'Helvetica'
-
-    #Definimos nuestras etiquetas  y usamos los colores del propio grafico.
-    etiquetas  = ['Opcion 01', 'Opcion 02']
-    legend.colorNamePairs  = [(lp.lines[i].strokeColor, etiquetas[i])
-                              for i in xrange(len(lp.data))]
-
-    d.add(lp)
-    d.add(legend)
+    bc = VerticalBarChart()
+    bc.x = 50
+    bc.y = 50
+    bc.height = 125
+    bc.width = 300
+    bc.data = data
+    bc.strokeColor = colors.black
+    bc.valueAxis.valueMin = 0
+    bc.valueAxis.valueMax = 50
+    bc.valueAxis.valueStep = 10  #paso de distancia entre punto y punto
+    bc.categoryAxis.labels.boxAnchor = 'ne'
+    bc.categoryAxis.labels.dx = 8
+    bc.categoryAxis.labels.dy = -2
+    bc.categoryAxis.labels.angle = 30
+    bc.categoryAxis.categoryNames = ['Ene-14','Feb-14','Mar-14',
+                                     'Abr-14','May-14','Jun-14','Jul-14','Ago-14']
+    bc.groupSpacing = 10
+    bc.barSpacing = 2
+    #bc.categoryAxis.style = 'stacked'  # Una variacion del grafico
+    d.add(bc)
+    pprint.pprint(bc.getProperties())
     #story.append(d)
 
 
@@ -550,3 +531,125 @@ def reporte_grafica(request, id_proyecto):
     response.write(buff.getvalue())
     buff.close()
     return response
+
+
+
+
+
+def reporte_product_backlog(request, id_proyecto):
+    #print "Genero el PDF"
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "reporte5.pdf"  # llamado clientes
+    # esta linea es por si deseas descargar directo el pdf a tu computadora
+    #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=letter,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Product Backlog", styles['Heading1'])
+    clientes.append(header)
+    headings = ('Nombre', 'Descripcion', 'Valor Negocio', 'Valor Tecnico', 'Estado Kanban', 'Estado Scrum')
+
+    project = Proyecto.objects.get(id=id_proyecto)
+    #print project
+    stories = UserStory.objects.filter(proyecto_id = id_proyecto).order_by('estadoScrum').reverse()
+    #print stories
+    vec_us = []
+    for us in stories:
+        if  us.estadoKanban == 0:
+            estadoKanban = 'ToDo'
+        elif us.estadoKanban == 1:
+            estadoKanban = 'Doing'
+        elif us.estadoKanban == 2:
+            estadoKanban = 'Done'
+        elif us.estadoKanban == 3:
+            estadoKanban = 'Pendiente Aprobacion'
+        elif us.estadoKanban == 4:
+            estadoKanban = 'Aprobado'
+
+        if us.estadoScrum == 0:
+            estadoScrum = 'Nuevo'
+        elif vec_us.estadoScrum == 1:
+            estadoScrum = 'Iniciado'
+        elif vec_us.estadoScrum == 2:
+            estadoScrum = 'Suspendido'
+        elif vec_us.estadoScrum == 3:
+            estadoScrum = 'Eliminado'
+
+        vec_us.append([us.nombre, us.descripcion, us.valor_negocio, us.valor_tecnico, estadoKanban, estadoScrum])
+
+
+
+    t = Table([headings] + vec_us)
+    t.setStyle(TableStyle(
+        [
+            ('GRID', (0, 0), (5, -1), 1, colors.dodgerblue),
+            ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
+        ]
+    ))
+    clientes.append(t)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+
+
+
+
+
+def reporte_sprint_backlog(request, id_proyecto):
+    #print "Genero el PDF"
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "reporte6.pdf"  # llamado clientes
+    # esta linea es por si deseas descargar directo el pdf a tu computadora
+    #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=letter,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Sprint Backlog", styles['Heading1'])
+    clientes.append(header)
+    headings = ('Nombre', 'Descripcion', 'Inicio propuesto', 'Fin propuesto', 'Estado', 'Capacidad')
+
+    project = Proyecto.objects.get(id=id_proyecto)
+    #print project
+    sprints = Sprint.objects.filter(proyecto_id = id_proyecto).order_by('estado')
+    #print stories
+    vec_sprint = []
+    for sp in sprints:
+        if sp.estado == 0:
+            vec_sprint.append([sp.nombre, sp.descripcion, sp.inicio_propuesto, sp.fin_propuesto, 'Futuro', sp.capacidad])
+        elif sp.estado == 1:
+            vec_sprint.append([sp.nombre, sp.descripcion, sp.inicio_propuesto, sp.fin_propuesto, 'En Ejecucion', sp.capacidad])
+        elif sp.estado == 2:
+            vec_sprint.append([sp.nombre, sp.descripcion, sp.inicio_propuesto, sp.fin_propuesto, 'Finalizado', sp.capacidad])
+
+
+
+    t = Table([headings] + vec_sprint)
+    t.setStyle(TableStyle(
+        [
+            ('GRID', (0, 0), (5, -1), 1, colors.dodgerblue),
+            ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
+        ]
+    ))
+    clientes.append(t)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+
