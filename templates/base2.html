@@ -18,10 +18,13 @@
     <!---
     <link href='http://fonts.googleapis.com/css?family=Advent+Pro:400,500' rel='stylesheet'>
     -->
+
+    <!---
     <script src="{{STATIC_URL}}js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="{{STATIC_URL}}js/bower_components/angular/angular.min.js"></script>
     <script src="{{STATIC_URL}}js/bower_components/Chart.js/Chart.min.js"></script>
     <script src="{{STATIC_URL}}js/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    -->
 
     <!--- <script>
          var asd = "{{MEDIA_ROOT}}";
@@ -39,16 +42,16 @@
                 <a class="brand" href="/">SIGEPRO</a>
                 <ul class="nav">
                     {% if  user.is_superuser %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administracion
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/usuarios">Usuario</a></li>
-                            <li><a href="/proyectos">Proyectos</a></li>
-                            <li><a href="/roles">Roles</a></li>
-                        </ul>
-                    </li>
+                        <li><a class="dropdown-toggle" href="/proyectos">Proyectos</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administracion
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/usuarios">Usuario</a></li>
+                                <li><a href="/roles">Roles</a></li>
+                            </ul>
+                        </li>
                     {% endif %}
 
                     <!---

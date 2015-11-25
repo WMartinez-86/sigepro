@@ -1,6 +1,6 @@
 {% extends 'base2.html' %}
 {% block title %}
-Equipo
+SIGEPRO - Equipos
 {% endblock %}
 {% block content %}
 <head>
@@ -16,37 +16,40 @@ Equipo
 
 <div id="content">
     <h1>Equipo de {{proyecto.nombre|title}}</h1>
+    <ul class="object-tools">
+        <li>
+            <a href="/equipos/agregar/{{ proyecto.id }}" class="addlink">Agregar Usuario</a>
+        </li>
+    </ul>
     <div id="container">
-        <ul class="object-tools">
-            <li>
 
-                <a href="/equipos/agregar/{{ proyecto.id }}" class="addlink">Agregar Usuario</a>
-
-            </li>
-        </ul>
         <div id="content-main">
             <fieldset class="module aligned wide">
                 <form method="post">{% csrf_token %}
                     <div class="form-row">
 
 
-                        <div><p style="font-size:18px"><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }}) - Cant. horas =  {{ cantHorasUS }}</p></div>
+                        <h1><div><p style="font-size:18px"><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }}) - Cant. horas =  {{ cantHorasUS }}</p></div></h1>
 
                         </br>
                         </br>
                         {% for equipo in equipos %}
-                            <p style="font-size:18px">{{ equipo.usuario.first_name }} {{ equipo.usuario.last_name }} ({{ equipo.usuario }}) - Cant. horas =  {{ equipo.horasPorDia }}</p>
+                            <h2><p style="font-size:18px">{{ equipo.usuario.first_name }} {{ equipo.usuario.last_name }} ({{ equipo.usuario }}) - Cant. horas =  {{ equipo.horasPorDia }}</p></h2>
                             {% for rol in equipo.rol.all %}
-                                <li><p style="font-size:16px"><b>  {{ rol }} </b>  <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black"></i></a></p></li>
+                                <!-- <li><p style="font-size:16px"><b>  {{ rol }} </b>  <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black"></i></a></p></li> -->
+                                <li><p style="font-size:16px"><b> {{ rol }} </b>  <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black" onclick="return confirm('Está seguro que desea eliminar al miembro del equipo?')"></i></a></p></li>
                             {% endfor %}
-                        </br>
+                            </br>
                         {% endfor %}
                         </br>
                         <hr>
-                        <p style="font-size:18px"><b>Fuerza de trabajo {{ fuerzaTrabajo }} </b></p>
+                        <h3><p style="font-size:18px"><b>Fuerza de trabajo {{ fuerzaTrabajo }} </b></p></h3>
                         <p style="font-size:18px">
                     </div>
                 </form>
             </fieldset>
         </div>
-        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}

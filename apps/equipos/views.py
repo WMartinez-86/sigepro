@@ -91,22 +91,29 @@ def eliminar_miembro(request,id_miembro): #id_miembro = id_MiembroEquipo
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
     """
     miembro = get_object_or_404(MiembroEquipo, pk=id_miembro)
+    id_proyecto = miembro.proyecto_id
     #proyecto = MiembroEquipo.objects.get(id=proyecto_id)
     #if proyecto.estado =='PRO':
-
+    miembro.delete() # borra despues de saber el id del proyecto
     #sprints = Sprint.objects.filter(proyecto_id=proyecto.id).order_by('orden')
 
+    fuerzaTrabajo = 0
+    cantHorasUS = 0
     rolSM = Group.objects.filter(name = "Scrum Master")
-    haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = miembro.proyecto_id)
+    haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = id_proyecto)
     if haySM.count() > 0: #si hay Scrum Master
-        SM = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = miembro.proyecto_id)
+        SM = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
         SMUser = User.objects.get(id = SM.usuario_id)
+        cantHorasUS = SM.horasPorDia
+        fuerzaTrabajo = cantHorasUS
     else:
         SMUser = None
-    proyecto = get_object_or_404(Proyecto, pk=miembro.proyecto_id)
-    equipos = MiembroEquipo.objects.filter(proyecto_id = miembro.proyecto_id)
+    proyecto = get_object_or_404(Proyecto, pk=id_proyecto)
+    equipos = MiembroEquipo.objects.filter(~Q(rol = rolSM), proyecto_id = id_proyecto)
+    for equipo in equipos:
+        fuerzaTrabajo = fuerzaTrabajo + equipo.horasPorDia
 
-    miembro.delete() # borra desde de usar para saber de que proyecto es
+
     return render_to_response('equipos/ver_equipo.html',
-                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser},
+                          {'proyecto': proyecto, 'equipos': equipos, 'scrumMaster': SMUser, 'cantHorasUS': cantHorasUS, 'fuerzaTrabajo': fuerzaTrabajo},
                           context_instance=RequestContext(request))
