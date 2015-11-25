@@ -31,8 +31,6 @@ SIGEPRO - Equipos
 
                         <h1><div><p style="font-size:18px"><strong>Scrum Master: </strong>{{ scrumMaster.first_name}} {{ scrumMaster.last_name}} ({{ scrumMaster.username }}) - Cant. horas =  {{ cantHorasUS }}</p></div></h1>
 
-                        </br>
-                        </br>
                         {% for equipo in equipos %}
                             <h2><p style="font-size:18px">{{ equipo.usuario.first_name }} {{ equipo.usuario.last_name }} ({{ equipo.usuario }}) - Cant. horas =  {{ equipo.horasPorDia }}</p></h2>
                             {% for rol in equipo.rol.all %}
