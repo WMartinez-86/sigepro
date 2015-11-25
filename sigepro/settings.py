@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'apps.actividades',
     'apps.equipos',
     'apps.trabajos',
+    'apps.reportes',
 )
 
 MIDDLEWARE_CLASSES = (

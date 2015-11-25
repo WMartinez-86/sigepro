@@ -17,6 +17,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nombre', models.CharField(max_length=20)),
                 ('descripcion', models.TextField(verbose_name=b'Descripcion')),
+                ('inicio_propuesto', models.DateField(verbose_name=b'Fecha de Inicio Propuesto, formato  DD/MM/AAAA')),
+                ('fin_propuesto', models.DateField(verbose_name=b'Fecha de Fin Propuesto, formato  DD/MM/AAAA')),
                 ('inicio', models.DateField(null=True, verbose_name=b'Fecha de Inicio, formato  DD/MM/AAAA')),
                 ('fin', models.DateField(null=True, verbose_name=b'Fecha de Inicio, formato  DD/MM/AAAA')),
                 ('estado', models.IntegerField(default=0, verbose_name=b'Estado', choices=[(0, b'Futuros'), (1, b'En Ejecucion'), (2, b'Finalizado')])),
