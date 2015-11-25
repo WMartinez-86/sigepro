@@ -31,16 +31,16 @@ Reportes
 
 
 
-
-        <div id="content-main">
-
-
-                <table >
+        <div id="links">
 
 
-
-                    <a href="/proyectos/generar/{{ proyecto.pk }}">generar pdf uno</a>
-
+            <a href="/proyectos/listar_reportes/generar/{{ id_proyecto }}">1. CANTIDAD DE HORAS DE TRABAJO</a>
+            </div>
+            <a href="/proyectos/listar_reportes/generar2/{{ id_proyecto }}">2. CANTIDAD DE HORAS TRABAJO POR DESARROLLADOR</a>
+            </div>
+            <a href="/proyectos/listar_reportes/generar3/{{ id_proyecto }}">3. LISTA DE TRABAJOS PARA COMPLETAR EL PROYECTO</a>
+            </div>
+            <a href="/proyectos/listar_reportes/generar4/{{ id_proyecto }}">4. GRAFICA DEL SPRINT</a>
 
         </div>
 
