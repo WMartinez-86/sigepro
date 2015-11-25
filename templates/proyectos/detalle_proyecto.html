@@ -1,6 +1,6 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Detalle_Proyecto
+	SIGEPRO - Detalles del Proyecto
 {% endblock %}
 {% block content %}
     <head>
@@ -18,17 +18,17 @@
        <fieldset class="module aligned wide">
 <form method="post">{% csrf_token %}
     <div class="form-row">
-            <div><strong>Nombre: </strong>{{ proyecto.nombre }}</div>
-            <div><strong>Codigo: </strong>{{ proyecto.id }}</div>
-            <div><strong>Descripción: </strong>{{ proyecto.descripcion }}</div>
-            <div><strong>Estado: </strong>{{ proyecto.estado }}</div>
-            <div><strong>Fecha de Inicio: </strong>{{ proyecto.fecha_ini }}</div>
+            <li><p><div><strong>Nombre: </strong>{{ proyecto.nombre }}</div></li></p>
+            <li><p><div><strong>Codigo: </strong>{{ proyecto.id }}</div></li></p>
+            <li><p><div><strong>Descripción: </strong>{{ proyecto.descripcion }}</div></li></p>
+            <li><p><div><strong>Estado: </strong>{{ proyecto.get_estado_display }}</div></li></p>
+            <li><p><div><strong>Fecha de Inicio: </strong>{{ proyecto.fecha_ini }}</div></li></p>
             {% if proyecto.fecha_fin != none %}
-                <div><strong>Fecha de Finalizacion: </strong>{{ proyecto.fecha_fin}}</div>
+                <li><p><div><strong>Fecha de Finalizacion: </strong>{{ proyecto.fecha_fin}}</div></li></p>
             {% endif %}
             <!--<div><strong>Observaciones: </strong>{{ proyecto.observaciones }}</div>-->
             {% for integrante in comite %}
-                <li>{{ integrante.first_name}} {{ integrante.last_name}}</li>
+                <li><p>{{ integrante.first_name}} {{ integrante.last_name}}</li></li></p>
             {% endfor %}
         </div>
 </form>

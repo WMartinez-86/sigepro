@@ -13,7 +13,7 @@
 body {
   font: 13px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
   color: #404040;
-  background: #0ca3d2;
+  background: #1877a2;
 }
 
 .container {
@@ -156,4 +156,10 @@ input[type=submit] {
 
 .lt-ie9 {
   input[type=text], input[type=password] { line-height: 34px; }
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
