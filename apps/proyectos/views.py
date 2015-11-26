@@ -176,7 +176,7 @@ def detalle_proyecto(request, id_proyecto):
 @permission_required('proyectos')
 def proyecto_iniciar(request, id_proyecto):
     """
-    Vista para ver los detalles del proyecto del sistema
+    Vista para iniciar un proyecto del sistema
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
@@ -206,7 +206,7 @@ def proyecto_iniciar(request, id_proyecto):
 @permission_required('proyectos')
 def proyecto_finalizar(request, id_proyecto):
     """
-    Vista para ver los detalles del proyecto del sistema
+    Vista para finalizar un proyecto del sistema
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
@@ -225,7 +225,7 @@ def proyecto_finalizar(request, id_proyecto):
 @permission_required('proyectos')
 def proyecto_aprobar(request, id_proyecto):
     """
-    Vista para ver los detalles del proyecto del sistema
+    Vista para aprobar un proyecto del sistema
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
@@ -244,7 +244,7 @@ def proyecto_aprobar(request, id_proyecto):
 @permission_required('proyectos')
 def proyecto_eliminar(request, id_proyecto):
     """
-    Vista para ver los detalles del proyecto del sistema
+    Vista para eliminar un proyecto del sistema
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
@@ -264,7 +264,7 @@ def proyecto_eliminar(request, id_proyecto):
 @permission_required('proyectos')
 def proyecto_rechazar(request, id_proyecto):
     """
-    Vista para ver los detalles del proyecto del sistema
+    Vista para rechazar un proyecto del sistema
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
@@ -282,6 +282,13 @@ def proyecto_rechazar(request, id_proyecto):
 
 
 def listar_reportes(request, id_proyecto):
+    """
+    Vista para listar los reportes generados por el sistema
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
+
     return render_to_response('proyectos/listar_reportes.html', {'id_proyecto': id_proyecto},
                               context_instance=RequestContext(request))
 
@@ -324,6 +331,12 @@ def generar_pdf(request, id_proyecto):
 
 
 def reporte_horas_trabajos(request, id_proyecto):
+    """
+    Vista para generar el reporte de las horas de trabajo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "reporte1.pdf"  # llamado clientes
@@ -375,6 +388,12 @@ def reporte_horas_trabajos(request, id_proyecto):
 
 
 def reporte_trabajos_dev(request, id_proyecto):
+    """
+    Vista para generar los reportes de los trabajos de los desarrolladores
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "reporte2.pdf"  # llamado clientes
@@ -427,6 +446,12 @@ def reporte_trabajos_dev(request, id_proyecto):
 
 
 def reporte_trabajos_rest(request, id_proyecto):
+    """
+    Vista para generar los reportes de los trabajos restantes para finalizar el proyecto
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "reporte3.pdf"  # llamado clientes
@@ -475,6 +500,12 @@ def reporte_trabajos_rest(request, id_proyecto):
 
 
 def reporte_grafica(request, id_proyecto):
+    """
+    Vista para generar el reporte de graficas de las horas de los sprints del proyecto
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "reporte4.pdf"  # llamado clientes
@@ -565,6 +596,12 @@ def reporte_grafica(request, id_proyecto):
 
 
 def reporte_product_backlog(request, id_proyecto):
+    """
+    Vista para generar los reportes del product backlog
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "reporte5.pdf"  # llamado clientes
@@ -633,6 +670,12 @@ def reporte_product_backlog(request, id_proyecto):
 
 
 def reporte_sprint_backlog(request, id_proyecto):
+    """
+    Vista para generar los reportes del sprint backlog
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     #print "Genero el PDF"
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "reporte6.pdf"  # llamado clientes

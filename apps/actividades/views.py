@@ -198,7 +198,7 @@ def desasignar_usuario(request,id_actividad):
 @permission_required('proyectos')
 def estadoKanban(request, id_actividad):
     """
-
+    Muestra el tablero  kanban con las actividades en cada estado
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))

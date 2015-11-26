@@ -269,7 +269,7 @@ def asignar_userStory(request,id_flujo):
 @permission_required('flujo')
 def asignar_userStoryFlujo(request, id_userStory, id_flujo):
     """
-    Vista auxiliar para obtener un listado de usuarios para asociar a el flujo
+    Vista auxiliar para obtener un listado de user stories para asociar a el flujo
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response
@@ -297,7 +297,7 @@ def asignar_userStoryFlujo(request, id_userStory, id_flujo):
 @permission_required('flujo')
 def desasignar_userStoryFlujo(request, id_userStory, id_flujo):
     """
-    Vista auxiliar para obtener un listado de usuarios para asociar a el flujo
+    Vista auxiliar para obtener un listado de user stories para desasociar a el flujo
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response
@@ -348,6 +348,7 @@ def desasignar_usuario(request,id_flujo):
 @permission_required('flujo')
 def moverUS_siguiente(request, id_userStory):
     """
+    Permite mover los user stories al siguiente estado
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
@@ -395,6 +396,7 @@ def moverUS_siguiente(request, id_userStory):
 @permission_required('flujo')
 def moverUS_desaprobrar(request, id_userStory):
     """
+    Desaprobar el movimiento de los user stories
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
@@ -440,7 +442,7 @@ def moverUS_desaprobrarAct(request, id_userStory):
 @permission_required('proyectos')
 def estadoKanban(request, id_flujo):
     """
-
+    Muestra el tablero kanban con los estados
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_proyecto: referencia al proyecto de la base de datos
     @return: render_to_response('proyectos/cambiar_estado_proyecto.html', { 'proyectos': proyecto_form, 'nombre':nombre}, context_instance=RequestContext(request))
