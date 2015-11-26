@@ -490,7 +490,7 @@ def reporte_grafica(request, id_proyecto):
                             )
     clientes = []
     styles = getSampleStyleSheet()
-    header = Paragraph("Grafica del Sprint", styles['Heading1'])
+    header = Paragraph("Grafica de los Sprint", styles['Heading1'])
     cabecera = styles['Heading1']
     clientes.append(header)
 
@@ -543,11 +543,10 @@ def reporte_grafica(request, id_proyecto):
     lp = LinePlot()
     legend = LineLegend()
 
-
     #Definimos nuestras etiquetas  y usamos los colores del propio grafico.
     etiquetas  = ['Opcion 01', 'Opcion 02']
-    legend.x = 0
-    legend.y = 0
+    legend.x = 40
+    legend.y = -80
     lp.lines[1].strokeColor = colors.green
     legend.colorNamePairs  = [(lp.lines[0].strokeColor, 'Dias Ideales'), (lp.lines[1].strokeColor, 'Dias Reales')]
 
