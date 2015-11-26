@@ -47,8 +47,11 @@ Sprints
         </ul>
         <div id="content-main">
 
-            <h2>Sprints FUTUROS</h2>
+            <h3 style="color:#ff4d4d">{{ mensaje }}</h3>
+
             <div class="results" >
+
+                <h2>Sprints FUTUROS</h2>
                 <table >
                     <thead>
                     <tr>
@@ -118,7 +121,7 @@ Sprints
                                 <td><center>{{ dato.capacidad }}</center></td>
                                 <td><center>{{ dato.horasUS }}</center></td>
                                 <td><center><a href="/sprints/backlog/{{ dato.pk }}" class="btn btn-warning"><i class=" icon-user icon-white"></i></a></center></td>
-                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                                <td><center><a href="/sprints/eliminar/{{ dato.pk }}" class="btn btn-danger" onclick="return confirm('Está seguro que desea eliminar el proyecto?')"><i class=" icon-trash icon-white"></i></a></center></td>
                                 {% if sprintActivo == 0  %}
                                     <td> </td>
                                     <td> </td>
@@ -287,6 +290,13 @@ Sprints
                     </tbody>
 
                 </table>
+
+                </br>
+                </br>
+                </br>
+                </br>
+
+
             </div>
 
 

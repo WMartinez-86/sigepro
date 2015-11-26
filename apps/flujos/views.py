@@ -84,10 +84,7 @@ def editar_flujo(request,id_flujo):
     flujo= Flujo.objects.get(id=id_flujo)
     id_proyecto= flujo.proyecto_id
     proyecto = Proyecto.objects.get(id=id_proyecto)
-    if proyecto.estado!='PRO':
-        proyectos = Proyecto.objects.all().exclude(estado='ELI')
-        return render_to_response('proyectos/listar_proyectos.html', {'datos': proyectos,'mensaje':1},
-                                  context_instance=RequestContext(request))
+
     if request.method == 'POST':
         # formulario enviado
         mensaje =100
@@ -196,26 +193,24 @@ def detalle_flujo(request, id_flujo):
 
     return render_to_response('flujos/detalle_flujo.html', {'datos': dato,'proyecto':proyecto}, context_instance=RequestContext(request))
 
-
-def eliminar_flujo(DeleteView,id_flujo):
-    model = Flujo
-    success_url = reverse_lazy('eliminar_flujo_final')
-
 @login_required
 @permission_required('flujo')
-def eliminar_flujo_final(request,id_flujo):
+def eliminar_flujo(request,id_flujo):
     """
     Vista para eliminar un flujo de un proyecto. Busca la flujo por su id_flujo y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_flujo: referencia a la flujo dentro de la base de datos
     @return: render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
     """
+    mensaje = 0 # sin errores
     flujo = get_object_or_404(Flujo, pk=id_flujo)
     proyecto = Proyecto.objects.get(id=flujo.proyecto_id)
-    if proyecto.estado =='PRO':
-        flujo.delete()
-    flujos = Flujo.objects.filter(proyecto_id=proyecto.id).order_by('orden')
-    return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+    #if proyecto.estado =='PRO':
+    flujo.delete()
+    flujos = Flujo.objects.filter(proyecto_id=id_proyecto).order_by('orden')
+
+    return render_to_response('flujos/listar_flujos.html', {'datos': flujos, 'proyecto' : proyecto, 'mensaje': mensaje}, context_instance=RequestContext(request))
+
 
 @login_required
 @permission_required('flujo')

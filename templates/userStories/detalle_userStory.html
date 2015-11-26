@@ -19,22 +19,22 @@ Detalle User Story
     <fieldset class="module aligned wide">
         <form method="post">{% csrf_token %}
             <div class="form-row">
-                <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
-                <div><strong>Descripción: </strong>{{ datos.descripcion }}</div>
-                <div><strong>Horas Estimadas: </strong>{{ datos.tiempo_estimado }}</div>
-                <div><strong>Actividad: </strong>{{ datos.actividad }}</div>
-                <div><strong>Estado: </strong>{{ datos.get_estadoKanban_display }}</div>
-                <div><strong>Prioridad: </strong>{{ datos.prioridad }}</div>
-                <div><strong>Proyecto: </strong>{{ datos.proyecto }}</div>
-                <div><strong>Desarrollador: </strong>{{ datos.desarrollador }}</div>
+                <h3><div><strong>Nombre: </strong>{{ datos.nombre }}</div></th></h3>
+                <h3><div><strong>Descripción: </strong>{{ datos.descripcion }}</div></h3>
+                <h3><div><strong>Horas Estimadas: </strong>{{ datos.tiempo_estimado }}</div></h3>
+                <h3><div><strong>Actividad: </strong>{{ datos.actividad }}</div></h3>
+                <h3><div><strong>Estado: </strong>{{ datos.get_estadoKanban_display }}</div></h3>
+                <h3><div><strong>Prioridad: </strong>{{ datos.prioridad }}</div></h3>
+                <h3><div><strong>Proyecto: </strong>{{ datos.proyecto }}</div></h3>
+                <h3><div><strong>Desarrollador: </strong>{{ datos.desarrollador }}</div></h3>
                 {% if datos.sprint == none %}
-                    <div><strong>Sprint: </strong>No asignado</div>
+                    <h3><div><strong>Sprint: </strong>No asignado</div></h3>
                 {% else %}
-                    <div><strong>Sprint: </strong>{{ datos.sprint }}</div>
+                    <h3><div><strong>Sprint: </strong>{{ datos.sprint }}</div></h3>
                 {% endif %}
 
-                <div><strong>Flujo: </strong>{{ datos.flujo }}</div>
-                <div><strong>Fecha de modificacion: </strong>{{ datos.fecha_mod }}</div>
+                <h3><div><strong>Flujo: </strong>{{ datos.flujo }}</div></h3>
+                <h3><div><strong>Fecha de modificacion: </strong>{{ datos.fecha_mod }}</div></h3>
                 <div>
 
                 </div>

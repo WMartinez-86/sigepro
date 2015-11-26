@@ -92,10 +92,28 @@ def eliminar_sprint(request,id_sprint):
     """
     sprint = get_object_or_404(Sprint, pk=id_sprint)
     proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
-    if proyecto.estado =='PRO':
-        sprint.delete()
-    sprints = Sprint.objects.filter(proyecto_id=proyecto.id).order_by('orden')
-    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto}, context_instance=RequestContext(request))
+
+    #Desasignar los User Stories asignados a ese sprint antes de eliminar
+    USNoTerminados = UserStory.objects.filter(sprint_id = id_sprint)
+    mensaje = ""
+    if USNoTerminados.count() > 0:
+        #borrar el id a este sprint de todos los user stories que lo tengas y no esten finalizados
+        mensaje = "Los User Stories asignados fueron devueltos al BackLog"
+        for userS in USNoTerminados:
+            userS.sprint_id = None
+            userS.save()
+
+    sprint = Sprint.objects.get(id = id_sprint)
+
+    #borrar el sprint
+    sprint.delete()
+
+    sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
+
+    haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
+
+    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count(), 'mensaje': mensaje}, context_instance=RequestContext(request))
+
 
 
 @login_required
@@ -129,15 +147,21 @@ def iniciar_sprint(request, id_sprint):
     @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
     """
     sprint = Sprint.objects.get(id = id_sprint)
-    sprint.estado = 1
-    sprint.inicio = datetime.now()
-    sprint.save()
+    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+
+    if proyecto.estado != "PRO":
+        mensaje = 'El Sprint no puede iniciar si el proyecto no se encuentra en Produccion'
+    else:
+        mensaje = None
+        sprint.estado = 1
+        sprint.inicio = datetime.now()
+        sprint.save()
 
     sprints = Sprint.objects.filter(proyecto_id=sprint.proyecto_id).order_by('orden')
-    proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+
     haySprintActivo = Sprint.objects.filter(proyecto_id=sprint.proyecto_id, estado = 1)
 
-    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count()}, context_instance=RequestContext(request))
+    return render_to_response('sprints/listar_sprints.html', {'datos': sprints, 'proyecto' : proyecto, 'sprintActivo': haySprintActivo.count(), 'mensaje': mensaje}, context_instance=RequestContext(request))
 
 @login_required
 @permission_required('sprint')
@@ -209,7 +233,6 @@ def asignar_userStorySprint(request, id_userStory, id_sprint):
         userStory.actividad_id = actividad1.id
         userStory.save()
 
-
         userStoriesBacklog = UserStory.objects.filter(sprint_id = None, proyecto_id = proyecto.id)
         userStoriesAsignados = UserStory.objects.filter(sprint_id = id_sprint, proyecto_id = proyecto.id)
 
@@ -231,7 +254,7 @@ def asignar_userStorySprint(request, id_userStory, id_sprint):
         return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint, 'proyecto':proyecto}, context_instance=RequestContext(request))
 
     else:
-        formulario = AsignarFlujoDesarrollador(proyecto.id)
+        formulario = AsignarFlujoDesarrollador(request.POST, id_proyecto=proyecto.id)
         return render_to_response('sprints/asignar_FlujoDesarrollador.html', { 'formulario': formulario, 'proyecto':proyecto}, context_instance=RequestContext(request))
 
 

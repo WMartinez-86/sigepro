@@ -88,7 +88,7 @@ SIGEPRO - Actividades
                         <td><center>{{ dato.nombre }}</center></td>
                         <td><center><a href="/actividades/{{ dato.pk }}" class="btn btn-success"><i class="icon-eye-open icon-white"></i></a></center></td>
                         <td><center><a href="/actividades/editar/{{ dato.pk }}" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a></center></td>
-                        <td><center><a href="/actividades/eliminar/{{ dato.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                        <td><center><a href="/actividades/eliminar/{{ dato.pk }}" class="btn btn-danger" onclick="return confirm('Está seguro que desea eliminar la Actividad?')"><i class=" icon-trash icon-white"></i></a></center></td>
                     </tr>
                     {% endfor %}
                     </tbody>

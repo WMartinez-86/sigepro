@@ -18,17 +18,17 @@
        <fieldset class="module aligned wide">
 <form method="post">{% csrf_token %}
     <div class="form-row">
-            <li><p><div><strong>Nombre: </strong>{{ proyecto.nombre }}</div></li></p>
-            <li><p><div><strong>Codigo: </strong>{{ proyecto.id }}</div></li></p>
-            <li><p><div><strong>Descripción: </strong>{{ proyecto.descripcion }}</div></li></p>
-            <li><p><div><strong>Estado: </strong>{{ proyecto.get_estado_display }}</div></li></p>
-            <li><p><div><strong>Fecha de Inicio: </strong>{{ proyecto.fecha_ini }}</div></li></p>
+            <h3><p><div><strong>Nombre: </strong>{{ proyecto.nombre }}</div></h3></p>
+            <h3><p><div><strong>Codigo: </strong>{{ proyecto.id }}</div></h3></p>
+            <h3><p><div><strong>Descripción: </strong>{{ proyecto.descripcion }}</div></h3></p>
+            <h3><p><div><strong>Estado: </strong>{{ proyecto.get_estado_display }}</div></h3></p>
+            <h3><p><div><strong>Fecha de Inicio: </strong>{{ proyecto.fecha_ini }}</div></h3></p>
             {% if proyecto.fecha_fin != none %}
-                <li><p><div><strong>Fecha de Finalizacion: </strong>{{ proyecto.fecha_fin}}</div></li></p>
+                <h3><p><div><strong>Fecha de Finalizacion: </strong>{{ proyecto.fecha_fin}}</div></h3></p>
             {% endif %}
             <!--<div><strong>Observaciones: </strong>{{ proyecto.observaciones }}</div>-->
             {% for integrante in comite %}
-                <li><p>{{ integrante.first_name}} {{ integrante.last_name}}</li></li></p>
+                <h3><p>{{ integrante.first_name}} {{ integrante.last_name}}</h3></p>
             {% endfor %}
         </div>
 </form>

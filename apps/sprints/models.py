@@ -13,6 +13,7 @@ class Sprint(models.Model):
     (0,'Futuros'),
     (1,'En Ejecucion'),
     (2,'Finalizado'),
+    (3,'Eliminado'),
     )
 
     nombre = models.CharField(max_length=20)

@@ -18,10 +18,10 @@ SIGEPRO - Detalles del Flujo
     <fieldset class="module aligned wide">
         <form method="post">{% csrf_token %}
             <div class="form-row">
-                <div><strong>Orden: </strong>{{ datos.orden }}</div>
-                <div><strong>Nombre: </strong>{{ datos.nombre }}</div>
-                <div><strong>Descripcion: </strong>{{ datos.descripcion }}</div>
-                <div><strong>Estado: </strong>{{ datos.estado}}</div>
+                <h3><div><strong>Orden: </strong>{{ datos.orden }}</div></h3>
+                <h3><div><strong>Nombre: </strong>{{ datos.nombre }}</div></h3>
+                <h3><div><strong>Descripcion: </strong>{{ datos.descripcion }}</div></h3>
+                <h3><div><strong>Estado: </strong>{{ datos.estado}}</div></h3>
             </div>
         </form>
     </fieldset>

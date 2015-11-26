@@ -35,7 +35,7 @@ SIGEPRO - Equipos
                             <h2><p style="font-size:18px">{{ equipo.usuario.first_name }} {{ equipo.usuario.last_name }} ({{ equipo.usuario }}) - Cant. horas =  {{ equipo.horasPorDia }}</p></h2>
                             {% for rol in equipo.rol.all %}
                                 <!-- <li><p style="font-size:16px"><b>  {{ rol }} </b>  <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black"></i></a></p></li> -->
-                                <li><p style="font-size:16px"><b> {{ rol }} </b>  <a href="/equipos/eliminar/{{ equipo.id }}"><i class="icon-remove icon-black" onclick="return confirm('Está seguro que desea eliminar al miembro del equipo?')"></i></a></p></li>
+                                <li><p style="font-size:16px"><b> {{ rol }} </b>  <a href="/equipos/eliminar/{{ equipo.id }}"  onclick="return confirm('Está seguro que desea eliminar al miembro del equipo?')"><i class="icon-remove icon-black"></i></a></p></li>
                             {% endfor %}
                             </br>
                         {% endfor %}
