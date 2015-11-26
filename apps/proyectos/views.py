@@ -548,7 +548,7 @@ def reporte_grafica(request, id_proyecto):
     legend.x = 40
     legend.y = -80
     lp.lines[1].strokeColor = colors.green
-    legend.colorNamePairs  = [(lp.lines[0].strokeColor, 'Dias Ideales'), (lp.lines[1].strokeColor, 'Dias Reales')]
+    legend.colorNamePairs  = [(lp.lines[0].strokeColor, 'Cantidad de dias ideal'), (lp.lines[1].strokeColor, 'Cantidad de dias real')]
 
     #d.add(lp)
     d.add(legend)
