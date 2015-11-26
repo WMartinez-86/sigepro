@@ -316,7 +316,8 @@ SIGEPRO - Proyectos
                                 <td> </td>
                                 <td><center><a href="/proyectos/aprobar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-thumbs-up icon-white"></i></a></center></td>
                                 <td><center><a href="/proyectos/rechazar/{{ proyecto.pk }}" class="btn btn-warning"><i class=" icon-thumbs-down icon-white"></i></a></center></td>
-                                <td><center><a href="/proyectos/eliminar/{{ proyecto.pk }}" class="btn btn-danger" onclick="return confirm('Está seguro que desea eliminar el proyecto?')"><i class=" icon-trash icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/eliminar/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-trash icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/listar_reportes/{{ proyecto.pk }}" class="btn btn-success"><i class=" icon-file icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -383,6 +384,7 @@ SIGEPRO - Proyectos
                                 <td><center><a href="/sprints/proyecto/{{ proyecto.pk }}" class="btn btn-info"><i class="icon-calendar icon-white"></i></a></center></td>
                                 <td><center><a href="/userStories/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-tasks icon-white"></i></a></center></td>
                                 <td><center><a href="/flujos/proyecto/{{ proyecto.pk }}" class="btn btn-danger"><i class=" icon-list icon-white"></i></a></center></td>
+                                <td><center><a href="/proyectos/listar_reportes/{{ proyecto.pk }}" class="btn btn-success"><i class=" icon-file icon-white"></i></a></center></td>
                             </tr>
                         {% endif %}
                     {% endfor %}

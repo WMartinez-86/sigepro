@@ -49,7 +49,12 @@ def ver_equipo(request, id_proyecto):
 @login_required
 @permission_required('proyectos')
 def agregar_miembro(request, id_proyecto):
-
+     """
+    vista para agregar usuarios a un equipo de trabajo
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/ver_equipo.html', {'proyectos':dato, 'usuarios':usuarios}, context_instance=RequestContext(request))
+    """
 
      if request.method=='POST':
         #formset = ItemFormSet(request.POST)

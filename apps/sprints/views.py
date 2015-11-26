@@ -167,7 +167,7 @@ def iniciar_sprint(request, id_sprint):
 @permission_required('sprint')
 def finalizar_sprint(request, id_sprint):
     """
-    vista para iniciar el sprint
+    vista para finalizar el sprint
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @return: render_to_response('proyectos/listar_proyectos.html', {'datos': results}, context_instance=RequestContext(request))
     """
@@ -198,7 +198,7 @@ def finalizar_sprint(request, id_sprint):
 @permission_required('sprint')
 def listar_USSprintBacklog(request, id_sprint):
     """
-    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    Vista para listar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
@@ -216,7 +216,7 @@ def listar_USSprintBacklog(request, id_sprint):
 @permission_required('sprint')
 def asignar_userStorySprint(request, id_userStory, id_sprint):
     """
-    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    Vista para asignar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
@@ -262,7 +262,7 @@ def asignar_userStorySprint(request, id_userStory, id_sprint):
 @permission_required('sprint')
 def desasignar_userStorySprint(request, id_userStory,  id_sprint):
     """
-    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    Vista para desasignar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
@@ -298,7 +298,7 @@ def desasignar_userStorySprint(request, id_userStory,  id_sprint):
 @permission_required('sprint')
 def reasignar_userStorySprint(request, id_userStory):
     """
-    Vista para eliminar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
+    Vista para reasignar un sprint de un proyecto. Busca la sprint por su id_sprint y lo destruye.
     @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
     @param id_sprint: referencia a la flujo dentro de la base de datos
     @return: render_to_response('sprints/listar_sprints.html', {'datos': flujos, 'proyecto' : proyecto}, context_instance=RequestContext(request))
@@ -373,6 +373,12 @@ def daterange(start_date, end_date):
 @login_required
 @permission_required('sprint')
 def graficar(request, id_sprint):
+    """
+    Vista que genera el burndown chart
+    @param request: objeto HttpRequest que representa la metadata de la solicitud HTTP
+    @param id_proyecto: referencia al proyecto de la base de datos
+    @return: render_to_response('proyectos/detalle_proyecto.html', {'proyecto': dato}, context_instance=RequestContext(request))
+    """
     sprint = Sprint.objects.get(id = id_sprint)
     hs_total = sprint.capacidad
     diasIdeales = sprint.fin_propuesto - sprint.inicio_propuesto
