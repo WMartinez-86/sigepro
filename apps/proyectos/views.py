@@ -419,12 +419,15 @@ def reporte_trabajos_dev(request, id_proyecto):
     #print stories
     vec_task = []
     for us in stories:
-        cant_task = 0
-        trabajos = Trabajo.objects.filter(userStory_id = us.id)
-        for task in trabajos:
-            cant_task = cant_task + 1
-        dev = User.objects.get(id = us.desarrollador_id)
-        vec_task.append([dev.username, cant_task])
+        #print us.sprint_id
+        if us.sprint_id is not None:
+            #print us
+            cant_task = 0
+            trabajos = Trabajo.objects.filter(userStory_id = us.id)
+            for task in trabajos:
+                cant_task = cant_task + 1
+            dev = User.objects.get(id = us.desarrollador_id)
+            vec_task.append([dev.username, cant_task])
 
 
     t = Table([headings] + vec_task)
@@ -542,10 +545,12 @@ def reporte_grafica(request, id_proyecto):
     vec_name = []
     today = timezone.now().date()
     for sp in sprints:
-        diasIdeales = sp.fin_propuesto - sp.inicio_propuesto
-        diasReales = today - sp.inicio
-        vec_sp.append([diasIdeales.days, diasReales.days])
-        vec_name.append(sp.nombre)
+        if sp.inicio is not None:
+            diasIdeales = sp.fin_propuesto - sp.inicio_propuesto
+            diasReales = today - sp.inicio
+            print diasReales
+            vec_sp.append([diasIdeales.days, diasReales.days])
+            vec_name.append(sp.nombre)
 
 
     bc = VerticalBarChart()
@@ -640,11 +645,11 @@ def reporte_product_backlog(request, id_proyecto):
 
         if us.estadoScrum == 0:
             estadoScrum = 'Nuevo'
-        elif vec_us.estadoScrum == 1:
+        elif us.estadoScrum == 1:
             estadoScrum = 'Iniciado'
-        elif vec_us.estadoScrum == 2:
+        elif us.estadoScrum == 2:
             estadoScrum = 'Suspendido'
-        elif vec_us.estadoScrum == 3:
+        elif us.estadoScrum == 3:
             estadoScrum = 'Eliminado'
 
         vec_us.append([us.nombre, us.descripcion, us.valor_negocio, us.valor_tecnico, estadoKanban, estadoScrum])
