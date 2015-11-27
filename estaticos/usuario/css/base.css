@@ -88,7 +88,7 @@ h5 {
 }
 
 ul li {
-    list-style-type: square;
+    /* list-style-type: square; */
     padding: 1px 0;
 }
 

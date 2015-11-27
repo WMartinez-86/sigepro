@@ -41,8 +41,8 @@
             <div class="navbar-inner">
                 <a class="brand" href="/">SIGEPRO</a>
                 <ul class="nav">
-                    {% if  user.is_superuser %}
-                        <li><a class="dropdown-toggle" href="/proyectos">Proyectos</a></li>
+                    <li><a class="dropdown-toggle" href="/proyectos">Proyectos</a></li>
+                    {% if user.is_staff %}
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administracion
                                 <b class="caret"></b>

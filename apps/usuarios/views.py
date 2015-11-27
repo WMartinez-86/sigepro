@@ -73,16 +73,19 @@ def edit_user(request, pk, template_name = 'usuarios/user/edit.html'):
     @param template_name: El nombre completo del template usado para desplegar el formulario de edición de datos de usuario
     @return: render(request, template_name, {form, perfil} )
     """
+    mensaje = ""
     usuario = get_object_or_404(User, pk=pk)
-    user= get_object_or_404(Perfiles, usuario=usuario)
-    print(get_object_or_404(Perfiles, usuario=usuario))
+    #user= get_object_or_404(Perfiles, usuario=usuario)
+    #print(get_object_or_404(Perfiles, usuario=usuario))
     form = Usuario(request.POST or False, instance= usuario)
     #perfil = Perfil(request.POST or False, instance=user)
-    # if form.is_valid() and perfil.is_valid():
-    #     form.save()
-    #     perfil.save()
-        #return redirect('/usuarios/')
-    return render(request, template_name, {'form':form})
+    if request.method=='POST':
+        if form.is_valid():
+            form.save()
+        else:
+            mensaje = "Verifique los datos"
+         #return redirect('/usuarios/')
+    return render(request, template_name, {'form':form, 'mensaje': mensaje})
 
 
 

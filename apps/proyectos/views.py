@@ -23,6 +23,7 @@ from apps.sprints.views import graficar
 from django.contrib.auth.models import User
 from io import BytesIO
 from reportlab.graphics.charts.lineplots import LinePlot
+from itertools import islice, chain
 
 from reportlab.graphics.widgets.markers import makeMarker
 
@@ -43,8 +44,16 @@ __author__ = 'juanma'
 @login_required
 @permission_required('proyectos')
 def lista_proyectos(request):
+    #User Logueado ID
+    userLogueadoID = request.user.id
+    #print "usuario ID %s" % userLogueado
 
-    proyectos = Proyecto.objects.all()
+    proyUsuario = MiembroEquipo.objects.filter(usuario_id=userLogueadoID)
+    for y in proyUsuario:
+        print "Proyecto pertenece a usuario: %s" % y.proyecto_id
+
+    #proyectos = Proyecto.objects.all().exclude(id__in = [x.id for x in request.user.usergallery_set()])
+    proyectos = Proyecto.objects.filter(id__in = [x.proyecto_id for x in proyUsuario])
     # proyecto = Proyecto.objects.get(id=id_proyecto)
     rolSM = Group.objects.filter(name = "Scrum Master")
     # equipos = MiembroEquipo.objects.filter(rol = rolSM)

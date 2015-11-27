@@ -223,6 +223,7 @@ def asignar_userStorySprint(request, id_userStory, id_sprint):
     """
     sprint = get_object_or_404(Sprint, pk=id_sprint)
     proyecto = Proyecto.objects.get(id=sprint.proyecto_id)
+    id_proyecto = proyecto.id
 
     if request.method == 'POST':
         userStory = UserStory.objects.get(id = id_userStory)
@@ -254,7 +255,7 @@ def asignar_userStorySprint(request, id_userStory, id_sprint):
         return render_to_response('sprints/asignar_userStories.html', {'userStoriesBacklog': userStoriesBacklog, 'userStoriesAsignados': userStoriesAsignados, 'sprint' : sprint, 'proyecto':proyecto}, context_instance=RequestContext(request))
 
     else:
-        formulario = AsignarFlujoDesarrollador(request.POST, id_proyecto=proyecto.id)
+        formulario = AsignarFlujoDesarrollador(Q(proyecto_id = id_proyecto))
         return render_to_response('sprints/asignar_FlujoDesarrollador.html', { 'formulario': formulario, 'proyecto':proyecto}, context_instance=RequestContext(request))
 
 
