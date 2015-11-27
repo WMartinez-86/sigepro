@@ -354,7 +354,7 @@ def reporte_horas_trabajos(request, id_proyecto):
     styles = getSampleStyleSheet()
     header = Paragraph("Cantidad de horas de trabajo", styles['Heading1'])
     clientes.append(header)
-    headings = ('Nombre del proyecto', 'Horas de trabajo')
+    headings = ('Nombre del proyecto', 'Horas de trabajo', 'Estado')
 
     project = Proyecto.objects.get(id=id_proyecto)
     #print project
@@ -367,7 +367,7 @@ def reporte_horas_trabajos(request, id_proyecto):
             horas_rest = horas_rest + task.hora
 
     horas_task = []
-    horas_task.append([project.nombre, horas_rest])
+    horas_task.append([project.nombre, horas_rest, project.estado])
 
 
     t = Table([headings] + horas_task)
