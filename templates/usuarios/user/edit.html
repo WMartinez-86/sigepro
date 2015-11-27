@@ -1,32 +1,33 @@
 {% extends 'base2.html' %}
 {% block title %}
-	Modificar Usuario
+Modificar Usuario
 {% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="es-PY" >
 <head>
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/estaticos/usuario/css/forms.css" />
 </head>
-    <div class="breadcrumbs">
+<div class="breadcrumbs">
     <a href="/usuarios/">Usuarios</a>
     "> Modificar"
-    </div>
-    <div id="content">
+</div>
+<div id="content">
     <h1>Modificar Usuario</h1>
-        <fieldset class="module aligned wide">
-<form method="post">{% csrf_token %}
-    <div class="form-row">
-        {{ form.as_p }}
-        {{ perfil.as_p }}
+    <fieldset class="module aligned wide">
+        <h3 style="color:#ff4d4d">{{ mensaje }}</h3>
+        <form method="post">{% csrf_token %}
+            <div class="form-row">
+                {{ form.as_p }}
+                {{ perfil.as_p }}
 
-        </div>
-    <div class="submit-row">
-    <input type="submit" value="Guardar Cambios" />
-        </div>
-</form>
-            </fieldset>
-    </div>
+            </div>
+            <div class="submit-row">
+                <input type="submit" value="Guardar Cambios" />
+            </div>
+        </form>
+    </fieldset>
+</div>
 </html>
 {% endblock %}
