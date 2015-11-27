@@ -552,6 +552,10 @@ def reporte_grafica(request, id_proyecto):
             vec_sp.append([diasIdeales.days, diasReales.days])
             vec_name.append(sp.nombre)
 
+    if diasIdeales.days > diasReales.days:
+        varGraph = diasIdeales.days
+    else:
+        varGraph = diasReales.days
 
     bc = VerticalBarChart()
     bc.x = 50
@@ -561,7 +565,7 @@ def reporte_grafica(request, id_proyecto):
     bc.data = vec_sp
     bc.strokeColor = colors.black
     bc.valueAxis.valueMin = 0
-    bc.valueAxis.valueMax = diasReales.days + 20
+    bc.valueAxis.valueMax = varGraph + 10
     bc.valueAxis.valueStep = 10  #paso de distancia entre punto y punto
     bc.categoryAxis.labels.boxAnchor = 'ne'
     bc.categoryAxis.labels.dx = 8
