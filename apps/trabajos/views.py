@@ -6,6 +6,7 @@ from django.template import RequestContext
 from apps.userStories.models import UserStory
 from apps.trabajos.models import Trabajo, Adjunto
 from apps.trabajos.forms import crearTrabajoForm, NuevoAdjunto
+from apps.sprints.models import Sprint
 from datetime import date
 from apps.equipos.models import MiembroEquipo
 from apps.proyectos.models import Proyecto
@@ -98,6 +99,9 @@ def crear_trabajo(request, id_userStory):
             equipi = MiembroEquipo.objects.get(rol = rolSM, proyecto_id = id_proyecto)
             SM = equipi.usuario
             correo = SM.email
+            #sp = newTrabajo.userStory.sprint_id
+            #print sp
+            #sprint = Sprint.objects.get(id = sp)
             send_mail("Asunto", "Mensaje del sistema. \nEl usuario " + str(desarrollador) + " ha creado el siguiente Trabajo\n" +
                       "\nDescrpcion: " + newTrabajo.descripcion +
                       "\nUser Story: " + newTrabajo.userStory.nombre +

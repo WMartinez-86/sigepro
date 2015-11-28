@@ -20,7 +20,7 @@ Burndown Chart
 <body class="">
 
 <!-- Container -->
-<div ng-app="charts" ng-controller="ChartCtrl as vm" ng-init=vm.getId({{listHsIdeal}},{{listLab}},{{listTaskHs}})>
+<div ng-app="charts" ng-controller="ChartCtrl as vm" ng-init=vm.getId()>
 
 
        <canvas id="line" class="chart chart-line" data="data"
@@ -31,9 +31,9 @@ Burndown Chart
     </div>
     <script>
         angular.module("charts", ["chart.js"]).controller("ChartCtrl", function ($scope) {
-        $scope.labels = {{listLab}};
+        $scope.labels = {1,2,3,4,5,6,7,8,9,0};
         $scope.series = ['Horas reales de trabajo', 'Horas ideales de trabajo'];
-        $scope.data = [{{listTaskHs}},{{ listHsIdeal }}];
+        $scope.data = [24,35,47,56,68,68 ];
         $scope.onClick = function (points, evt) {
         console.log(points, evt);
     };
