@@ -421,7 +421,7 @@ def graficar(request, id_sprint):
                 diagrap = diagrap + timedelta(days=1)
             #print listTaskHs
 
-    elif hoy > sprint.fin:
+    elif hoy > sprint.fin_propuesto:
         #print "emtro aca en el elif"
         #print sprint.id
         #print id_sprint
@@ -430,12 +430,12 @@ def graficar(request, id_sprint):
             listHsIdeal.append(hs_total)
         diasLab = 0
         listLab = []
-        diasCompleto = sprint.fin - sprint.inicio_propuesto
+        diasCompleto = sprint.fin_propuesto - sprint.inicio_propuesto
         for ind in range(diasCompleto.days):
             diasLab = diasLab + 1
             #condias = 'Dia ' +  str(diasLab)
             listLab.append(diasLab)
-        dayLimite = sprint.fin - sprint.inicio
+        dayLimite = sprint.fin_propuesto - sprint.inicio_propuesto
         #print dayLimite
         capSpring = sprint.capacidad
         for dia in range(dayLimite.days):

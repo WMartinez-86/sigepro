@@ -48,18 +48,23 @@ def lista_proyectos(request):
     userLogueadoID = request.user.id
     #print "usuario ID %s" % userLogueado
 
-    proyUsuario = MiembroEquipo.objects.filter(usuario_id=userLogueadoID)
-    for y in proyUsuario:
-        print "Proyecto pertenece a usuario: %s" % y.proyecto_id
-
-    #proyectos = Proyecto.objects.all().exclude(id__in = [x.id for x in request.user.usergallery_set()])
-    proyectos = Proyecto.objects.filter(id__in = [x.proyecto_id for x in proyUsuario])
-    # proyecto = Proyecto.objects.get(id=id_proyecto)
     rolSM = Group.objects.filter(name = "Scrum Master")
-    # equipos = MiembroEquipo.objects.filter(rol = rolSM)
-    # equipos = MiembroEquipo.objects.filter()
 
-    # haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = miembro.proyecto_id)
+    if request.user.is_staff:
+        proyectos = Proyecto.objects.all()
+    else:
+        proyUsuario = MiembroEquipo.objects.filter(usuario_id=userLogueadoID)
+        for y in proyUsuario:
+            print "Proyecto pertenece a usuario: %s" % y.proyecto_id
+
+        #proyectos = Proyecto.objects.all().exclude(id__in = [x.id for x in request.user.usergallery_set()])
+        proyectos = Proyecto.objects.filter(id__in = [x.proyecto_id for x in proyUsuario])
+        # proyecto = Proyecto.objects.get(id=id_proyecto)
+
+        # equipos = MiembroEquipo.objects.filter(rol = rolSM)
+        # equipos = MiembroEquipo.objects.filter()
+
+        # haySM = MiembroEquipo.objects.filter(rol = rolSM, proyecto_id = miembro.proyecto_id)
 
     return render_to_response('proyectos/listar_proyectos.html', {'proyectos': proyectos, 'rolSM': rolSM},
                               context_instance=RequestContext(request))
